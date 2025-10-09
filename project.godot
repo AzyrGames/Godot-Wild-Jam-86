@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Platformer Prototype"
+config/name="Godot Wild Jam 96"
 config/tags=PackedStringArray("game_jam", "prototype")
 run/main_scene="uid://b0rjmyu6yhxev"
 config/features=PackedStringArray("4.5", "GL Compatibility")
