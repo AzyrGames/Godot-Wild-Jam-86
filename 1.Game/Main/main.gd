@@ -1,8 +1,7 @@
 extends Node2D
 class_name Main2D
 
-const GAME_PATH: String = "uid://b2thg741ns17h"
-const GAME_TIME_LIMIT: float = 60*60
+const GAME_PATH: String = "uid://bw3votfvu4bw7"
 
 @export var sub_viewport: SubViewport
 @export var game_timer: Timer
@@ -52,7 +51,10 @@ func add_game() -> bool:
 	if !game_2d:
 		print("Not game")
 		return false
-	add_child(game_2d)
+	if sub_viewport:
+		sub_viewport.add_child(game_2d)
+	else:
+		add_child(game_2d)
 	return true
 
 

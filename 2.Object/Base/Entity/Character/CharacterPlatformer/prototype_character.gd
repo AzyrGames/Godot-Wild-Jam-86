@@ -9,10 +9,9 @@ signal hit_wall(wall_normal: Vector2)
 signal direction_changed(new_direction: int)
 signal started_fast_falling()
 signal coyote_time_started()
-signal grace_period_started()
 
 
-@export var movement_setting : CharacterMovementSetting
+@export var movement_setting: CharacterMovementSetting
 
 
 ## Collision Settings
@@ -40,7 +39,6 @@ var debug_up_gravity: float = 0.0
 var debug_down_gravity: float = 0.0
 
 
-
 ## Internal state variables - Not for external access
 var _jump_hold_time: float = 0.0
 var _is_jumping: bool = false
@@ -51,15 +49,14 @@ var canvas_layer: CanvasLayer
 var _was_on_floor_last_frame: bool = false
 var _last_horizontal_input: float = 0.0
 var _running_speed_when_jumped: float = 0.0
-var _is_stomping: bool = false
 var _current_gravity: float
 var _facing_direction: int = 1
 var _last_facing_direction: int = 1
 
-## Timer nodes for input buffering and grace periods
+## Timer nodes for jump 
 var _jump_buffer_timer: Timer
 var _coyote_timer: Timer
-var _grace_period_timer: Timer
+
 
 ## Calculated movement physics values - Updated when export values change
 var _forward_acceleration: float
@@ -68,6 +65,7 @@ var _friction: float
 var _air_acceleration: float
 var _air_friction: float
 
+
 ## Calculated jump physics values - Updated when export values change
 var _initial_jump_velocity: float
 var _up_gravity: float
@@ -75,10 +73,10 @@ var _down_gravity: float
 var _jump_time_to_peak: float
 var _jump_time_to_fall: float
 
+
 ## Converted frame times to seconds
 var _input_buffer_time: float
 var _coyote_time: float
-var _jump_grace_period: float
 
 ## Initialize physics calculations and setup timers
 func _ready() -> void:
@@ -92,6 +90,27 @@ func _ready() -> void:
 	_calculate_movement_physics()
 	_calculate_jump_physics()
 	_current_gravity = _down_gravity
+
+## Main physics update loop
+func _physics_process(delta: float) -> void:
+	_handle_input(delta)
+	_update_collision_shape()
+	_apply_gravity(delta)
+	_handle_horizontal_movement(delta)
+	_handle_jumping(delta)
+	_handle_collisions()
+	_update_sprite_direction()
+	_update_debug_display()
+	move_and_slide()
+
+	# Update timers after move_and_slide to get accurate floor state
+	_update_timers(delta)
+	# Check for landing
+	if not _was_on_floor_last_frame and is_on_floor():
+		var was_fast_falling: bool = _is_fast_falling
+		landed.emit(velocity.y, was_fast_falling)
+	# Update state tracking
+	_was_on_floor_last_frame = is_on_floor()
 
 ## Update all dependent variables when movement_setting change
 func _on_settings_changed() -> void:
@@ -118,7 +137,6 @@ func _update_from_settings() -> void:
 	# Convert frame times to seconds (60 ticks per seconds)
 	_input_buffer_time = movement_setting.input_buffer_frames / 60.0
 	_coyote_time = movement_setting.coyote_time_frames / 60.0
-	_jump_grace_period = movement_setting.jump_grace_period_frames / 60.0
 	# Convert jump timing from ticks to seconds
 	_jump_time_to_peak = movement_setting.jump_time_to_peak_ticks / 60.0
 	_jump_time_to_fall = movement_setting.jump_time_to_fall_ticks / 60.0
@@ -126,7 +144,7 @@ func _update_from_settings() -> void:
 	if debug_label:
 		debug_label.visible = is_show_debug
 
-## Setup all timer nodes for input buffering and grace periods
+## Setup all timer nodes
 func _setup_timers() -> void:
 	# Jump buffer timer
 	_jump_buffer_timer = Timer.new()
@@ -142,13 +160,6 @@ func _setup_timers() -> void:
 	_coyote_timer.timeout.connect(_on_coyote_time_timeout)
 	add_child(_coyote_timer)
 	
-	# Grace period timer
-	_grace_period_timer = Timer.new()
-	_grace_period_timer.wait_time = _jump_grace_period
-	_grace_period_timer.one_shot = true
-	_grace_period_timer.timeout.connect(_on_grace_period_timeout)
-	add_child(_grace_period_timer)
-
 ## Timer timeout callbacks
 func _on_jump_buffer_timeout() -> void:
 	pass
@@ -156,32 +167,10 @@ func _on_jump_buffer_timeout() -> void:
 func _on_coyote_time_timeout() -> void:
 	pass
 
-func _on_grace_period_timeout() -> void:
-	pass
 
-## Main physics update loop
-func _physics_process(delta: float) -> void:
-	_handle_input(delta)
-	_update_collision_shape()
-	_apply_gravity(delta)
-	_handle_horizontal_movement(delta)
-	_handle_jumping(delta)
-	_handle_collisions()
-	_update_sprite_direction()
-	_update_debug_display()
-	move_and_slide()
-	# Update timers after move_and_slide to get accurate floor state
-	_update_timers(delta)
-	# Check for landing
-	if not _was_on_floor_last_frame and is_on_floor():
-		var was_fast_falling: bool = _is_fast_falling
-		landed.emit(velocity.y, was_fast_falling)
-	# Update state tracking
-	_was_on_floor_last_frame = is_on_floor()
 
 ## Process player input and store state
 func _handle_input(delta: float) -> void:
-	# Jump input
 	if Input.is_action_just_pressed("move_jump"):
 		_jump_buffer_timer.start()
 	if Input.is_action_pressed("move_jump") and _is_jumping:
@@ -189,7 +178,6 @@ func _handle_input(delta: float) -> void:
 	if Input.is_action_just_released("move_jump"):
 		if _is_jumping and movement_setting.variable_jump_enabled:
 			_apply_jump_cutoff()
-	# Fast fall input
 	var was_fast_falling: bool = _is_fast_falling
 	if Input.is_action_pressed("move_down") and not is_on_floor():
 		_is_fast_falling = true
@@ -197,21 +185,14 @@ func _handle_input(delta: float) -> void:
 			started_fast_falling.emit()
 	else:
 		_is_fast_falling = false
-	# Store horizontal input
+
 	_last_horizontal_input = Input.get_axis("move_left", "move_right")
 
 
-## Update coyote time and grace period timers
 func _update_timers(delta: float) -> void:
-	# Start coyote time when leaving the ground
 	if _was_on_floor_last_frame and not is_on_floor():
-		# Just left the ground - start coyote time
 		_coyote_timer.start()
 		coyote_time_started.emit()
-	# Extended grace period for high-speed movement
-	if abs(velocity.x) > movement_setting.terminal_horizontal_speed * 0.8:
-		_grace_period_timer.start()
-		grace_period_started.emit()
 
 func _update_collision_shape() -> void:
 	if !movement_setting or !floor_collision_shape or !body_collision_shape:
@@ -231,11 +212,6 @@ func _apply_gravity(delta: float) -> void:
 		_is_fast_falling = false
 		return
 
-	# Handle stomp bounce
-	if _is_stomping and is_on_floor():
-		velocity.y = -movement_setting.stomp_bounce_velocity
-		_is_stomping = false
-		return
 	# Apply different gravity based on jump state
 
 	if velocity.y < 0:
@@ -257,8 +233,10 @@ func _apply_gravity(delta: float) -> void:
 		else:
 			_current_gravity *= movement_setting.fast_fall_multiplier
 	velocity.y += _current_gravity * delta
+
 	# Clamp vertical velocity to terminal speed
 	velocity.y = min(velocity.y, movement_setting.terminal_vertical_speed)
+
 
 ## Handle ground and air horizontal movement with different acceleration
 func _handle_horizontal_movement(delta: float) -> void:
@@ -297,8 +275,7 @@ func _handle_jumping(delta: float) -> void:
 func _check_can_jump() -> bool:
 	return (
 		is_on_floor() or
-		not _coyote_timer.is_stopped() or
-		not _grace_period_timer.is_stopped()
+		not _coyote_timer.is_stopped()
 	)
 
 ## Execute jump with momentum and speed boosts
@@ -307,8 +284,7 @@ func _perform_jump() -> void:
 	_running_speed_when_jumped = abs(velocity.x)
 	var was_running: bool = _running_speed_when_jumped >= movement_setting.terminal_horizontal_speed * 0.7
 	# Calculate base jump velocity
-	var jump_vel: float = -_initial_jump_velocity
-
+	var jump_vel: float = - _initial_jump_velocity
 
 	add_horizontal_boost(movement_setting.running_horizontal_boost)
 	velocity.y = jump_vel
@@ -316,9 +292,9 @@ func _perform_jump() -> void:
 	_jump_hold_time = 0.0
 	# Stop timers
 	_coyote_timer.stop()
-	_grace_period_timer.stop()
 	# Emit jump signal
 	jumped.emit(jump_vel, was_running)
+
 
 ## Reduce jump height when button is released early
 func _apply_jump_cutoff() -> void:
@@ -333,6 +309,7 @@ func _handle_collisions() -> void:
 		velocity.y = movement_setting.head_bump_velocity
 		_is_jumping = false
 		hit_ceiling.emit(bump_vel)
+
 	# Wall bump detection
 	if is_on_wall():
 		var wall_normal: Vector2 = get_wall_normal()
@@ -342,28 +319,31 @@ func _handle_collisions() -> void:
 func _update_sprite_direction() -> void:
 	if not flip_sprite_on_direction_change or sprite == null:
 		return
+
 	# Update facing direction based on horizontal input
 	if _last_horizontal_input > 0:
 		_facing_direction = 1
 	elif _last_horizontal_input < 0:
 		_facing_direction = -1
+
 	# Check for direction change and emit signal
 	if _facing_direction != _last_facing_direction:
 		direction_changed.emit(_facing_direction)
 		_last_facing_direction = _facing_direction
+
 	# Only flip sprite if direction changed
 	if _facing_direction == 1 and sprite.flip_h:
 		sprite.flip_h = false
 	elif _facing_direction == -1 and not sprite.flip_h:
 		sprite.flip_h = true
 
-## Update debug label with current state information
+
+## Update debug label
 func _update_debug_display() -> void:
 	if debug_label == null or not is_show_debug:
 		return
 	var jump_buffer_left := _jump_buffer_timer.time_left if not _jump_buffer_timer.is_stopped() else 0.0
 	var coyote_left := _coyote_timer.time_left if not _coyote_timer.is_stopped() else 0.0
-	var grace_left := _grace_period_timer.time_left if not _grace_period_timer.is_stopped() else 0.0
 	var current_accel := 0.0
 	var accel_name := "None"
 	if is_on_floor():
@@ -391,9 +371,9 @@ func _update_debug_display() -> void:
 		gravity_type = "Fast Fall" if movement_setting.variable_fast_fall_speed > 0 else "FF(%.1fx)" % movement_setting.fast_fall_multiplier
 	var debug_text := "Vel (%.1f, %.1f)|Facing %s\nFloor %s|Jump %s|Fall %s|FF %s\n" % [
 		velocity.x, velocity.y, "R" if _facing_direction == 1 else "L", is_on_floor(), _is_jumping, _is_falling, _is_fast_falling]
-	debug_text += "JumpBuf %.2fs - %d |Coyote %.2fs - %d \nGrace %.2fs - %d |Hold %.2fs - %d \n" % [
-		jump_buffer_left, int(jump_buffer_left * 60.0), coyote_left, int(coyote_left * 60.0), 
-		grace_left, int(grace_left * 60.0), _jump_hold_time, int(_jump_hold_time * 60.0)]
+	debug_text += "JumpBuf %.2fs - %d |Coyote %.2fs - %d|Hold %.2fs - %d \n" % [
+		jump_buffer_left, int(jump_buffer_left * 60.0), coyote_left, int(coyote_left * 60.0)
+		]
 	debug_text += "Accel %s: %.0f px/s² \nGrav %s : %.0f px/s² \n" % [accel_name, current_accel, gravity_type, _current_gravity]
 	debug_text += "FwdAcc %.0f|TurnAcc %.0f|Fric %.0f\n" % [_forward_acceleration, _turn_acceleration, _friction]
 	debug_text += "AirAcc %.0f|AirFric %.0f\n" % [_air_acceleration, _air_friction]
@@ -405,32 +385,34 @@ func _update_debug_display() -> void:
 func _calculate_movement_physics() -> void:
 	if not movement_setting:
 		return
-	# Calculate accelerations from timing parameters
+
+	# Calculate acceleration values from timing parameters
+
 	var time_to_max_speed: float = movement_setting.time_to_max_speed_ticks / 60.0
 	var time_to_turn: float = movement_setting.time_to_turn_ticks / 60.0
 	var time_to_stop: float = movement_setting.time_to_stop_ticks / 60.0
 	var air_time_to_max: float = movement_setting.air_control_time_to_max_ticks / 60.0
 	var air_time_to_stop: float = movement_setting.air_friction_time_to_stop_ticks / 60.0
-	# Forward acceleration
+
 	_forward_acceleration = movement_setting.terminal_horizontal_speed / time_to_max_speed
-	# Turn acceleration
 	_turn_acceleration = (2.0 * movement_setting.terminal_horizontal_speed) / time_to_turn
-	# Friction
 	_friction = movement_setting.terminal_horizontal_speed / time_to_stop
-	# Air control acceleration
 	_air_acceleration = movement_setting.terminal_horizontal_speed / air_time_to_max
-	# Air friction
 	_air_friction = movement_setting.terminal_horizontal_speed / air_time_to_stop
+
 	# Update debug values
 	_update_debug_movement_values()
+
 
 ## Calculate jump physics from height and timing parameters
 func _calculate_jump_physics() -> void:
 	if not movement_setting:
 		return
+
 	# Calculate gravity and initial velocity
 	_up_gravity = (2.0 * movement_setting.max_jump_height) / (_jump_time_to_peak * _jump_time_to_peak)
 	_up_gravity *= movement_setting.gravity_multiplier
+
 	# Calculate down gravity
 	_down_gravity = (2.0 * movement_setting.max_jump_height) / (_jump_time_to_fall * _jump_time_to_fall)
 	_down_gravity *= movement_setting.gravity_multiplier
@@ -438,6 +420,7 @@ func _calculate_jump_physics() -> void:
 	_initial_jump_velocity = _up_gravity * _jump_time_to_peak
 	# Update debug values
 	_update_debug_jump_values()
+
 
 ## Update debug display values for movement physics
 func _update_debug_movement_values() -> void:
@@ -447,11 +430,13 @@ func _update_debug_movement_values() -> void:
 	debug_air_acceleration = _air_acceleration
 	debug_air_friction = _air_friction
 
+
 ## Update debug display values for jump physics
 func _update_debug_jump_values() -> void:
 	debug_initial_jump_velocity = _initial_jump_velocity
 	debug_up_gravity = _up_gravity
 	debug_down_gravity = _down_gravity
+
 
 ## Public utility functions for external use
 func get_facing_direction() -> int:
@@ -466,17 +451,9 @@ func is_fast_falling() -> bool:
 func has_coyote_time() -> bool:
 	return not _coyote_timer.is_stopped()
 
-func has_grace_period() -> bool:
-	return not _grace_period_timer.is_stopped()
 
 func has_jump_buffer() -> bool:
 	return not _jump_buffer_timer.is_stopped()
-
-## Public functions for special moves and terrain interaction
-func trigger_stomp() -> void:
-	_is_stomping = true
-	velocity.y = movement_setting.variable_fast_fall_speed
-	_is_fast_falling = true
 
 func set_terrain_friction(new_friction: float) -> void:
 	_friction = new_friction
@@ -500,11 +477,10 @@ func get_debug_info() -> Dictionary:
 		"is_fast_falling": _is_fast_falling,
 		"has_coyote_time": has_coyote_time(),
 		"has_jump_buffer": has_jump_buffer(),
-		"has_grace_period": has_grace_period(),
 		"jump_hold_time": _jump_hold_time,
 		"current_gravity": _current_gravity,
 		"facing_direction": _facing_direction,
-		"can_jump": is_on_floor() or has_coyote_time() or has_grace_period(),
+		"can_jump": is_on_floor() or has_coyote_time(),
 		"running_speed_when_jumped": _running_speed_when_jumped,
 		"calculated_physics": {
 			"forward_acceleration": _forward_acceleration,

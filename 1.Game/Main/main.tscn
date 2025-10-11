@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ybutnrp1d24r" path="res://1.Game/Main/main.gd" id="1_bhcqt"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("sub_viewport")]
 script = ExtResource("1_bhcqt")
+sub_viewport = NodePath("")
 metadata/_custom_type_script = "uid://ybutnrp1d24r"

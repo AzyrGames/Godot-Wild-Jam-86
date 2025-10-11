@@ -5,7 +5,6 @@ extends Resource
 ## Movement Settings
 @export_group("Moving Speed")
 @export var max_moving_speed: float = 200.0: set = _set_max_moving_speed
-
 @export var terminal_horizontal_speed: float = 300.0: set = _set_terminal_horizontal_speed
 @export var terminal_vertical_speed: float = 600.0: set = _set_terminal_vertical_speed
 
@@ -25,13 +24,14 @@ extends Resource
 @export var running_horizontal_boost: float = 50.0: set = _set_running_horizontal_boost
 
 
-
 ## Gravity Settings - Calculated from jump parameters
 @export_group("Gravity")
 @export var gravity_multiplier: float = 1.0: set = _set_gravity_multiplier
 @export var apex_threshold: float = 50.0: set = _set_apex_threshold
 @export var dynamic_gravity_transition: bool = true: set = _set_dynamic_gravity_transition
 @export var jump_cutoff_multiplier: float = 0.3: set = _set_jump_cutoff_multiplier
+
+
 ## Set to < 0 if use mulitpler
 @export var variable_fast_fall_speed: float = 400.0: set = _set_variable_fast_fall_speed
 @export var fast_fall_multiplier: float = 2.0: set = _set_fast_fall_multiplier
@@ -45,7 +45,6 @@ extends Resource
 @export_group("Input Timing (Frames at 60fps)")
 @export var input_buffer_frames: int = 9: set = _set_input_buffer_frames
 @export var coyote_time_frames: int = 6: set = _set_coyote_time_frames
-@export var jump_grace_period_frames: int = 9: set = _set_jump_grace_period_frames
 
 # Setter functions for Movement group
 func _set_terminal_horizontal_speed(value: float) -> void:
@@ -135,8 +134,4 @@ func _set_input_buffer_frames(value: int) -> void:
 
 func _set_coyote_time_frames(value: int) -> void:
 	coyote_time_frames = value
-	emit_changed()
-
-func _set_jump_grace_period_frames(value: int) -> void:
-	jump_grace_period_frames = value
 	emit_changed()
