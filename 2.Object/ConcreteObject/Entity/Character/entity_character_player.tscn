@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://caa43fkynpx52"]
+
+[ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
+[ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
+[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="3_nlyfk"]
+
+[sub_resource type="Resource" id="Resource_nlyfk"]
+script = ExtResource("2_tsqhy")
+max_moving_speed = 140.0
+terminal_vertical_speed = 400.0
+time_to_max_speed_ticks = 18
+time_to_turn_ticks = 10
+time_to_stop_ticks = 12
+max_jump_height = 68.0
+jump_time_to_fall_ticks = 20
+head_bump_velocity = -30.0
+running_horizontal_boost = 25.0
+jump_cutoff_multiplier = 0.4
+air_control_time_to_max_ticks = 25
+air_friction_time_to_stop_ticks = 30
+input_buffer_frames = 6
+metadata/_custom_type_script = "uid://bq0337t82fgc2"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsqhy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsqhy"]
+height = 40.0
+
+[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite")]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_u5nji")
+movement_setting = SubResource("Resource_nlyfk")
+floor_collision_shape = NodePath("CollisionShapeFloor")
+body_collision_shape = NodePath("CollisionShapeBody")
+sprite = NodePath("Icon")
+is_show_debug = false
+metadata/_custom_type_script = "uid://dukhpw2kiyr0p"
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(5.364418e-07, 1.758337e-06)
+scale = Vector2(0.15625, 0.3125)
+texture = ExtResource("3_nlyfk")
+
+[node name="CollisionShapeFloor" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_tsqhy")
+
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_tsqhy")
