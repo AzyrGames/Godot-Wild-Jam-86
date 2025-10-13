@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b88xbdbrsvxxt"]
+
+[ext_resource type="Script" uid="uid://cpnjmd74nyl1b" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/ghost_movement.gd" id="1_nknyg"]
+[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="2_crdsh"]
+
+[node name="EntityCharacterGhost" type="Node2D"]
+script = ExtResource("1_nknyg")
+
+[node name="BoxBoundsMaker" type="Node2D" parent="."]
+
+[node name="GhostSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_crdsh")
