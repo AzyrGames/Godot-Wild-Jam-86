@@ -40,10 +40,14 @@ func setup_setting_gui() -> void:
 		value_toggle_vsync.is_on = user_settings.is_vsync
 		GameWindow.set_vsync(value_toggle_vsync.is_on)
 
-	value_slider_master.slider_value.value = user_settings.master_volume
-	value_slider_music.slider_value.value = user_settings.music_volume
-	value_slider_sfx.slider_value.value = user_settings.sfx_volume
-	value_slider_screen_shake.slider_value.value = user_settings.screen_shake
+	set_audio_bus_volume("Master", user_settings.master_volume)
+	set_audio_bus_volume("Music", user_settings.music_volume)
+	set_audio_bus_volume("SFX", user_settings.sfx_volume)
+
+	value_slider_master.slider_value.value = user_settings.master_volume * 100
+	value_slider_music.slider_value.value = user_settings.music_volume * 100
+	value_slider_sfx.slider_value.value = user_settings.sfx_volume * 100 
+	value_slider_screen_shake.slider_value.value = user_settings.screen_shake * 100
 
 	connect_window_related()
 	connect_value_slider()
@@ -125,24 +129,28 @@ func _value_toggle_vsync_value_chagned(_value: float) -> void:
 
 
 
-func _on_value_slider_master_value_changed(value: float) -> void:
-	set_audio_bus_volume("Master", value)
-	user_settings.master_volume = value
+func _on_value_slider_master_value_changed(_value: float) -> void:
+	_value = _value / 100.0
+	set_audio_bus_volume("Master", _value)
+	user_settings.master_volume = _value
 	user_settings.save()
 	
 
-func _on_value_slider_music_value_changed(value: float) -> void:
-	set_audio_bus_volume("Music", value)
-	user_settings.music_volume = value
+func _on_value_slider_music_value_changed(_value: float) -> void:
+	_value = _value / 100.0
+	set_audio_bus_volume("Music", _value)
+	user_settings.music_volume = _value
 	user_settings.save()
 
 
-func _on_value_slider_sfx_value_changed(value: float) -> void:
-	set_audio_bus_volume("SFX", value)
-	user_settings.sfx_volume = value
+func _on_value_slider_sfx_value_changed(_value: float) -> void:
+	_value = _value / 100.0
+	set_audio_bus_volume("SFX", _value)
+	user_settings.sfx_volume = _value
 	user_settings.save()
 
 
-func _on_value_slider_screen_shake_value_changed(value: float) -> void:
-	user_settings.screen_shake = value
+func _on_value_slider_screen_shake_value_changed(_value: float) -> void:
+	_value = _value / 100.0
+	user_settings.screen_shake = _value
 	user_settings.save()
