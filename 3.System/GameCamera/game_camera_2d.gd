@@ -13,6 +13,7 @@ func _ready() -> void:
 	GameManager.game_camera = self
 	connect_event_bus()
 
+
 func _physics_process(delta: float) -> void:
 	follow_target()
 	pass
@@ -20,6 +21,7 @@ func _physics_process(delta: float) -> void:
 
 func connect_event_bus() -> void:
 	EventBus.character_switched.connect(_on_character_switched)
+	EventBus.change_camera_constraint.connect(change_camera_constraint)
 	pass
 
 
@@ -27,11 +29,6 @@ func follow_target() -> void:
 	if !tween_complete: return
 	if follow_target_node:
 		global_position = global_position.lerp(follow_target_node.global_position, 0.15)
-	pass
-
-func _on_character_switched(_character_type: GameData.CharacterType) -> void:
-	follow_target_node = GameData.entity_character_node.get(_character_type)
-	tween_to_new_character()
 	pass
 
 
@@ -46,3 +43,25 @@ func tween_to_new_character() -> void:
 
 func _on_camera_tween_done() -> void:
 	tween_complete = true
+
+
+
+func _on_character_switched(_character_type: GameData.CharacterType) -> void:
+	follow_target_node = GameData.entity_character_node.get(_character_type)
+	tween_to_new_character()
+	pass
+
+
+func change_camera_constraint(_constraint_camera: Camera2D) -> void:
+	print("change camera contraint")
+	# limit_left = _constraint_camera.limit_left
+	# limit_right = _constraint_camera.limit_right
+	# limit_bottom = _constraint_camera.limit_bottom
+	# limit_top = _constraint_camera.limit_top
+	# var tween := create_tween()
+	
+	limit_left = _constraint_camera.limit_left
+	limit_right = _constraint_camera.limit_right
+	limit_bottom = _constraint_camera.limit_bottom
+	limit_top = _constraint_camera.limit_top
+	pass

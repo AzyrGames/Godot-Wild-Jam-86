@@ -1,25 +1,21 @@
 [gd_scene load_steps=7 format=3 uid="uid://bw3votfvu4bw7"]
 
 [ext_resource type="Script" uid="uid://b74ubmyligtxg" path="res://1.Game/Game/game_2d.gd" id="1_hbmr2"]
-[ext_resource type="PackedScene" uid="uid://d1ahydrto1ctu" path="res://4.Level/Level/TestLevel/level_test_1.tscn" id="2_qj4j1"]
 [ext_resource type="PackedScene" uid="uid://caa43fkynpx52" path="res://2.Object/ConcreteObject/Entity/Character/entity_character_player.tscn" id="3_7mnxe"]
 [ext_resource type="Script" uid="uid://d24d0yuf64ws7" path="res://3.System/PlayerSwitcher/player_switcher.gd" id="3_8a5g4"]
 [ext_resource type="Script" uid="uid://cacxmmyur2858" path="res://3.System/GameCamera/game_camera_2d.gd" id="3_d4v4r"]
 [ext_resource type="PackedScene" uid="uid://bnv7r0f8ypqrw" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.tscn" id="4_my75u"]
+[ext_resource type="PackedScene" uid="uid://dpggt20oh3t7o" path="res://4.Level/Map/map_1.tscn" id="6_d4v4r"]
 
 [node name="Game2d" type="Node2D"]
 script = ExtResource("1_hbmr2")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
-[node name="LevelTest1" parent="." instance=ExtResource("2_qj4j1")]
-
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow_target_node")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_target_node")]
 physics_interpolation_mode = 1
-position = Vector2(0, 65)
-limit_left = -691
-limit_top = -90
-limit_right = 709
-limit_bottom = 180
+position = Vector2(240, -138)
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
 editor_draw_limits = true
 script = ExtResource("3_d4v4r")
 follow_target_node = NodePath("../PlayerSwitcher/EntityCharacterPlayer")
@@ -31,8 +27,11 @@ character_platformer = NodePath("EntityCharacterPlayer")
 character_ghost = NodePath("EntityCharacterGhost")
 
 [node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
-position = Vector2(0, 124)
+position = Vector2(50, -156)
 active = true
 
 [node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
+position = Vector2(90, -198)
 move_speed = 90.0
+
+[node name="Map1" parent="." instance=ExtResource("6_d4v4r")]

@@ -10,7 +10,6 @@ signal component_disabled(component_name: String)
 
 
 
-
 signal start_game
 signal pause_game
 
@@ -29,5 +28,8 @@ signal is_full_screen(_value: bool)
 
 signal character_switched(_charcter: GameData.CharacterType)
 
+signal area_triggered(_trigger_name: String)
+
+signal change_camera_constraint(_constraint_camera: Camera2D)
 
 signal mask_triggered(_pos: Vector2)
