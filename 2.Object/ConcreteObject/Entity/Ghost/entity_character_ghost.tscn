@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnv7r0f8ypqrw"]
+
+[ext_resource type="Script" uid="uid://ciyuq7rs48dma" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.gd" id="1_hg4ld"]
+[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="2_tcxqw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tcxqw"]
+radius = 20.024984
+
+[node name="EntityCharacterGhost" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_hg4ld")
+metadata/_custom_type_script = "uid://ciyuq7rs48dma"
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_tcxqw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tcxqw")

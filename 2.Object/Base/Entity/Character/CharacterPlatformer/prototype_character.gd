@@ -1,5 +1,7 @@
 extends EntityCharacter2D
-class_name CharacterPlatformer2D
+class_name EntityCharacterPlatformer2D
+
+
 
 ## Signals for major events
 signal jumped(jump_velocity: float, was_running: bool)
@@ -11,8 +13,9 @@ signal started_fast_falling()
 signal coyote_time_started()
 
 
-@export var movement_setting: CharacterMovementSetting
+@export var active: bool = false
 
+@export var movement_setting: CharacterMovementSetting
 
 ## Collision Settings
 @export_group("Collision")
@@ -93,7 +96,8 @@ func _ready() -> void:
 
 ## Main physics update loop
 func _physics_process(delta: float) -> void:
-	_handle_input(delta)
+	if active:
+		_handle_input(delta)
 	_update_collision_shape()
 	_apply_gravity(delta)
 	_handle_horizontal_movement(delta)

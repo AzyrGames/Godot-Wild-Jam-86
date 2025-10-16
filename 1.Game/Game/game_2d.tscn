@@ -1,17 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://bw3votfvu4bw7"]
+[gd_scene load_steps=6 format=3 uid="uid://bw3votfvu4bw7"]
 
 [ext_resource type="Script" uid="uid://b74ubmyligtxg" path="res://1.Game/Game/game_2d.gd" id="1_hbmr2"]
 [ext_resource type="PackedScene" uid="uid://d1ahydrto1ctu" path="res://4.Level/Level/TestLevel/level_test_1.tscn" id="2_qj4j1"]
 [ext_resource type="PackedScene" uid="uid://caa43fkynpx52" path="res://2.Object/ConcreteObject/Entity/Character/entity_character_player.tscn" id="3_7mnxe"]
+[ext_resource type="Script" uid="uid://d24d0yuf64ws7" path="res://3.System/PlayerSwitcher/player_switcher.gd" id="3_8a5g4"]
+[ext_resource type="PackedScene" uid="uid://bnv7r0f8ypqrw" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.tscn" id="4_my75u"]
 
 [node name="Game2d" type="Node2D"]
 script = ExtResource("1_hbmr2")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
 [node name="LevelTest1" parent="." instance=ExtResource("2_qj4j1")]
-
-[node name="EntityCharacterPlayer" parent="." instance=ExtResource("3_7mnxe")]
-position = Vector2(0, 124)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
@@ -21,3 +20,15 @@ limit_top = -200
 limit_right = 700
 limit_bottom = 200
 editor_draw_limits = true
+
+[node name="PlayerSwitcher" type="Node2D" parent="." node_paths=PackedStringArray("character_platformer", "character_ghost")]
+script = ExtResource("3_8a5g4")
+character_platformer = NodePath("EntityCharacterPlayer")
+character_ghost = NodePath("EntityCharacterGhost")
+
+[node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
+position = Vector2(0, 124)
+active = true
+
+[node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
+move_speed = 90.0

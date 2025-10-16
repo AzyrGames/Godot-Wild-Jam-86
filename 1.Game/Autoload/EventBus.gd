@@ -25,3 +25,9 @@ signal game_unfrozen()
 
 
 signal is_full_screen(_value: bool)
+
+
+signal character_switched(_charcter: GameData.CharacterType)
+
+
+signal mask_triggered(_pos: Vector2)
