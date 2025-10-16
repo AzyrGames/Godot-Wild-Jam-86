@@ -31,16 +31,29 @@ func _physics_process(_delta: float) -> void:
 		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	else:
 		move_direction = Vector2.ZERO
+
+	if !active and is_following:
+		follow_player()
 	if _last_move_direction != move_direction:
 		_last_move_direction = move_direction
 		calculate_velocity()
 	move_and_slide()
-	pass
 
 func _on_character_switched(char: GameData.CharacterType) -> void:
 	if char == GameData.CharacterType.GHOST and is_mask:
 		EventBus.mask_destroyed.emit()
 	pass
+
+# var _
+
+func follow_player() -> void:
+	var _characer_target_pos := GameManager.game_character.global_position + Vector2(0, -60)
+	if global_position.distance_to(_characer_target_pos) > 5:
+		move_direction = global_position.direction_to(_characer_target_pos)
+	else:
+		move_direction = Vector2.ZERO
+	pass
+
 
 func calculate_velocity() -> void:
 	velocity = move_direction * move_speed

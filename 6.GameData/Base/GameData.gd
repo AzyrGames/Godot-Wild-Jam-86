@@ -17,6 +17,7 @@ enum MapList {
 	MAP_5,
 }
 
+
 var map_path: Dictionary[MapList, String] = {
 	MapList.MAP_1: "",
 	MapList.MAP_2: "",
