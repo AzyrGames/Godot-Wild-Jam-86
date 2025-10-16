@@ -5,6 +5,7 @@ enum CharacterType {
 	GHOST
 }
 
+var entity_character_node: Dictionary[CharacterType, EntityCharacter2D]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

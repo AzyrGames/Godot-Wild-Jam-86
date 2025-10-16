@@ -83,6 +83,9 @@ var _coyote_time: float
 
 ## Initialize physics calculations and setup timers
 func _ready() -> void:
+
+	GameData.entity_character_node.get_or_add(GameData.CharacterType.PLATFORMER, self)
+
 	if movement_setting:
 		# Connect resource changed signal
 		if movement_setting.is_connected("changed", _on_settings_changed):
@@ -96,8 +99,10 @@ func _ready() -> void:
 
 ## Main physics update loop
 func _physics_process(delta: float) -> void:
-	if active:
-		_handle_input(delta)
+	# if active:
+		# _handle_input(delta)
+	# else:
+# 
 	_update_collision_shape()
 	_apply_gravity(delta)
 	_handle_horizontal_movement(delta)
@@ -115,6 +120,30 @@ func _physics_process(delta: float) -> void:
 		landed.emit(velocity.y, was_fast_falling)
 	# Update state tracking
 	_was_on_floor_last_frame = is_on_floor()
+
+
+func _input(event: InputEvent) -> void:
+	if active:
+		if Input.is_action_just_pressed("move_jump"):
+			_jump_buffer_timer.start()
+		if Input.is_action_pressed("move_jump") and _is_jumping:
+			_jump_hold_time += get_physics_process_delta_time()
+		if Input.is_action_just_released("move_jump"):
+			if _is_jumping and movement_setting.variable_jump_enabled:
+				_apply_jump_cutoff()
+		var was_fast_falling: bool = _is_fast_falling
+		if Input.is_action_pressed("move_down") and not is_on_floor():
+			_is_fast_falling = true
+			if not was_fast_falling:
+				started_fast_falling.emit()
+		else:
+			_is_fast_falling = false
+
+		_last_horizontal_input = Input.get_axis("move_left", "move_right")
+	else:
+		_last_horizontal_input = 0.0
+
+
 
 ## Update all dependent variables when movement_setting change
 func _on_settings_changed() -> void:
@@ -170,27 +199,6 @@ func _on_jump_buffer_timeout() -> void:
 
 func _on_coyote_time_timeout() -> void:
 	pass
-
-
-
-## Process player input and store state
-func _handle_input(delta: float) -> void:
-	if Input.is_action_just_pressed("move_jump"):
-		_jump_buffer_timer.start()
-	if Input.is_action_pressed("move_jump") and _is_jumping:
-		_jump_hold_time += delta
-	if Input.is_action_just_released("move_jump"):
-		if _is_jumping and movement_setting.variable_jump_enabled:
-			_apply_jump_cutoff()
-	var was_fast_falling: bool = _is_fast_falling
-	if Input.is_action_pressed("move_down") and not is_on_floor():
-		_is_fast_falling = true
-		if not was_fast_falling:
-			started_fast_falling.emit()
-	else:
-		_is_fast_falling = false
-
-	_last_horizontal_input = Input.get_axis("move_left", "move_right")
 
 
 func _update_timers(delta: float) -> void:
