@@ -9,6 +9,8 @@ var current_game_state: Dictionary = {}
 
 var main_2d: Main2D
 
+var game_camera: GameCamera2D
+
 var current_checkpoint: Checkpoint2D
 
 # Configuration variables

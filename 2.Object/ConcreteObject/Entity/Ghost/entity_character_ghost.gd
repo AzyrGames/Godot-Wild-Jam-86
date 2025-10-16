@@ -8,6 +8,11 @@ class_name EntityCharacterGhost2D
 
 var _last_move_direction: Vector2
 
+
+func _ready() -> void:
+	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
+
+
 func _physics_process(delta: float) -> void:
 	if !active: return
 	if _last_move_direction != move_direction:
