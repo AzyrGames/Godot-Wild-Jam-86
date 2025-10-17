@@ -30,6 +30,7 @@ Utils="*res://9.Utils/Utils.gd"
 ComponentManager="*res://3.System/Component/Base/ComponentManager.gd"
 Console="*res://1.Game/Console/Console.gd"
 GameData="*res://6.GameData/Base/GameData.gd"
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 [debug]
 
@@ -41,11 +42,11 @@ window/size/viewport_width=480
 window/size/viewport_height=270
 window/size/window_width_override=1440
 window/size/window_height_override=810
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/better-terrain/plugin.cfg")
 
 [input]
 
