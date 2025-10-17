@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy2q6tc0n2y4b"]
+
+[ext_resource type="Script" uid="uid://ckvb2btma1dev" path="res://2.Object/VisualObject/Entity/entity_ghost_visual.gd" id="1_18h2d"]
+[ext_resource type="SpriteFrames" uid="uid://cs3t6naila1xn" path="res://8.Asset/2D/texture_ghost_face.aseprite" id="2_ox1xp"]
+
+[sub_resource type="Curve" id="Curve_0hol4"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1.4158676), 0.0, -0.29572868, 0, 0, Vector2(1, 0.021602154), -3.9168139, 0.0, 0, 0]
+point_count = 2
+
+[node name="Line2D" type="Line2D"]
+points = PackedVector2Array(0, 0, -6, 0, -10, 6, -9, 13, -6, 20, 2, 26)
+width_curve = SubResource("Curve_0hol4")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("1_18h2d")
+metadata/_edit_lock_ = true
+
+[node name="Face" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_ox1xp")
+metadata/_edit_lock_ = true
