@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.static-texture-split-layer"
+type="PortableCompressedTexture2D"
+uid="uid://1k4ffi5wujmo"
+path="res://.godot/imported/texture_oceanbg_Clouds.ase_layer_tex-49adb64805c1247fd3473176a1b3d4b4.res"
+
+[deps]
+
+source_file="res://8.Asset/2D/Ocean/texture_oceanbg_Clouds.ase_layer_tex"
+dest_files=["res://.godot/imported/texture_oceanbg_Clouds.ase_layer_tex-49adb64805c1247fd3473176a1b3d4b4.res"]
+
+[params]
+

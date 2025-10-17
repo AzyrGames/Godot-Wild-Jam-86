@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.static-texture-split-layer"
+type="PortableCompressedTexture2D"
+uid="uid://d301jd2awoe7"
+path="res://.godot/imported/texture_oceanbg_Waves 2.ase_layer_tex-f4425dacc8d6da6fe9b442384c126cca.res"
+
+[deps]
+
+source_file="res://8.Asset/2D/Ocean/texture_oceanbg_Waves 2.ase_layer_tex"
+dest_files=["res://.godot/imported/texture_oceanbg_Waves 2.ase_layer_tex-f4425dacc8d6da6fe9b442384c126cca.res"]
+
+[params]
+
