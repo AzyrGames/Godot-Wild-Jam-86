@@ -79,7 +79,10 @@ func update_mask() -> void:
 		for x in range(rect.position.x, rect.position.x + rect.size.x):
 			for y in range(rect.position.y, rect.position.y + rect.size.y):
 				if new_bounds.has_point(Vector2i(x, y)):
-					if absi(x - real_mask_pos.x) < MASK_MAX_SIZE and absi(y - real_mask_pos.y) < MASK_MAX_SIZE:
+					if  (x - real_mask_pos.x) < MASK_MAX_SIZE \
+							and (x - real_mask_pos.x) > -(MASK_MAX_SIZE+1) \
+							and (y - real_mask_pos.y) < MASK_MAX_SIZE \
+							and (y - real_mask_pos.y) > -(MASK_MAX_SIZE+1):
 						add_cells.push_back(Vector2i(x, y))
 					else:
 						oversize_cells.push_back(Vector2i(x, y))

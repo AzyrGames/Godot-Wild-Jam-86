@@ -29,7 +29,7 @@ var map_path: Dictionary[MapList, String] = {
 var map_default_checkpoint: Dictionary[MapList, String] = {
 	MapList.MAP_1: "m1l1c1",
 	MapList.MAP_2: "m2l1c1",
-	MapList.MAP_3: "",
+	MapList.MAP_3: "m3l1c1",
 	MapList.MAP_4: "",
 	MapList.MAP_5: "",
 }

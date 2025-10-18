@@ -5,11 +5,16 @@ class_name Game2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Console.register_command(command_change_map, "change_map")
+
 	GameManager.game_2d = self
 	connect_event_bus()
 	reset_game_map()
 	pass # Replace with function body.
 
+func command_change_map(mapname: String) -> void:
+	print("Command to change map received, switching to ", GameData.MapList.get("MAP_" + mapname))
+	request_game_map(GameData.MapList.get("MAP_" + mapname))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -105,6 +110,7 @@ func _check_load_request_status(_request_status: ResourceLoader.ThreadLoadStatus
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED:
 			_request_game_map_path = ""
 			print("Map request failed")
+			Console.print_line("Error: Map request failed")
 			pass
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			var _packed_scene: PackedScene = ResourceLoader.load_threaded_get(_request_game_map_path)
