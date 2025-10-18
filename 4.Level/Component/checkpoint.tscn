@@ -178,6 +178,7 @@ position = Vector2(0, -15)
 texture = ExtResource("1_w2ox7")
 
 [node name="CharacterRespawnPoint" type="Marker2D" parent="."]
+position = Vector2(0, -20)
 script = ExtResource("3_bcsj0")
 metadata/_custom_type_script = "uid://cocyq087a2ucj"
 
