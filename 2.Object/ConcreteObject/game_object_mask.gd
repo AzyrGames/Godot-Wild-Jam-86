@@ -12,21 +12,35 @@ extends TileMapLayer
 func _ready() -> void:
 	EventBus.mask_point_set.connect(_on_mask_start)
 	EventBus.mask_track_finished.connect(_on_mask_end)
-	EventBus.mask_destroyed.connect(_on_mask_destroyed)
+	# EventBus.mask_destroyed.connect(_on_mask_destroyed)
 
 func _physics_process(_delta: float) -> void:
-	if GameData.mask_tracker != null:
-		var local_tracked_pos := to_local(GameData.mask_tracker.global_position)
-		var new_size := convert_to_size(local_tracked_pos)
-		# expand by 1 to enclose ghost in mask
-		#new_size += (Vector2i(1, 1) * new_size.sign())
-		# 0 components result in 0 sign so handle those cases
-		if new_size.x == 0:
-			new_size.x = 1
-		if new_size.y == 0:
-			new_size.y = 1
-		if new_size != mask_size:
-			mask_size = new_size
+	process_mask()
+
+var local_tracked_pos: Vector2
+var new_size: Vector2i
+
+var last_mask_position: Vector2
+
+func process_mask() -> void:
+	if !GameData.mask_tracker: return
+	if last_mask_position == GameData.mask_tracker.global_position: return
+	last_mask_position = GameData.mask_tracker.global_position
+	local_tracked_pos = to_local(GameData.mask_tracker.global_position)
+	new_size = convert_to_size(local_tracked_pos)
+	# expand by 1 to enclose ghost in mask
+	#new_size += (Vector2i(1, 1) * new_size.sign())
+	# 0 components result in 0 sign so handle those cases
+	if new_size.x == 0:
+		new_size.x = 1
+	if new_size.y == 0:
+		new_size.y = 1
+	if new_size != mask_size:
+		mask_size = new_size
+		EventBus.mask_destroyed.emit()
+		update_mask()
+	_on_mask_end(GameData.mask_tracker.global_position)
+
 
 func _on_mask_start(pos: Vector2) -> void:
 	mask_position = local_to_map(to_local(pos))

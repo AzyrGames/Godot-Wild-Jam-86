@@ -1,36 +1,40 @@
 extends EntityCharacter2D
 class_name EntityCharacterGhost2D
 
-@export var active: bool = false
+@export var active: bool = false:
+	set(value):
+		active = value
+
 @export var is_following: bool = true
 @export var move_speed: float
 @export var move_direction: Vector2
 
 var _last_move_direction: Vector2
 
-var is_mask := false
+var is_mask := true
 
 func _ready() -> void:
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
-	EventBus.mask_created.connect(func(_v): is_mask = true)
-	EventBus.mask_destroyed.connect(func(): is_mask = false)
+	# EventBus.mask_created.connect(func(_v): is_mask = true)
+	# EventBus.mask_destroyed.connect(func(): is_mask = false)
 	EventBus.character_switched.connect(_on_character_switched)
 
 
 func _physics_process(_delta: float) -> void:
-	visible = !is_mask
 	if !active:
 		return
-
-	if !is_mask and Input.is_action_just_pressed(&"move_jump"):
-		if GameData.mask_tracker != self:
+	if Input.is_action_just_pressed(&"move_jump"):
+		if !GameData.mask_tracker:
 			set_marker()
 		else:
-			trigger_mask()
-	if !is_mask:
+			clear_marker()
+
+
+	if active:
 		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	else:
 		move_direction = Vector2.ZERO
+
 	if _last_move_direction != move_direction:
 		_last_move_direction = move_direction
 		calculate_velocity()
@@ -38,8 +42,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_character_switched(char: GameData.CharacterType) -> void:
-	if char == GameData.CharacterType.GHOST and is_mask:
-		EventBus.mask_destroyed.emit()
+	if !char == GameData.CharacterType.GHOST: return
+	active = !active
 	pass
 
 # var _
