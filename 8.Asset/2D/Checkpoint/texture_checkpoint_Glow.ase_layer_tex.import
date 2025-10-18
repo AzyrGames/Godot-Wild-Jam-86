@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.static-texture-split-layer"
+type="PortableCompressedTexture2D"
+uid="uid://df3d5wy7yqkrp"
+path="res://.godot/imported/texture_checkpoint_Glow.ase_layer_tex-ddfaa767d7945f9552fa6a99c56b4745.res"
+
+[deps]
+
+source_file="res://8.Asset/2D/Checkpoint/texture_checkpoint_Glow.ase_layer_tex"
+dest_files=["res://.godot/imported/texture_checkpoint_Glow.ase_layer_tex-ddfaa767d7945f9552fa6a99c56b4745.res"]
+
+[params]
+
