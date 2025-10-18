@@ -1,4 +1,4 @@
-extends Area2D
+extends TriggerArea2D
 class_name Checkpoint2D
 
 @export var character_respawn_point: CharacterRespawnPoint
@@ -17,7 +17,15 @@ func _input(event: InputEvent) -> void:
 	pass
 
 
-func _on_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func connect_signal() -> void:
+	super()
+	body_shape_entered.connect(_on_body_shape_entered)
+	body_shape_exited.connect(_on_body_shape_exited)
+	pass
+
+
+
+func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if GameManager.current_checkpoint:
 		GameManager.current_checkpoint.is_active = false
 	GameManager.current_checkpoint = self
@@ -26,7 +34,6 @@ func _on_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, 
 	pass # Replace with function body.
 
 
-func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	area.is_inside_check_point = false
+func _on_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	EventBus.check_point_entered.emit(false)
 	pass # Replace with function body.
