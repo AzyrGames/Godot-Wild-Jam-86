@@ -13,9 +13,6 @@ class_name Checkpoint2D
 			print("updating checkpoint ", name, " to ", value)
 			$AnimationPlayer.play(&"get_checkpoint" if value == true else &"RESET")
 		is_active = value
-		if sprite_indicator:
-			sprite_indicator.visible = value
-
 
 func _ready() -> void:
 	super()
@@ -30,9 +27,6 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	pass
 
-
-
-
 func connect_signal() -> void:
 	super()
 	body_shape_entered.connect(_on_body_shape_entered)
@@ -44,7 +38,6 @@ func connect_signal() -> void:
 			is_active = false
 	)
 	pass
-
 
 
 func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:

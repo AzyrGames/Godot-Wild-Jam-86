@@ -271,6 +271,7 @@ _data = {
 }
 
 [node name="OceanBackground" type="Node2D"]
+z_index = -5
 
 [node name="ParallaxOcean" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0, 0)
@@ -284,34 +285,24 @@ texture = ExtResource("2_qbl3x")
 centered = false
 
 [node name="Waves1" type="Sprite2D" parent="ParallaxOcean"]
-modulate = Color(1, 1, 1, 0.002667129)
 texture = ExtResource("3_7p7ho")
 centered = false
-offset = Vector2(0.36101007, 0)
 
 [node name="Waves2" type="Sprite2D" parent="ParallaxOcean"]
-modulate = Color(1, 1, 1, 0.45867896)
 texture = ExtResource("4_lfxul")
 centered = false
-offset = Vector2(-2.4684649, 0)
 
 [node name="Waves3" type="Sprite2D" parent="ParallaxOcean"]
-modulate = Color(1, 1, 1, 0.9982353)
 texture = SubResource("PortableCompressedTexture2D_m0425")
 centered = false
-offset = Vector2(-3.9297607, 0)
 
 [node name="Waves4" type="Sprite2D" parent="ParallaxOcean"]
-modulate = Color(1, 1, 1, 0.87622017)
 texture = ExtResource("5_lbk4d")
 centered = false
-offset = Vector2(-2.8832865, 0)
 
 [node name="Waves5" type="Sprite2D" parent="ParallaxOcean"]
-modulate = Color(1, 1, 1, 0.1914419)
 texture = ExtResource("6_5umt3")
 centered = false
-offset = Vector2(-0.14983273, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxOcean"]
 libraries = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bw3votfvu4bw7"]
+[gd_scene load_steps=12 format=3 uid="uid://bw3votfvu4bw7"]
 
 [ext_resource type="Script" uid="uid://b74ubmyligtxg" path="res://1.Game/Game/game_2d.gd" id="1_hbmr2"]
 [ext_resource type="PackedScene" uid="uid://caa43fkynpx52" path="res://2.Object/ConcreteObject/Entity/Character/entity_character_player.tscn" id="3_7mnxe"]
@@ -6,8 +6,9 @@
 [ext_resource type="Script" uid="uid://cacxmmyur2858" path="res://3.System/GameCamera/game_camera_2d.gd" id="3_d4v4r"]
 [ext_resource type="PackedScene" uid="uid://bnv7r0f8ypqrw" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.tscn" id="4_my75u"]
 [ext_resource type="Texture2D" uid="uid://dka3hcrfntae0" path="res://8.Asset/2D/texture_tileset_ghostmask.png" id="7_la1kc"]
-[ext_resource type="PackedScene" uid="uid://dm4myrikbhdfk" path="res://4.Level/Map/Map2/map_2.tscn" id="8_la1kc"]
 [ext_resource type="Script" uid="uid://byu0ya1xhnbrd" path="res://2.Object/ConcreteObject/game_object_mask.gd" id="8_murlr"]
+[ext_resource type="PackedScene" uid="uid://heaygjhx42wq" path="res://4.Level/Map/Map2/map_2.tscn" id="9_k3eo0"]
+[ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="9_murlr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k3eo0"]
 texture = ExtResource("7_la1kc")
@@ -67,10 +68,11 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[node name="Game2d" type="Node2D" node_paths=PackedStringArray("current_game_map")]
+[node name="Game2d" type="Node2D"]
 script = ExtResource("1_hbmr2")
-current_game_map = NodePath("Map2")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
+
+[node name="OceanBackground" parent="." instance=ExtResource("9_murlr")]
 
 [node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_target_node")]
 physics_interpolation_mode = 1
@@ -82,8 +84,6 @@ script = ExtResource("3_d4v4r")
 follow_target_node = NodePath("../PlayerSwitcher/EntityCharacterPlayer")
 metadata/_custom_type_script = "uid://cacxmmyur2858"
 
-[node name="Map2" parent="." instance=ExtResource("8_la1kc")]
-
 [node name="GhostMask" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_wdgkn")
 script = ExtResource("8_murlr")
@@ -93,10 +93,11 @@ script = ExtResource("3_8a5g4")
 character_platformer = NodePath("EntityCharacterPlayer")
 character_ghost = NodePath("EntityCharacterGhost")
 
+[node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
+position = Vector2(0, -30)
+active = true
+
 [node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
 position = Vector2(0, -80)
-move_speed = 90.0
 
-[node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
-position = Vector2(-50, -20)
-active = true
+[node name="Map2" parent="." instance=ExtResource("9_k3eo0")]

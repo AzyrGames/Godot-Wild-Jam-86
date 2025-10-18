@@ -50,7 +50,7 @@ func _on_character_switched(char: GameData.CharacterType) -> void:
 func follow_player() -> void:
 	var _characer_target_pos := GameManager.game_character.global_position + Vector2(sin(_time) * 30.0, cos(_time / 2.0) * 15.0)
 	if cos(_time) > 0.0:
-		z_index = 1
+		z_index = 2
 	else:
 		z_index = 0
 	if global_position.distance_to(_characer_target_pos) > 5:

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://uxre0gba8qlp"]
+
+[ext_resource type="Script" uid="uid://cr338livb3ud3" path="res://3.System/TriggerArea/MapTransition/map_transition.gd" id="1_nmt5q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vls1"]
+size = Vector2(60, 60)
+
+[node name="MapTransition2D" type="Area2D"]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("1_nmt5q")
+to_map = 1
+active = true
+metadata/_custom_type_script = "uid://cr338livb3ud3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5vls1")

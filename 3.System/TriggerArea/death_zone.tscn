@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c07mi1fdbfwqm"]
+
+[ext_resource type="Script" uid="uid://c0kcen2hphj3m" path="res://3.System/TriggerArea/base/trigger_area_2d.gd" id="1_ff04o"]
+
+[node name="DeathZone" type="Area2D"]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("1_ff04o")
+active = true
+trigger_name = "death_zone"
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"

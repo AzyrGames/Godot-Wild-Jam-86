@@ -6,15 +6,16 @@
 
 [sub_resource type="Resource" id="Resource_nlyfk"]
 script = ExtResource("2_tsqhy")
-max_moving_speed = 120.0
+max_moving_speed = 128.0
 terminal_vertical_speed = 400.0
 time_to_max_speed_ticks = 18
 time_to_turn_ticks = 10
 time_to_stop_ticks = 12
 max_jump_height = 64.0
-jump_time_to_fall_ticks = 20
-head_bump_velocity = -30.0
-running_horizontal_boost = 25.0
+jump_time_to_peak_ticks = 26
+jump_time_to_fall_ticks = 24
+head_bump_velocity = -20.0
+running_horizontal_boost = 20.0
 jump_cutoff_multiplier = 0.4
 air_control_time_to_max_ticks = 20
 air_friction_time_to_stop_ticks = 25
@@ -29,6 +30,7 @@ radius = 9.0
 height = 38.0
 
 [node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite")]
+z_index = 1
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_u5nji")

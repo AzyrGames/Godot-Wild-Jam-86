@@ -19,7 +19,7 @@ func process_mask() -> void:
 	if !GameData.mask_tracker: return
 	var local_tracked_pos: Vector2 = to_local(GameData.mask_tracker.global_position)
 	var new_size: Vector2i = convert_to_size(local_tracked_pos)
-	print(new_size)
+	# print(new_size)
 	# Ensure mask is at least 1 tile in size
 	if new_size.x == 0:
 		new_size.x = 1

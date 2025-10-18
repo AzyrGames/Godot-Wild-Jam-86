@@ -1,23 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm4myrikbhdfk"]
+[gd_scene load_steps=5 format=3 uid="uid://heaygjhx42wq"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_iqu1b"]
-[ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="2_ek741"]
 [ext_resource type="PackedScene" uid="uid://b6hv1suuub6y" path="res://4.Level/Map/Map2/level/map_2_level_1.tscn" id="2_kibp3"]
-[ext_resource type="Script" uid="uid://bdah4wskhtoqr" path="res://3.System/Checkpoint/checkpoint_2d.gd" id="3_5jgtx"]
-[ext_resource type="Script" uid="uid://cocyq087a2ucj" path="res://3.System/Checkpoint/CharacterRespawnPoint/character_respawn_point_2d.gd" id="4_x881e"]
-[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="5_wcphh"]
-[ext_resource type="Script" uid="uid://c0kcen2hphj3m" path="res://3.System/TriggerArea/base/trigger_area_2d.gd" id="6_x881e"]
-[ext_resource type="Script" uid="uid://cr338livb3ud3" path="res://3.System/TriggerArea/MapTransition/map_transition.gd" id="7_wcphh"]
-[ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="8_7e6d5"]
+[ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_ssseh"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7e6d5"]
-size = Vector2(60, 60)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x881e"]
-size = Vector2(60, 60)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixxm5"]
-size = Vector2(820, 230)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ek741"]
+size = Vector2(1260, 200)
 
 [node name="Map2" type="Node2D"]
 script = ExtResource("1_iqu1b")
@@ -25,115 +13,21 @@ metadata/_custom_type_script = "uid://dvtiu04654nwl"
 
 [node name="Map2Level1" parent="." instance=ExtResource("2_kibp3")]
 
-[node name="Checkpoint2D" type="Area2D" parent="." node_paths=PackedStringArray("character_respawn_point", "collision_shape", "sprite_static", "sprite_indicator")]
-position = Vector2(-50, -20)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("3_5jgtx")
-check_point_name = "m2_checkpoint_1"
-character_respawn_point = NodePath("CharacterRespawnPoint")
-collision_shape = NodePath("CollisionShape2D")
-sprite_static = NodePath("Icon")
-sprite_indicator = NodePath("Icon2")
-active = true
-trigger_name = "m2l1_ checkpoint_1"
-metadata/_custom_type_script = "uid://bdah4wskhtoqr"
-
-[node name="CharacterRespawnPoint" type="Marker2D" parent="Checkpoint2D"]
-script = ExtResource("4_x881e")
-metadata/_custom_type_script = "uid://cocyq087a2ucj"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2D"]
-position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_7e6d5")
-
-[node name="Icon" type="Sprite2D" parent="Checkpoint2D"]
-z_index = -1
-position = Vector2(0, -10)
-scale = Vector2(0.46875, 0.46875)
-texture = ExtResource("5_wcphh")
-
-[node name="Icon2" type="Sprite2D" parent="Checkpoint2D"]
-z_index = -1
-position = Vector2(-1.5497208e-06, -50)
-scale = Vector2(0.15624999, 0.15625006)
-texture = ExtResource("5_wcphh")
-
-[node name="Checkpoint2D2" type="Area2D" parent="." node_paths=PackedStringArray("character_respawn_point", "collision_shape", "sprite_static", "sprite_indicator")]
-position = Vector2(250, -20)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("3_5jgtx")
-check_point_name = "m2_checkpoint_2"
-character_respawn_point = NodePath("CharacterRespawnPoint")
-collision_shape = NodePath("CollisionShape2D")
-sprite_static = NodePath("Icon")
-sprite_indicator = NodePath("Icon2")
-active = true
-trigger_name = "m2l1_ checkpoint_2"
-metadata/_custom_type_script = "uid://bdah4wskhtoqr"
-
-[node name="CharacterRespawnPoint" type="Marker2D" parent="Checkpoint2D2"]
-script = ExtResource("4_x881e")
-metadata/_custom_type_script = "uid://cocyq087a2ucj"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2D2"]
-position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_7e6d5")
-
-[node name="Checkpoint" parent="." instance=ExtResource("3_ssseh")]
-
-[node name="Icon2" type="Sprite2D" parent="Checkpoint2D2"]
-visible = false
-z_index = -1
-position = Vector2(-1.5497208e-06, -50)
-scale = Vector2(0.15624999, 0.15625006)
-texture = ExtResource("5_wcphh")
-
-[node name="TriggerArea2D" type="Area2D" parent="."]
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("6_x881e")
-active = true
-trigger_name = "death_zone"
-metadata/_custom_type_script = "uid://c0kcen2hphj3m"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea2D"]
-position = Vector2(-150, 50)
-shape = SubResource("RectangleShape2D_x881e")
-
-[node name="MapTransition" type="Area2D" parent="."]
-position = Vector2(495, -20)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("7_wcphh")
-active = true
-trigger_name = "map_transition"
-metadata/_custom_type_script = "uid://c0kcen2hphj3m"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapTransition"]
-position = Vector2(-150, 50)
-shape = SubResource("RectangleShape2D_x881e")
-
 [node name="CameraConstraint1" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
-position = Vector2(-220, 170)
 collision_layer = 4096
 collision_mask = 2
-script = ExtResource("8_7e6d5")
+script = ExtResource("3_ssseh")
 constraint_camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://c0kcen2hphj3m"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
-position = Vector2(450, -285)
-shape = SubResource("RectangleShape2D_ixxm5")
+position = Vector2(530, -100)
+shape = SubResource("RectangleShape2D_ek741")
 
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
 ignore_rotation = false
 enabled = false
-limit_left = -180
+limit_left = -100
 limit_top = -230
-limit_right = 880
+limit_right = 1160
 limit_bottom = 40
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(60, -95)

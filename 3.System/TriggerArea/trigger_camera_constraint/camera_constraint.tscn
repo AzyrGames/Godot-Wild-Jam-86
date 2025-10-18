@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://b70hxgcxorm3b"]
+
+[ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="1_drwum"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eeek5"]
+size = Vector2(820, 230)
+
+[node name="CameraConstraint1" type="Area2D" node_paths=PackedStringArray("constraint_camera")]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("1_drwum")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_eeek5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
+enabled = false
+limit_left = 0
+limit_top = -270
+limit_right = 880
+limit_bottom = 0
