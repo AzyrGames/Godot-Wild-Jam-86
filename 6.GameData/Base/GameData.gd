@@ -7,9 +7,7 @@ enum CharacterType {
 
 var entity_character_node: Dictionary[CharacterType, EntityCharacter2D]
 
-
-
-
+var mask_tracker: Node2D
 
 enum MapList {
 	MAP_1,
