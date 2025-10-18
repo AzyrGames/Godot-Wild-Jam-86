@@ -388,10 +388,12 @@ func _update_sprite() -> void:
 	elif _facing_direction == -1 and not sprite.flip_h:
 		sprite.flip_h = true
 
-	if abs(velocity.x) > 40.0:
+	if not is_on_floor() and velocity.y < 0.0:
+		sprite.play("jump")
+	elif not is_on_floor():
+		sprite.play("fall")
+	elif abs(velocity.x) > 40.0:
 		sprite.play("run")
-	elif abs(velocity.x) > 10.0:
-		sprite.play("walk")
 	else:
 		sprite.play("idle")
 
