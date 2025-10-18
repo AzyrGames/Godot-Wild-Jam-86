@@ -92,10 +92,10 @@ script = ExtResource("3_8a5g4")
 character_platformer = NodePath("EntityCharacterPlayer")
 character_ghost = NodePath("EntityCharacterGhost")
 
-[node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
-position = Vector2(-50, -20)
-active = true
-
 [node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
 position = Vector2(0, -80)
 move_speed = 90.0
+
+[node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
+position = Vector2(-50, -20)
+active = true
