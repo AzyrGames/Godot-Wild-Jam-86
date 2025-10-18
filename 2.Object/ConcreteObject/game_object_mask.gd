@@ -1,6 +1,6 @@
 extends TileMapLayer
 
-const MASK_MAX_SIZE := 7
+const MASK_MAX_SIZE := 9
 
 @export var mask_bounds: Rect2i:
 	set(v):
