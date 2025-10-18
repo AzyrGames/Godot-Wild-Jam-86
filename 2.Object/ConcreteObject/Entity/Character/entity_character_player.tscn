@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
 [ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
-[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="3_nlyfk"]
+[ext_resource type="SpriteFrames" uid="uid://by7dan0ewfuko" path="res://8.Asset/2D/texture_player.ase" id="3_nlyfk"]
 
 [sub_resource type="Resource" id="Resource_nlyfk"]
 script = ExtResource("2_tsqhy")
@@ -33,14 +33,9 @@ script = ExtResource("1_u5nji")
 movement_setting = SubResource("Resource_nlyfk")
 floor_collision_shape = NodePath("CollisionShapeFloor")
 body_collision_shape = NodePath("CollisionShapeBody")
-sprite = NodePath("Icon")
+sprite = NodePath("Sprite")
 is_show_debug = false
 metadata/_custom_type_script = "uid://dukhpw2kiyr0p"
-
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(5.364418e-07, 1.758337e-06)
-scale = Vector2(0.15625, 0.3125)
-texture = ExtResource("3_nlyfk")
 
 [node name="CollisionShapeFloor" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)
@@ -48,3 +43,7 @@ shape = SubResource("RectangleShape2D_tsqhy")
 
 [node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_tsqhy")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3_nlyfk")
+animation = &"idle"
