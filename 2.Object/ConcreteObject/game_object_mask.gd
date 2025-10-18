@@ -10,7 +10,7 @@ var _old_bounds: Rect2i
 func _ready() -> void:
 	EventBus.mask_point_set.connect(_on_mask_start)
 	EventBus.mask_track_finished.connect(emit_new_mask.unbind(1))
-	# EventBus.mask_destroyed.connect(_on_mask_destroyed)
+	EventBus.mask_destroyed.connect(_on_mask_destroyed)
 
 func _physics_process(_delta: float) -> void:
 	process_mask()

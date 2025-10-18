@@ -12,9 +12,12 @@ var game_2d: Game2D
 
 var game_camera: GameCamera2D
 var game_character: EntityCharacterPlatformer2D
+var game_ghost: EntityCharacterGhost2D
 var current_checkpoint: Checkpoint2D
 
 var checkpoint_list : Dictionary[String, Checkpoint2D]
+
+var current_mask: Rect2i
 
 # Configuration variables
 @export var default_time_scale: float = 1.0
@@ -30,7 +33,12 @@ func connect_event_bus() -> void:
 	EventBus.start_game.connect(start_game)
 	EventBus.exit_game.connect(exit_game)
 	EventBus.quit_game.connect(quit_game)
-
+	EventBus.mask_created.connect(func(new_mask):
+		current_mask = new_mask
+	)
+	EventBus.mask_destroyed.connect(func():
+		current_mask = Rect2i(0, 0, 0, 0)
+	)
 	pass
 
 

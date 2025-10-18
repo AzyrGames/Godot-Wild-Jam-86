@@ -7,6 +7,7 @@ class_name Game2D
 func _ready() -> void:
 	GameManager.game_2d = self
 	connect_event_bus()
+	reset_game_map()
 	pass # Replace with function body.
 
 
@@ -30,8 +31,10 @@ func _input(event: InputEvent) -> void:
 	pass
 
 
-func respawn_character() -> void:
+func respawn_character(force_ghost := false) -> void:
 	GameManager.game_character.global_position = GameManager.current_checkpoint.character_respawn_point.global_position
+	if GameData.mask_tracker != GameManager.game_ghost or force_ghost:
+		GameManager.game_ghost.global_position = GameManager.current_checkpoint.character_respawn_point.global_position + Vector2(-24.0, -30.0)
 	pass
 
 
@@ -46,7 +49,12 @@ func reset_game_map() -> void:
 	if !GameManager.checkpoint_list.has(_check_point_name):
 		printerr("No map")
 	GameManager.current_checkpoint = GameManager.checkpoint_list.get(_check_point_name)
-	respawn_character()
+	respawn_character(true)
+	if GameData.mask_tracker != null:
+		EventBus.mask_track_abort.emit()
+	if GameManager.current_mask.has_area():
+		EventBus.mask_destroyed.emit()
+	GameManager.game_camera.snap_to_target()
 	pass
 
 
@@ -101,7 +109,7 @@ func _check_load_request_status(_request_status: ResourceLoader.ThreadLoadStatus
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			var _packed_scene: PackedScene = ResourceLoader.load_threaded_get(_request_game_map_path)
 			_request_game_map_path = ""
-			# _request_map = 
+			# _request_map =
 			if !_packed_scene:
 				print_debug(_packed_scene, " is invalid")
 				return
@@ -109,7 +117,7 @@ func _check_load_request_status(_request_status: ResourceLoader.ThreadLoadStatus
 			if !_game_map_node is Map2D:
 				print_debug(_game_map_node, " is not game map")
 				return
-			
+
 			if !change_game_map_to(_game_map_node):
 				print_debug(_game_map_node, " Map transition Failed")
 				return

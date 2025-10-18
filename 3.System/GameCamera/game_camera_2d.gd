@@ -65,3 +65,13 @@ func change_camera_constraint(_constraint_camera: Camera2D) -> void:
 	limit_bottom = _constraint_camera.limit_bottom
 	limit_top = _constraint_camera.limit_top
 	pass
+
+func snap_to_target() -> void:
+	#limit_left = -100000
+	#limit_right = 100000
+	#limit_bottom = 100000
+	#limit_top = -10000
+	if camera_tween:
+		camera_tween.stop()
+	global_position = follow_target_node.global_position
+	reset_smoothing()
