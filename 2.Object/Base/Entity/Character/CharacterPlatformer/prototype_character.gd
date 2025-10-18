@@ -30,6 +30,10 @@ signal coyote_time_started()
 @export var is_show_debug: bool = true
 @export var debug_label: Label
 
+@export var vfx_floor_moving: GPUParticles2D
+@export var vfx_jumping: PackedScene
+
+
 
 ## Debug Display - Read-only calculated values
 var debug_forward_acceleration: float = 0.0
@@ -112,6 +116,7 @@ func _physics_process(delta: float) -> void:
 	_handle_jumping(delta)
 	_handle_collisions()
 	_update_sprite()
+	_update_particle_effect()
 	_update_debug_display()
 	move_and_slide()
 
@@ -151,6 +156,7 @@ func _input(event: InputEvent) -> void:
 		_last_horizontal_input = Input.get_axis("move_left", "move_right")
 	else:
 		_last_horizontal_input = 0.0
+
 
 ## Update all dependent variables when movement_setting change
 func _on_settings_changed() -> void:
@@ -223,6 +229,7 @@ func _update_collision_shape() -> void:
 
 ## Disable character collision for one way platform
 func _disable_collision() -> void:
+	if !get_last_slide_collision(): return
 	if !get_last_slide_collision().get_collider() is OneWayPlatform2D: return
 	_is_one_way_platform = true
 	body_collision_shape.disabled = true
@@ -329,6 +336,10 @@ func _perform_jump() -> void:
 	_coyote_timer.stop()
 	# Emit jump signal
 	jumped.emit(jump_vel, was_running)
+	# vfx_jumping.emitting = true
+
+	Utils.add_vfx(vfx_jumping, global_position)
+
 
 
 ## Reduce jump height when button is released early
@@ -349,6 +360,7 @@ func _handle_collisions() -> void:
 	if is_on_wall():
 		var wall_normal: Vector2 = get_wall_normal()
 		hit_wall.emit(wall_normal)
+
 
 ## Update sprite facing direction and animation based on movement input
 func _update_sprite() -> void:
@@ -378,6 +390,21 @@ func _update_sprite() -> void:
 		sprite.play("walk")
 	else:
 		sprite.play("idle")
+
+
+func _update_particle_effect() -> void:
+	if vfx_floor_moving:
+		if is_on_floor() and velocity != Vector2.ZERO:
+			vfx_floor_moving.emitting = true
+		else:
+			vfx_floor_moving.emitting = false
+	
+	if vfx_jumping:
+		if _is_jumping:
+			pass
+			# vfx_jumping.emitting = true
+	pass
+
 
 
 ## Update debug label

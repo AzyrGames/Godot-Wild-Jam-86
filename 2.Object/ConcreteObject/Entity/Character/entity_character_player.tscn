@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://caa43fkynpx52"]
+[gd_scene load_steps=13 format=3 uid="uid://caa43fkynpx52"]
 
 [ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
 [ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
 [ext_resource type="SpriteFrames" uid="uid://by7dan0ewfuko" path="res://8.Asset/2D/texture_player.ase" id="3_nlyfk"]
+[ext_resource type="PackedScene" uid="uid://ox71yatbxyya" path="res://5.Resouces/VFX/vfx_jumping.tscn" id="4_ury02"]
 
 [sub_resource type="Resource" id="Resource_nlyfk"]
 script = ExtResource("2_tsqhy")
@@ -29,7 +30,47 @@ size = Vector2(18, 20)
 radius = 9.0
 height = 38.0
 
-[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite")]
+[sub_resource type="Gradient" id="Gradient_nlyfk"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5073864, 0.7952652)
+colors = PackedColorArray(1, 1, 1, 0.5137255, 1, 1, 1, 0.29803923, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ury02"]
+gradient = SubResource("Gradient_nlyfk")
+width = 7
+height = 6
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_nlyfk"]
+_data = [Vector2(0.0006088242, 0.7156617), 0.0, 0.0, 0, 0, Vector2(0.2116478, 1), 0.0, 0.0, 0, 0, Vector2(0.5038556, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_ury02"]
+curve = SubResource("Curve_nlyfk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f5gn7"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_min = -89.99999
+angle_max = 90.000015
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 30.000002
+damping_max = 30.000002
+scale_min = 0.79999995
+scale_max = 1.1999999
+color = Color(0.50480944, 0.45248514, 0.2586988, 1)
+alpha_curve = SubResource("CurveTexture_ury02")
+hue_variation_min = -0.050000023
+hue_variation_max = 0.049999975
+
+[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite", "vfx_floor_moving")]
 z_index = 1
 collision_layer = 2
 collision_mask = 32
@@ -39,6 +80,8 @@ floor_collision_shape = NodePath("CollisionShapeFloor")
 body_collision_shape = NodePath("CollisionShapeBody")
 sprite = NodePath("Sprite")
 is_show_debug = false
+vfx_floor_moving = NodePath("VFXFloorMoving")
+vfx_jumping = ExtResource("4_ury02")
 metadata/_custom_type_script = "uid://dukhpw2kiyr0p"
 
 [node name="CollisionShapeFloor" type="CollisionShape2D" parent="."]
@@ -52,3 +95,15 @@ shape = SubResource("CapsuleShape2D_tsqhy")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_nlyfk")
 animation = &"idle"
+
+[node name="VFXFloorMoving" type="GPUParticles2D" parent="."]
+position = Vector2(0, 20)
+amount = 5
+texture = SubResource("GradientTexture2D_ury02")
+lifetime = 0.5
+explosiveness = 0.2
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_f5gn7")
+
+[node name="VFXJumping" parent="." instance=ExtResource("4_ury02")]
+position = Vector2(0, 20)
