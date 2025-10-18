@@ -125,7 +125,7 @@ func _handle_command_input(p_event: InputEvent) -> void:
 				var scroll_bar: VScrollBar = _output.get_v_scroll_bar()
 				scroll_bar.value += scroll_bar.page
 			_:
-				if p_event.is_action_pressed("limbo_auto_complete_reverse"):
+				if p_event.is_action_pressed(""):
 					_reverse_autocomplete()
 				else:
 					return
@@ -155,9 +155,9 @@ func _input(p_event: InputEvent) -> void:
 		toggle_console()
 		get_viewport().set_input_as_handled()
 	# Check to see if the history gui should open
-	elif _control.visible and p_event.is_action_pressed("developer_console_search_history"):
-		toggle_history()
-		get_viewport().set_input_as_handled()
+	# elif _control.visible and p_event.is_action_pressed("developer_console_search_history"):
+	# 	toggle_history()
+	# 	get_viewport().set_input_as_handled()
 	elif _history_gui.visible and p_event is InputEventKey:
 		_handle_history_input(p_event)
 	elif _control.visible and p_event is InputEventKey and p_event.is_pressed():

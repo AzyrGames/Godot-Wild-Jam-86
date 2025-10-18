@@ -28,6 +28,8 @@ signal is_full_screen(_value: bool)
 signal character_switched(_charcter: GameData.CharacterType)
 
 signal area_triggered(_trigger_name: String)
+signal switch_map(_to_map: GameData.MapList)
+signal game_map_changed
 
 signal change_camera_constraint(_constraint_camera: Camera2D)
 

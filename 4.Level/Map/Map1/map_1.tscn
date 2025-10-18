@@ -1,15 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpggt20oh3t7o"]
+[gd_scene load_steps=14 format=3 uid="uid://dpggt20oh3t7o"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_35pyb"]
 [ext_resource type="PackedScene" uid="uid://dtfsdhl03ostd" path="res://4.Level/Map/Map1/Level/map_1_level_1.tscn" id="2_vf2xv"]
 [ext_resource type="PackedScene" uid="uid://bewxjurfg3f75" path="res://4.Level/Map/Map1/Level/map_1_level_2.tscn" id="3_eb3m1"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="4_eeek5"]
+[ext_resource type="Script" uid="uid://bdah4wskhtoqr" path="res://3.System/Checkpoint/checkpoint_2d.gd" id="5_2do0m"]
+[ext_resource type="Script" uid="uid://cocyq087a2ucj" path="res://3.System/Checkpoint/CharacterRespawnPoint/character_respawn_point_2d.gd" id="6_afo26"]
+[ext_resource type="Script" uid="uid://cr338livb3ud3" path="res://3.System/TriggerArea/MapTransition/map_transition.gd" id="7_afo26"]
+[ext_resource type="Script" uid="uid://c0kcen2hphj3m" path="res://3.System/TriggerArea/base/trigger_area_2d.gd" id="8_hmncv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eeek5"]
 size = Vector2(820, 230)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6i05u"]
 size = Vector2(860, 230)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2do0m"]
+size = Vector2(40, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afo26"]
+size = Vector2(56, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmncv"]
+size = Vector2(80, 80)
 
 [node name="Map1" type="Node2D"]
 script = ExtResource("1_35pyb")
@@ -21,6 +34,7 @@ metadata/_custom_type_script = "uid://dvtiu04654nwl"
 position = Vector2(880, 0)
 
 [node name="CameraConstraint1" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+visible = false
 collision_layer = 4096
 collision_mask = 2
 script = ExtResource("4_eeek5")
@@ -40,6 +54,7 @@ limit_right = 880
 limit_bottom = 0
 
 [node name="CameraConstraint2" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+visible = false
 position = Vector2(880, 0)
 collision_layer = 4096
 collision_mask = 2
@@ -58,3 +73,42 @@ limit_left = 880
 limit_top = -270
 limit_right = 1760
 limit_bottom = 0
+
+[node name="Checkpoint2D" type="Area2D" parent="." node_paths=PackedStringArray("character_respawn_point")]
+position = Vector2(100, -80)
+script = ExtResource("5_2do0m")
+check_point_name = "m1_checkpoint_1"
+character_respawn_point = NodePath("CharacterRespawnPoint")
+metadata/_custom_type_script = "uid://bdah4wskhtoqr"
+
+[node name="CharacterRespawnPoint" type="Marker2D" parent="Checkpoint2D"]
+position = Vector2(0, 20)
+script = ExtResource("6_afo26")
+metadata/_custom_type_script = "uid://cocyq087a2ucj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2D"]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_2do0m")
+
+[node name="MapTransition2D" type="Area2D" parent="."]
+position = Vector2(314, -98)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("7_afo26")
+to_map = 1
+active = true
+metadata/_custom_type_script = "uid://cr338livb3ud3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapTransition2D"]
+position = Vector2(-282, 24)
+shape = SubResource("RectangleShape2D_afo26")
+
+[node name="TriggerArea2D2" type="Area2D" parent="."]
+script = ExtResource("8_hmncv")
+active = true
+trigger_name = "Victory"
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea2D2"]
+position = Vector2(780, -180)
+shape = SubResource("RectangleShape2D_hmncv")
