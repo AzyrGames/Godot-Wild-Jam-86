@@ -111,7 +111,7 @@ func freeze_frame(time_scale: float, duration: float) -> void:
 	if duration < 0 or duration > freeze_duration_limit:
 		push_warning("Duration must be between 0 and ", freeze_duration_limit, " seconds")
 		return
-	
+
 	EventBus.game_frozen.emit(time_scale, duration)
 	Engine.time_scale = time_scale
 	await get_tree().create_timer(duration * time_scale, false).timeout

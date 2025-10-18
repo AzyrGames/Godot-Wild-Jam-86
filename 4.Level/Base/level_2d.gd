@@ -2,6 +2,7 @@ extends Node2D
 class_name Level2D
 
 const MASKABLE_ROCK: int = 4
+const MASK_OUT_ROCK: int = 5
 
 @export
 var unmasked_world: TileMapLayer
@@ -11,8 +12,13 @@ var masked_tiles: TileMapLayer
 func _ready() -> void:
 	EventBus.mask_created.connect(_on_mask_created)
 	EventBus.mask_destroyed.connect(_on_mask_destroyed)
-	if masked_tiles:
-		masked_tiles.clear()
+	if not unmasked_world or not masked_tiles:
+		printerr("Level ", name, " needs to have mask and unmasked tilemaplayers")
+		return
+	masked_tiles.clear()
+	for tpos in unmasked_world.get_used_cells():
+		if BetterTerrain.get_cell(unmasked_world, tpos) == MASK_OUT_ROCK:
+			switch_cell(unmasked_world, masked_tiles, tpos)
 
 func _on_mask_created(mask: Rect2i) -> void:
 	if not masked_tiles or not unmasked_world:
@@ -20,15 +26,20 @@ func _on_mask_created(mask: Rect2i) -> void:
 	for tx in range(mask.position.x, mask.position.x + mask.size.x):
 		for ty in range(mask.position.y, mask.position.y + mask.size.y):
 			var tpos := Vector2i(tx, ty)
-			var td := unmasked_world.get_cell_tile_data(tpos)
-			if BetterTerrain.get_tile_terrain_type(td) == MASKABLE_ROCK:
+			if BetterTerrain.get_cell(unmasked_world, tpos) == MASKABLE_ROCK:
 				switch_cell(unmasked_world, masked_tiles, tpos)
+			elif BetterTerrain.get_cell(masked_tiles, tpos) == MASK_OUT_ROCK:
+				switch_cell(masked_tiles, unmasked_world, tpos)
 
 func _on_mask_destroyed() -> void:
 	if not masked_tiles or not unmasked_world:
 		return
+	for tpos in unmasked_world.get_used_cells():
+		if BetterTerrain.get_cell(unmasked_world, tpos) == MASK_OUT_ROCK:
+			switch_cell(unmasked_world, masked_tiles, tpos)
 	for tpos in masked_tiles.get_used_cells():
-		switch_cell(masked_tiles, unmasked_world, tpos)
+		if BetterTerrain.get_cell(masked_tiles, tpos) == MASKABLE_ROCK:
+			switch_cell(masked_tiles, unmasked_world, tpos)
 
 func switch_cell(from: TileMapLayer, to: TileMapLayer, tpos: Vector2i) -> void:
 	to.set_cell(

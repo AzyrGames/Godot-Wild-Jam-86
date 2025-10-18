@@ -4,13 +4,14 @@ class_name Checkpoint2D
 @export var character_respawn_point: CharacterRespawnPoint
 
 @export var collision_shape: CollisionShape2D
-@export var sprite_static: Sprite2D
-@export var sprite_indicator: Sprite2D
+@export var animation_player: AnimationPlayer
 
 @export var is_active: bool = false:
 	set(value):
+		if value != is_active:
+			print("updating checkpoint ", name, " to ", value)
+			$AnimationPlayer.play(&"get_checkpoint" if value == true else &"RESET")
 		is_active = value
-		sprite_indicator.visible = value
 
 
 func _input(event: InputEvent) -> void:
@@ -21,12 +22,18 @@ func connect_signal() -> void:
 	super()
 	body_shape_entered.connect(_on_body_shape_entered)
 	body_shape_exited.connect(_on_body_shape_exited)
+	EventBus.check_point_entered.connect(func(entered):
+		if not entered:
+			return
+		if GameManager.current_checkpoint != self:
+			is_active = false
+	)
 	pass
 
 
 
 func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	if GameManager.current_checkpoint:
+	if GameManager.current_checkpoint and GameManager.current_checkpoint != self:
 		GameManager.current_checkpoint.is_active = false
 	GameManager.current_checkpoint = self
 	is_active = true

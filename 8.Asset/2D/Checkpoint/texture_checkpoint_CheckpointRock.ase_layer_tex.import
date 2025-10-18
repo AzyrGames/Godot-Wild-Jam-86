@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.static-texture-split-layer"
+type="PortableCompressedTexture2D"
+uid="uid://coueesbibtbl6"
+path="res://.godot/imported/texture_checkpoint_CheckpointRock.ase_layer_tex-ac917f6d92d218546b2f0509c2e0b55a.res"
+
+[deps]
+
+source_file="res://8.Asset/2D/Checkpoint/texture_checkpoint_CheckpointRock.ase_layer_tex"
+dest_files=["res://.godot/imported/texture_checkpoint_CheckpointRock.ase_layer_tex-ac917f6d92d218546b2f0509c2e0b55a.res"]
+
+[params]
+

@@ -10,7 +10,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var offset := global_position - _last_frame_position
-	
+
 	for p_idx in get_point_count():
 		set_point_position(p_idx, get_point_position(p_idx) - offset)
 		if p_idx == 0:
@@ -31,6 +31,6 @@ func _process(delta: float) -> void:
 			set_point_position(p_idx, new_pos)
 	$Face.play()
 	$Face.position = get_point_position(0)
-	
-	
+
+
 	_last_frame_position = global_position

@@ -1,83 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://dm4myrikbhdfk"]
+[gd_scene load_steps=5 format=3 uid="uid://dm4myrikbhdfk"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_iqu1b"]
+[ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="2_ek741"]
 [ext_resource type="PackedScene" uid="uid://b6hv1suuub6y" path="res://4.Level/Map/Map2/level/map_2_level_1.tscn" id="2_kibp3"]
-[ext_resource type="Script" uid="uid://bdah4wskhtoqr" path="res://3.System/Checkpoint/checkpoint_2d.gd" id="3_5jgtx"]
-[ext_resource type="Script" uid="uid://cocyq087a2ucj" path="res://3.System/Checkpoint/CharacterRespawnPoint/character_respawn_point_2d.gd" id="4_x881e"]
-[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="5_wcphh"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7e6d5"]
-size = Vector2(60, 60)
+[ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="3_ssseh"]
 
 [node name="Map2" type="Node2D"]
 script = ExtResource("1_iqu1b")
 metadata/_custom_type_script = "uid://dvtiu04654nwl"
 
+[node name="OceanBackground" parent="." instance=ExtResource("2_ek741")]
+
 [node name="Map2Level1" parent="." instance=ExtResource("2_kibp3")]
 
-[node name="Checkpoint2D" type="Area2D" parent="." node_paths=PackedStringArray("character_respawn_point", "collision_shape", "sprite_static", "sprite_indicator")]
-position = Vector2(-50, -20)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("3_5jgtx")
-character_respawn_point = NodePath("CharacterRespawnPoint")
-collision_shape = NodePath("CollisionShape2D")
-sprite_static = NodePath("Icon")
-sprite_indicator = NodePath("Icon2")
-active = true
-trigger_name = "m2l1_ checkpoint_1"
-metadata/_custom_type_script = "uid://bdah4wskhtoqr"
+[node name="Checkpoint" parent="." instance=ExtResource("3_ssseh")]
 
-[node name="CharacterRespawnPoint" type="Marker2D" parent="Checkpoint2D"]
-script = ExtResource("4_x881e")
-metadata/_custom_type_script = "uid://cocyq087a2ucj"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2D"]
-position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_7e6d5")
-
-[node name="Icon" type="Sprite2D" parent="Checkpoint2D"]
-z_index = -1
-position = Vector2(0, -10)
-scale = Vector2(0.46875, 0.46875)
-texture = ExtResource("5_wcphh")
-
-[node name="Icon2" type="Sprite2D" parent="Checkpoint2D"]
-z_index = -1
-position = Vector2(-1.5497208e-06, -50)
-scale = Vector2(0.15624999, 0.15625006)
-texture = ExtResource("5_wcphh")
-
-[node name="Checkpoint2D2" type="Area2D" parent="." node_paths=PackedStringArray("character_respawn_point", "collision_shape", "sprite_static", "sprite_indicator")]
-position = Vector2(250, -20)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("3_5jgtx")
-character_respawn_point = NodePath("CharacterRespawnPoint")
-collision_shape = NodePath("CollisionShape2D")
-sprite_static = NodePath("Icon")
-sprite_indicator = NodePath("Icon2")
-active = true
-trigger_name = "m2l1_ checkpoint_2"
-metadata/_custom_type_script = "uid://bdah4wskhtoqr"
-
-[node name="CharacterRespawnPoint" type="Marker2D" parent="Checkpoint2D2"]
-script = ExtResource("4_x881e")
-metadata/_custom_type_script = "uid://cocyq087a2ucj"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2D2"]
-position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_7e6d5")
-
-[node name="Icon" type="Sprite2D" parent="Checkpoint2D2"]
-z_index = -1
-position = Vector2(0, -10)
-scale = Vector2(0.46875, 0.46875)
-texture = ExtResource("5_wcphh")
-
-[node name="Icon2" type="Sprite2D" parent="Checkpoint2D2"]
-visible = false
-z_index = -1
-position = Vector2(-1.5497208e-06, -50)
-scale = Vector2(0.15624999, 0.15625006)
-texture = ExtResource("5_wcphh")
+[node name="Checkpoint2" parent="." instance=ExtResource("3_ssseh")]
+position = Vector2(220, 0)
