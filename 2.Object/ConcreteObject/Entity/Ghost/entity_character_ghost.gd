@@ -16,9 +16,11 @@ var _time := 0.0
 
 func _ready() -> void:
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
+	GameManager.game_ghost = self
 	# EventBus.mask_created.connect(func(_v): is_mask = true)
 	# EventBus.mask_destroyed.connect(func(): is_mask = false)
 	EventBus.character_switched.connect(_on_character_switched)
+	EventBus.mask_track_abort.connect(_on_mask_abort)
 
 
 func _physics_process(_delta: float) -> void:
@@ -44,6 +46,9 @@ func _on_character_switched(char: GameData.CharacterType) -> void:
 	if !char == GameData.CharacterType.GHOST: return
 	active = !active
 	pass
+
+func _on_mask_abort() -> void:
+	GameData.mask_tracker = null
 
 # var _
 
@@ -78,5 +83,4 @@ func set_marker() -> void:
 
 
 func clear_marker() -> void:
-	GameData.mask_tracker = null
 	EventBus.mask_track_abort.emit()

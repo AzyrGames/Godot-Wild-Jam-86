@@ -1,15 +1,18 @@
 extends Line2D
 
+@export var tracking_target: Node2D
+@export var face: AnimatedSprite2D
+
 var _last_frame_position: Vector2
 
 var _point_velocity: PackedVector2Array = []
 
 func _ready() -> void:
-	_last_frame_position = global_position
+	_last_frame_position = tracking_target.global_position
 	_point_velocity.resize(get_point_count())
 
 func _process(delta: float) -> void:
-	var offset := global_position - _last_frame_position
+	var offset := tracking_target.global_position - _last_frame_position
 
 	for p_idx in get_point_count():
 		set_point_position(p_idx, get_point_position(p_idx) - offset)
@@ -29,8 +32,8 @@ func _process(delta: float) -> void:
 			new_pos = parent_pos + (new_pos - parent_pos).limit_length(4.0)
 			_point_velocity[p_idx] = (new_pos - get_point_position(p_idx)) / delta * 0.92
 			set_point_position(p_idx, new_pos)
-	$Face.play()
-	$Face.position = get_point_position(0)
+	face.play()
+	face.position = get_point_position(0)
 
 
-	_last_frame_position = global_position
+	_last_frame_position = tracking_target.global_position
