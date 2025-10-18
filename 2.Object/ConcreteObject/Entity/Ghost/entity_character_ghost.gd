@@ -32,8 +32,20 @@ func _physics_process(_delta: float) -> void:
 	else:
 		move_direction = Vector2.ZERO
 
-	if !active and is_following:
-		follow_player()
+func _physics_process(_delta: float) -> void:
+	visible = !is_mask
+	if !active:
+		return
+
+	if !is_mask and Input.is_action_just_pressed(&"move_jump"):
+		if GameData.mask_tracker != self:
+			set_marker()
+		else:
+			trigger_mask()
+	if !is_mask:
+		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	else:
+		move_direction = Vector2.ZERO
 	if _last_move_direction != move_direction:
 		_last_move_direction = move_direction
 		calculate_velocity()
@@ -53,7 +65,6 @@ func follow_player() -> void:
 	else:
 		move_direction = Vector2.ZERO
 	pass
-
 
 func calculate_velocity() -> void:
 	velocity = move_direction * move_speed
