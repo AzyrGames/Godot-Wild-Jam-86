@@ -12,10 +12,21 @@ var tween_complete: bool = true
 func _ready() -> void:
 	GameManager.game_camera = self
 	connect_event_bus()
+	real_position = global_position
 
+var real_position: Vector2
 
 func _physics_process(delta: float) -> void:
+	global_position = real_position
 	follow_target()
+	real_position = global_position
+	global_position = snapped(global_position, Vector2.ONE)
+	GameManager.main_2d.set_subpixel_shader(real_position - global_position)
+	# GameManager.main_2d.set_subpixel_shader(global_position - real_position)
+
+
+	# GameManager.main_2d.set_subpixel_shader(real_position.snapped(Vector2.ONE) - real_position)
+	# print(global_position)
 	pass
 
 

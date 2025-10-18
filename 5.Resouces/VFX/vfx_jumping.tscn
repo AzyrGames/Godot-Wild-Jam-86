@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://ox71yatbxyya"]
+
+[ext_resource type="Script" uid="uid://bkgjt05c6grhx" path="res://5.Resouces/VFX/vfx_jumping.gd" id="1_do74j"]
+
+[sub_resource type="Gradient" id="Gradient_nlyfk"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5073864, 0.7952652)
+colors = PackedColorArray(1, 1, 1, 0.5137255, 1, 1, 1, 0.29803923, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ury02"]
+gradient = SubResource("Gradient_nlyfk")
+width = 7
+height = 6
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_ury02"]
+_data = [Vector2(0.0006088242, 0.7156617), 0.0, 0.0, 0, 0, Vector2(0.2116478, 1), 0.0, 0.0, 0, 0, Vector2(0.5038556, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_f5gn7"]
+curve = SubResource("Curve_ury02")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_txlrk"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_min = -89.99999
+angle_max = 90.000015
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+damping_min = 30.000002
+damping_max = 30.000002
+scale_max = 1.3
+color = Color(0.5918384, 0.49885803, 0.30536473, 1)
+alpha_curve = SubResource("CurveTexture_f5gn7")
+hue_variation_min = -0.050000023
+hue_variation_max = 0.049999975
+
+[node name="VFXJumping" type="GPUParticles2D"]
+emitting = false
+texture = SubResource("GradientTexture2D_ury02")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_txlrk")
+script = ExtResource("1_do74j")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

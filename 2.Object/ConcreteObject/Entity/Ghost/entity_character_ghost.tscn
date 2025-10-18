@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnv7r0f8ypqrw"]
+[gd_scene load_steps=11 format=3 uid="uid://bnv7r0f8ypqrw"]
 
 [ext_resource type="Script" uid="uid://ciyuq7rs48dma" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.gd" id="1_hg4ld"]
 [ext_resource type="Script" uid="uid://ckvb2btma1dev" path="res://2.Object/ConcreteObject/Entity/Ghost/ghost_visual.gd" id="2_gejy7"]
@@ -14,6 +14,47 @@ viewport_path = NodePath("Polygon2D/SubViewport")
 _limits = [0.0, 4.0, 0.0, 1.0]
 _data = [Vector2(0, 1.4158676), 0.0, -0.29572868, 0, 0, Vector2(1, 0.021602154), -3.9168139, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tcxqw"]
+radius = 20.024984
+
+[sub_resource type="Gradient" id="Gradient_gejy7"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.46950763, 0.7687501)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q2vkl"]
+gradient = SubResource("Gradient_gejy7")
+width = 6
+height = 6
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_gejy7"]
+_data = [Vector2(0, 0.7670096), 0.0, 0.0, 0, 0, Vector2(0.2522322, 0.6643131), 0.0, 0.0, 0, 0, Vector2(0.59719974, 0.67715), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_q2vkl"]
+curve = SubResource("Curve_gejy7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7uih4"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angular_velocity_min = -20.000015
+angular_velocity_max = 29.999983
+gravity = Vector3(0, 20, 0)
+damping_min = 10.0
+damping_max = 20.0
+scale_max = 2.0
+color = Color(0.84629995, 0.93, 0.93, 0.7921569)
+alpha_curve = SubResource("CurveTexture_q2vkl")
+hue_variation_min = -0.010000022
+hue_variation_max = 0.009999977
 
 [node name="EntityCharacterGhost" type="CharacterBody2D"]
 z_index = 2
@@ -52,3 +93,13 @@ metadata/_edit_lock_ = true
 [node name="Face" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_q2vkl")
 metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tcxqw")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -2
+amount = 6
+texture = SubResource("GradientTexture2D_q2vkl")
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_7uih4")

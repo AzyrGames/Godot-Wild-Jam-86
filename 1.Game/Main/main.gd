@@ -3,6 +3,7 @@ class_name Main2D
 
 const GAME_PATH: String = "uid://bw3votfvu4bw7"
 
+@export var sub_viewport_container: SubViewportContainer
 @export var sub_viewport: SubViewport
 @export var game_timer: Timer
 @export var asp_music: AudioStreamPlayer
@@ -62,3 +63,10 @@ func get_game_node() -> Game2D:
 	var _game_node : Node = Utils.instance_node(GAME_PATH)
 	if !_game_node is Game2D: return
 	return _game_node
+
+
+func set_subpixel_shader(_value: Vector2) -> void:
+	# print(_value)
+	sub_viewport_container.material.set_shader_parameter("cam_offset", _value)
+	# print(sub_viewport_container.get_instance_shader_parameter("cam_offset"))
+	pass
