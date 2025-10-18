@@ -2,10 +2,14 @@ shader_type canvas_item;
 uniform vec2 cam_offset = vec2(0.0, 0.0);
 
 uniform sampler2D tex: filter_nearest;
+uniform bool is_active;
+
 
 void vertex() {
 	// Pixel perfect
-	VERTEX += cam_offset;
+    if (is_active == true){
+	    VERTEX += cam_offset;
+    }
 }
 
 uniform vec2 resolution = vec2(480, 270);
@@ -45,6 +49,7 @@ vec3 hsv_to_rgb(vec3 c) {
 }
 
 void fragment() {
+    if (is_active == true){
     // Chromatic Aberration. Samples R, G, and B from offset UVs.
     vec2 center = SCREEN_UV - 0.5;
     float dist = dot(center, center);
@@ -114,4 +119,5 @@ void fragment() {
     }
     vec4 bloom = texture(tex, SCREEN_UV) + ((sum / 9.0) * bloom_intensity);
     COLOR = mix(vec4(crt_color, 1), bloom, 0.6);
+    }
 }

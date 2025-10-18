@@ -34,6 +34,8 @@ signal coyote_time_started()
 @export var vfx_jumping: PackedScene
 
 
+@export var asp_running: AudioStreamPlayer2D
+@export var asp_jump: AudioStreamPlayer2D
 
 ## Debug Display - Read-only calculated values
 var debug_forward_acceleration: float = 0.0
@@ -337,7 +339,9 @@ func _perform_jump() -> void:
 	# Emit jump signal
 	jumped.emit(jump_vel, was_running)
 	# vfx_jumping.emitting = true
-
+	if asp_jump:
+		if !asp_jump.playing:
+			asp_jump.playing = true
 	Utils.add_vfx(vfx_jumping, global_position)
 
 
@@ -393,11 +397,15 @@ func _update_sprite() -> void:
 
 
 func _update_particle_effect() -> void:
-	if vfx_floor_moving:
+	if vfx_floor_moving and asp_running:
 		if is_on_floor() and velocity != Vector2.ZERO:
 			vfx_floor_moving.emitting = true
+			if !asp_running.playing:
+				asp_running.playing = true
 		else:
 			vfx_floor_moving.emitting = false
+			# if asp_running.playing:
+			# 	asp_running.playing = false
 	
 	if vfx_jumping:
 		if _is_jumping:

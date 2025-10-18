@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnv7r0f8ypqrw"]
+[gd_scene load_steps=12 format=3 uid="uid://bnv7r0f8ypqrw"]
 
 [ext_resource type="Script" uid="uid://ciyuq7rs48dma" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.gd" id="1_hg4ld"]
 [ext_resource type="Script" uid="uid://ckvb2btma1dev" path="res://2.Object/ConcreteObject/Entity/Ghost/ghost_visual.gd" id="2_gejy7"]
@@ -14,9 +14,6 @@ viewport_path = NodePath("Polygon2D/SubViewport")
 _limits = [0.0, 4.0, 0.0, 1.0]
 _data = [Vector2(0, 1.4158676), 0.0, -0.29572868, 0, 0, Vector2(1, 0.021602154), -3.9168139, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_tcxqw"]
-radius = 20.024984
 
 [sub_resource type="Gradient" id="Gradient_gejy7"]
 interpolation_mode = 1
@@ -68,7 +65,7 @@ metadata/_custom_type_script = "uid://ciyuq7rs48dma"
 shape = SubResource("CircleShape2D_tcxqw")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(1, 1, 1, 0.8627451)
+color = Color(0.97, 0.97, 0.97, 0.69803923)
 texture = SubResource("ViewportTexture_gejy7")
 texture_offset = Vector2(-32, -32)
 polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
@@ -94,7 +91,7 @@ metadata/_edit_lock_ = true
 sprite_frames = ExtResource("3_q2vkl")
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tcxqw")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]

@@ -11,6 +11,7 @@ resource_local_to_scene = true
 shader = ExtResource("2_bhcqt")
 shader_parameter/cam_offset = Vector2(0, 0)
 shader_parameter/tex = SubResource("ViewportTexture_bhcqt")
+shader_parameter/is_active = true
 shader_parameter/resolution = Vector2(482, 272)
 shader_parameter/scan_line_amount = 0.2000000095
 shader_parameter/warp_amount = 0.1250000059375
