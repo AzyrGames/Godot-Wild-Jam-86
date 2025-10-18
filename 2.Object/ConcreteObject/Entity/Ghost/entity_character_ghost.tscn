@@ -13,6 +13,7 @@ point_count = 2
 radius = 20.024984
 
 [node name="EntityCharacterGhost" type="CharacterBody2D"]
+z_index = 2
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_hg4ld")

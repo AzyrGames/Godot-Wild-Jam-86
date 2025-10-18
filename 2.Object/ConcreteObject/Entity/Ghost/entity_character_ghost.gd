@@ -2,7 +2,7 @@ extends EntityCharacter2D
 class_name EntityCharacterGhost2D
 
 @export var active: bool = false
-
+@export var is_following: bool = true
 @export var move_speed: float
 @export var move_direction: Vector2
 
@@ -32,14 +32,24 @@ func _physics_process(_delta: float) -> void:
 	else:
 		move_direction = Vector2.ZERO
 	if _last_move_direction != move_direction:
-		calculate_velocity()
 		_last_move_direction = move_direction
+		calculate_velocity()
 	move_and_slide()
-	pass
+
 
 func _on_character_switched(char: GameData.CharacterType) -> void:
 	if char == GameData.CharacterType.GHOST and is_mask:
 		EventBus.mask_destroyed.emit()
+	pass
+
+# var _
+
+func follow_player() -> void:
+	var _characer_target_pos := GameManager.game_character.global_position + Vector2(0, -60)
+	if global_position.distance_to(_characer_target_pos) > 5:
+		move_direction = global_position.direction_to(_characer_target_pos)
+	else:
+		move_direction = Vector2.ZERO
 	pass
 
 func calculate_velocity() -> void:

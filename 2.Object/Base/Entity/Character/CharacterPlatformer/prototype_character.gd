@@ -81,9 +81,12 @@ var _jump_time_to_fall: float
 var _input_buffer_time: float
 var _coyote_time: float
 
+## One way platform
+var _is_one_way_platform: bool
+
 ## Initialize physics calculations and setup timers
 func _ready() -> void:
-
+	GameManager.game_character = self
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.PLATFORMER, self)
 
 	if movement_setting:
@@ -124,13 +127,19 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if active:
-		if Input.is_action_just_pressed("move_jump"):
-			_jump_buffer_timer.start()
-		if Input.is_action_pressed("move_jump") and _is_jumping:
-			_jump_hold_time += get_physics_process_delta_time()
-		if Input.is_action_just_released("move_jump"):
-			if _is_jumping and movement_setting.variable_jump_enabled:
-				_apply_jump_cutoff()
+		if Input.is_action_pressed("move_down"):
+			if Input.is_action_just_pressed("jump_down"):
+				print("Hello")
+				_disable_collision()
+				pass
+		else:
+			if Input.is_action_just_pressed("move_jump"):
+				_jump_buffer_timer.start()
+			if Input.is_action_pressed("move_jump") and _is_jumping:
+				_jump_hold_time += get_physics_process_delta_time()
+			if Input.is_action_just_released("move_jump"):
+				if _is_jumping and movement_setting.variable_jump_enabled:
+					_apply_jump_cutoff()
 		var was_fast_falling: bool = _is_fast_falling
 		if Input.is_action_pressed("move_down") and not is_on_floor():
 			_is_fast_falling = true
@@ -142,8 +151,6 @@ func _input(event: InputEvent) -> void:
 		_last_horizontal_input = Input.get_axis("move_left", "move_right")
 	else:
 		_last_horizontal_input = 0.0
-
-
 
 ## Update all dependent variables when movement_setting change
 func _on_settings_changed() -> void:
@@ -211,8 +218,24 @@ func _update_collision_shape() -> void:
 		return
 	if !is_on_floor() and !_is_falling:
 		floor_collision_shape.disabled = true
-	else:
+	elif !_is_one_way_platform:
 		floor_collision_shape.disabled = false
+
+## Disable character collision for one way platform
+func _disable_collision() -> void:
+	if !get_last_slide_collision().get_collider() is OneWayPlatform2D: return
+	_is_one_way_platform = true
+	body_collision_shape.disabled = true
+	floor_collision_shape.disabled = true
+	get_tree().create_timer(0.01667 * 10).timeout.connect(_active_collision)
+	pass
+
+## Enable character collision for one way platform
+func _active_collision() -> void:
+	_is_one_way_platform = false
+	floor_collision_shape.disabled = false
+	body_collision_shape.disabled = false
+	pass
 
 
 ## Apply gravity with variable rates and fast falling
