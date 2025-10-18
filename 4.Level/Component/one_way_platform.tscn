@@ -1,16 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bd6mw0rtbtay3"]
+[gd_scene load_steps=3 format=3 uid="uid://bd6mw0rtbtay3"]
 
-[ext_resource type="Script" uid="uid://ccbpxkmr1i3mn" path="res://4.Level/Component/one_way_platform.gd" id="1_his4u"]
 [ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="1_mqhgd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofcw1"]
 size = Vector2(60, 10)
 
-[node name="OneWayPlatform" type="StaticBody2D"]
-collision_layer = 32
+[node name="OneWayPlatform" type="AnimatableBody2D"]
+collision_layer = 16
 collision_mask = 2
-script = ExtResource("1_his4u")
-metadata/_custom_type_script = "uid://ccbpxkmr1i3mn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(30, -5)

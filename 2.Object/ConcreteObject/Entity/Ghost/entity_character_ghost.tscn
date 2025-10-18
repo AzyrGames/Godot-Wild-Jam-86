@@ -53,12 +53,13 @@ alpha_curve = SubResource("CurveTexture_q2vkl")
 hue_variation_min = -0.010000022
 hue_variation_max = 0.009999977
 
-[node name="EntityCharacterGhost" type="CharacterBody2D"]
+[node name="EntityCharacterGhost" type="CharacterBody2D" node_paths=PackedStringArray("body")]
 z_index = 2
 collision_layer = 4
-collision_mask = 0
+collision_mask = 64
 script = ExtResource("1_hg4ld")
 move_speed = 120.0
+body = NodePath("Polygon2D/SubViewport/Line2D")
 metadata/_custom_type_script = "uid://ciyuq7rs48dma"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -89,6 +90,7 @@ metadata/_edit_lock_ = true
 
 [node name="Face" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_q2vkl")
+animation = &"struggle"
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]

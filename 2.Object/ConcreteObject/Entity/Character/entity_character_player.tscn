@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://caa43fkynpx52"]
+[gd_scene load_steps=19 format=3 uid="uid://caa43fkynpx52"]
 
 [ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
 [ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
@@ -86,14 +86,18 @@ random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("7_ytj0q")
 
-[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite", "vfx_floor_moving", "asp_running", "asp_jump")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ytj0q"]
+size = Vector2(18, 2)
+
+[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "oneway_sensor", "sprite", "vfx_floor_moving", "asp_running", "asp_jump")]
 z_index = 1
 collision_layer = 2
-collision_mask = 32
+collision_mask = 112
 script = ExtResource("1_u5nji")
 movement_setting = SubResource("Resource_nlyfk")
 floor_collision_shape = NodePath("CollisionShapeFloor")
 body_collision_shape = NodePath("CollisionShapeBody")
+oneway_sensor = NodePath("OneWaySensor")
 sprite = NodePath("Sprite")
 is_show_debug = false
 vfx_floor_moving = NodePath("VFXFloorMoving")
@@ -131,3 +135,12 @@ stream = SubResource("AudioStreamRandomizer_5kksx")
 
 [node name="ASPJump" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_d011n")
+
+[node name="OneWaySensor" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWaySensor"]
+position = Vector2(-3.0559022e-10, 20)
+shape = SubResource("RectangleShape2D_ytj0q")

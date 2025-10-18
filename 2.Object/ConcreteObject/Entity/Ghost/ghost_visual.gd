@@ -6,10 +6,12 @@ extends Line2D
 var _last_frame_position: Vector2
 
 var _point_velocity: PackedVector2Array = []
+var _oversized: bool
 
 func _ready() -> void:
 	_last_frame_position = tracking_target.global_position
 	_point_velocity.resize(get_point_count())
+	face.play(&"default")
 
 func _process(delta: float) -> void:
 	var offset := tracking_target.global_position - _last_frame_position
@@ -32,8 +34,15 @@ func _process(delta: float) -> void:
 			new_pos = parent_pos + (new_pos - parent_pos).limit_length(4.0)
 			_point_velocity[p_idx] = (new_pos - get_point_position(p_idx)) / delta * 0.92
 			set_point_position(p_idx, new_pos)
-	face.play()
 	face.position = get_point_position(0)
 
 
 	_last_frame_position = tracking_target.global_position
+
+func set_warn_oversized(oversized: bool) -> void:
+	if oversized:
+		default_color = Color.ROYAL_BLUE
+		face.play(&"struggle")
+	else:
+		default_color = Color.WHITE
+		face.play(&"default")
