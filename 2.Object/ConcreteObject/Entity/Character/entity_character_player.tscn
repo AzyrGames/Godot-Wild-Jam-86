@@ -22,9 +22,11 @@ input_buffer_frames = 6
 metadata/_custom_type_script = "uid://bq0337t82fgc2"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tsqhy"]
+size = Vector2(18, 20)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsqhy"]
-height = 40.0
+radius = 9.0
+height = 38.0
 
 [node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite")]
 collision_layer = 2
@@ -42,6 +44,7 @@ position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_tsqhy")
 
 [node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
+position = Vector2(-3.0559022e-10, 1)
 shape = SubResource("CapsuleShape2D_tsqhy")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
