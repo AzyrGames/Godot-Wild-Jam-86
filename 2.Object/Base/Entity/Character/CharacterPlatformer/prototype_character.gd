@@ -25,7 +25,7 @@ signal coyote_time_started()
 
 ## Visual Settings
 @export_group("Visual")
-@export var sprite: Sprite2D
+@export var sprite: AnimatedSprite2D
 @export var flip_sprite_on_direction_change: bool = true
 @export var is_show_debug: bool = true
 @export var debug_label: Label
@@ -111,7 +111,7 @@ func _physics_process(delta: float) -> void:
 	_handle_horizontal_movement(delta)
 	_handle_jumping(delta)
 	_handle_collisions()
-	_update_sprite_direction()
+	_update_sprite()
 	_update_debug_display()
 	move_and_slide()
 
@@ -350,8 +350,8 @@ func _handle_collisions() -> void:
 		var wall_normal: Vector2 = get_wall_normal()
 		hit_wall.emit(wall_normal)
 
-## Update sprite facing direction based on movement input
-func _update_sprite_direction() -> void:
+## Update sprite facing direction and animation based on movement input
+func _update_sprite() -> void:
 	if not flip_sprite_on_direction_change or sprite == null:
 		return
 
@@ -371,6 +371,13 @@ func _update_sprite_direction() -> void:
 		sprite.flip_h = false
 	elif _facing_direction == -1 and not sprite.flip_h:
 		sprite.flip_h = true
+	
+	if abs(velocity.x) > 40.0:
+		sprite.play("run")
+	elif abs(velocity.x) > 10.0:
+		sprite.play("walk")
+	else:
+		sprite.play("idle")
 
 
 ## Update debug label

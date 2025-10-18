@@ -1,7 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnv7r0f8ypqrw"]
+[gd_scene load_steps=6 format=3 uid="uid://bnv7r0f8ypqrw"]
 
 [ext_resource type="Script" uid="uid://ciyuq7rs48dma" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.gd" id="1_hg4ld"]
-[ext_resource type="Texture2D" uid="uid://ca1wbchfqfrda" path="res://icon.svg" id="2_tcxqw"]
+[ext_resource type="Script" uid="uid://ckvb2btma1dev" path="res://2.Object/ConcreteObject/Entity/Ghost/ghost_visual.gd" id="2_gejy7"]
+[ext_resource type="SpriteFrames" uid="uid://cs3t6naila1xn" path="res://8.Asset/2D/texture_ghost_face.aseprite" id="3_q2vkl"]
+
+[sub_resource type="Curve" id="Curve_0hol4"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1.4158676), 0.0, -0.29572868, 0, 0, Vector2(1, 0.021602154), -3.9168139, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tcxqw"]
 radius = 20.024984
@@ -13,9 +19,18 @@ collision_mask = 0
 script = ExtResource("1_hg4ld")
 metadata/_custom_type_script = "uid://ciyuq7rs48dma"
 
-[node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_tcxqw")
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -6, 0, -10, 6, -9, 13, -6, 20, 2, 26)
+width_curve = SubResource("Curve_0hol4")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("2_gejy7")
+metadata/_edit_lock_ = true
+
+[node name="Face" type="AnimatedSprite2D" parent="Line2D"]
+sprite_frames = ExtResource("3_q2vkl")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tcxqw")
