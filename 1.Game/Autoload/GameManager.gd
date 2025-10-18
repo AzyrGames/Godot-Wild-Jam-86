@@ -14,6 +14,8 @@ var game_camera: GameCamera2D
 var game_character: EntityCharacterPlatformer2D
 var current_checkpoint: Checkpoint2D
 
+var checkpoint_list : Dictionary[String, Checkpoint2D]
+
 # Configuration variables
 @export var default_time_scale: float = 1.0
 @export var freeze_duration_limit: float = 5.0

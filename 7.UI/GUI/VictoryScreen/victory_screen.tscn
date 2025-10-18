@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="1_1iq2j"]
 [ext_resource type="Script" uid="uid://db03b4h5dnh" path="res://7.UI/GUI/VictoryScreen/victory_screen.gd" id="2_ncy4b"]
-[ext_resource type="StyleBox" path="res://7.UI/Theme/panel_plat_black.tres" id="3_ckb2w"]
+[ext_resource type="StyleBox" uid="uid://crpci47t7tqbd" path="res://7.UI/Theme/panel_plat_black.tres" id="3_ckb2w"]
 
 [node name="VictoryScreen" type="Control"]
 layout_mode = 3

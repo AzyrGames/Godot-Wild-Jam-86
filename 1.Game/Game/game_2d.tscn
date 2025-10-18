@@ -67,8 +67,9 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[node name="Game2d" type="Node2D"]
+[node name="Game2d" type="Node2D" node_paths=PackedStringArray("current_game_map")]
 script = ExtResource("1_hbmr2")
+current_game_map = NodePath("Map2")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
 [node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_target_node")]
