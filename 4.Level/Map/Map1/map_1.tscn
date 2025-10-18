@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dpggt20oh3t7o"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_35pyb"]
-[ext_resource type="PackedScene" uid="uid://dtfsdhl03ostd" path="res://4.Level/Map/Level/map_1_level_1.tscn" id="2_vf2xv"]
-[ext_resource type="PackedScene" uid="uid://bewxjurfg3f75" path="res://4.Level/Map/Level/map_1_level_2.tscn" id="3_eb3m1"]
+[ext_resource type="PackedScene" uid="uid://dtfsdhl03ostd" path="res://4.Level/Map/Map1/Level/map_1_level_1.tscn" id="2_vf2xv"]
+[ext_resource type="PackedScene" uid="uid://bewxjurfg3f75" path="res://4.Level/Map/Map1/Level/map_1_level_2.tscn" id="3_eb3m1"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="4_eeek5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eeek5"]

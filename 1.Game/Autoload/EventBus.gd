@@ -25,7 +25,6 @@ signal game_unfrozen()
 
 signal is_full_screen(_value: bool)
 
-
 signal character_switched(_charcter: GameData.CharacterType)
 
 signal area_triggered(_trigger_name: String)
@@ -46,3 +45,7 @@ signal mask_track_abort()
 signal mask_created(mask: Rect2i)
 ## Emitted when a mask is deleted.
 signal mask_destroyed()
+
+
+## Emitted when checkpoint is entered or exited
+signal check_point_entered(_value: bool)

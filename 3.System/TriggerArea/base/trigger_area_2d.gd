@@ -5,8 +5,8 @@ class_name TriggerArea2D
 	set(value):
 		active = value
 		set_active_collision_shape(!value)
-@export var trigger_name: String
 
+@export var trigger_name: String
 
 func _ready() -> void:
 	connect_signal()
