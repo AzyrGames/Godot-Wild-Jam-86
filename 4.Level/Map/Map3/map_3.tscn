@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://bp4lu5c42iak"]
+[gd_scene load_steps=3 format=3 uid="uid://bp4lu5c42iak"]
+
+[ext_resource type="PackedScene" uid="uid://dsi5nsmfphwa6" path="res://4.Level/Map/Map3/level/map_3_level_1.tscn" id="1_6wtpp"]
+[ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_qp20w"]
 
 [node name="Map3" type="Node2D"]
+script = ExtResource("1_qp20w")
+metadata/_custom_type_script = "uid://dvtiu04654nwl"
+
+[node name="Map3Level1" parent="." instance=ExtResource("1_6wtpp")]

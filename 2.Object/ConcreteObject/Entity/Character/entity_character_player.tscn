@@ -1,9 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://caa43fkynpx52"]
+[gd_scene load_steps=18 format=3 uid="uid://caa43fkynpx52"]
 
 [ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
 [ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
 [ext_resource type="SpriteFrames" uid="uid://by7dan0ewfuko" path="res://8.Asset/2D/texture_player.ase" id="3_nlyfk"]
 [ext_resource type="PackedScene" uid="uid://ox71yatbxyya" path="res://5.Resouces/VFX/vfx_jumping.tscn" id="4_ury02"]
+[ext_resource type="AudioStream" uid="uid://dk6h7i2ge2tiq" path="res://8.Asset/Audio/sfx_char_step_1.ogg" id="5_txlrk"]
+[ext_resource type="AudioStream" uid="uid://cgceqlr8w18tt" path="res://8.Asset/Audio/sfx_char_step_2.ogg" id="6_ytj0q"]
+[ext_resource type="AudioStream" uid="uid://vvw7xdg6wdwh" path="res://8.Asset/Audio/sfx_char_jump.wav" id="7_ytj0q"]
 
 [sub_resource type="Resource" id="Resource_nlyfk"]
 script = ExtResource("2_tsqhy")
@@ -70,7 +73,20 @@ alpha_curve = SubResource("CurveTexture_ury02")
 hue_variation_min = -0.050000023
 hue_variation_max = 0.049999975
 
-[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite", "vfx_floor_moving")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5kksx"]
+playback_mode = 1
+random_pitch = 1.1
+streams_count = 2
+stream_0/stream = ExtResource("5_txlrk")
+stream_1/stream = ExtResource("6_ytj0q")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d011n"]
+playback_mode = 1
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("7_ytj0q")
+
+[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "sprite", "vfx_floor_moving", "asp_running", "asp_jump")]
 z_index = 1
 collision_layer = 2
 collision_mask = 32
@@ -82,7 +98,12 @@ sprite = NodePath("Sprite")
 is_show_debug = false
 vfx_floor_moving = NodePath("VFXFloorMoving")
 vfx_jumping = ExtResource("4_ury02")
+asp_running = NodePath("ASPRunning")
+asp_jump = NodePath("ASPJump")
 metadata/_custom_type_script = "uid://dukhpw2kiyr0p"
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+position = Vector2(0, -15)
 
 [node name="CollisionShapeFloor" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)
@@ -105,5 +126,8 @@ explosiveness = 0.2
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_f5gn7")
 
-[node name="VFXJumping" parent="." instance=ExtResource("4_ury02")]
-position = Vector2(0, 20)
+[node name="ASPRunning" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_5kksx")
+
+[node name="ASPJump" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_d011n")

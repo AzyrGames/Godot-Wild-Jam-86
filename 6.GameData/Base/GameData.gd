@@ -21,7 +21,7 @@ enum MapList {
 var map_path: Dictionary[MapList, String] = {
 	MapList.MAP_1: "uid://dpggt20oh3t7o",
 	MapList.MAP_2: "uid://heaygjhx42wq",
-	MapList.MAP_3: "",
+	MapList.MAP_3: "uid://bp4lu5c42iak",
 	MapList.MAP_4: "",
 	MapList.MAP_5: "",
 }

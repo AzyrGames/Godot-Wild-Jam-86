@@ -31,7 +31,7 @@ active = true
 
 [node name="Checkpoint2" parent="." instance=ExtResource("3_ynkwa")]
 position = Vector2(940, -60)
-check_point_name = "m3l1c1"
+check_point_name = "m3l1c2"
 active = true
 
 [node name="DeathZone" parent="." instance=ExtResource("4_l3lfp")]
