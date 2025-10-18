@@ -9,9 +9,10 @@ class_name EntityCharacterGhost2D
 @export var move_speed: float
 @export var move_direction: Vector2
 
-var _last_move_direction: Vector2
-
 var is_mask := true
+
+var _last_move_direction: Vector2
+var _time := 0.0
 
 func _ready() -> void:
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
@@ -21,19 +22,17 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if !active:
-		return
-	if Input.is_action_just_pressed(&"move_jump"):
+	_time += _delta
+	if active and Input.is_action_just_pressed(&"move_jump"):
 		if !GameData.mask_tracker:
 			set_marker()
 		else:
 			clear_marker()
 
-
 	if active:
 		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	else:
-		move_direction = Vector2.ZERO
+	elif !GameData.mask_tracker:
+		follow_player()
 
 	if _last_move_direction != move_direction:
 		_last_move_direction = move_direction
@@ -49,7 +48,11 @@ func _on_character_switched(char: GameData.CharacterType) -> void:
 # var _
 
 func follow_player() -> void:
-	var _characer_target_pos := GameManager.game_character.global_position + Vector2(0, -60)
+	var _characer_target_pos := GameManager.game_character.global_position + Vector2(sin(_time) * 30.0, cos(_time / 2.0) * 15.0)
+	if cos(_time) > 0.0:
+		z_index = 1
+	else:
+		z_index = 0
 	if global_position.distance_to(_characer_target_pos) > 5:
 		move_direction = global_position.direction_to(_characer_target_pos)
 	else:
