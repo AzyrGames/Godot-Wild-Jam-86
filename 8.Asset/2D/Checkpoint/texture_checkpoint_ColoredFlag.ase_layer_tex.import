@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.static-texture-split-layer"
+type="PortableCompressedTexture2D"
+uid="uid://bvjtc7hldyo8k"
+path="res://.godot/imported/texture_checkpoint_ColoredFlag.ase_layer_tex-01c2da6ca379a2574e31023134d586ba.res"
+
+[deps]
+
+source_file="res://8.Asset/2D/Checkpoint/texture_checkpoint_ColoredFlag.ase_layer_tex"
+dest_files=["res://.godot/imported/texture_checkpoint_ColoredFlag.ase_layer_tex-01c2da6ca379a2574e31023134d586ba.res"]
+
+[params]
+

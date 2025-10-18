@@ -82,6 +82,8 @@ script = ExtResource("3_d4v4r")
 follow_target_node = NodePath("../PlayerSwitcher/EntityCharacterPlayer")
 metadata/_custom_type_script = "uid://cacxmmyur2858"
 
+[node name="Map2" parent="." instance=ExtResource("8_la1kc")]
+
 [node name="GhostMask" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_wdgkn")
 script = ExtResource("8_murlr")
@@ -98,5 +100,3 @@ active = true
 [node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
 position = Vector2(0, -80)
 move_speed = 90.0
-
-[node name="Map2" parent="." instance=ExtResource("8_la1kc")]

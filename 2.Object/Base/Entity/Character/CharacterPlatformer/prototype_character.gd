@@ -56,7 +56,7 @@ var _current_gravity: float
 var _facing_direction: int = 1
 var _last_facing_direction: int = 1
 
-## Timer nodes for jump 
+## Timer nodes for jump
 var _jump_buffer_timer: Timer
 var _coyote_timer: Timer
 
@@ -105,7 +105,7 @@ func _physics_process(delta: float) -> void:
 	# if active:
 		# _handle_input(delta)
 	# else:
-# 
+#
 	_update_collision_shape()
 	_apply_gravity(delta)
 	_handle_horizontal_movement(delta)
@@ -192,14 +192,14 @@ func _setup_timers() -> void:
 	_jump_buffer_timer.one_shot = true
 	_jump_buffer_timer.timeout.connect(_on_jump_buffer_timeout)
 	add_child(_jump_buffer_timer)
-	
+
 	# Coyote time timer
 	_coyote_timer = Timer.new()
 	_coyote_timer.wait_time = _coyote_time
 	_coyote_timer.one_shot = true
 	_coyote_timer.timeout.connect(_on_coyote_time_timeout)
 	add_child(_coyote_timer)
-	
+
 ## Timer timeout callbacks
 func _on_jump_buffer_timeout() -> void:
 	pass
@@ -260,7 +260,7 @@ func _apply_gravity(delta: float) -> void:
 	else:
 		_is_falling = true
 		_current_gravity = _down_gravity
-	
+
 	# Fast falling
 	if _is_fast_falling:
 		if movement_setting.variable_fast_fall_speed > 0:
@@ -371,7 +371,7 @@ func _update_sprite() -> void:
 		sprite.flip_h = false
 	elif _facing_direction == -1 and not sprite.flip_h:
 		sprite.flip_h = true
-	
+
 	if abs(velocity.x) > 40.0:
 		sprite.play("run")
 	elif abs(velocity.x) > 10.0:
