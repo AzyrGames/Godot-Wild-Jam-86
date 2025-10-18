@@ -131,9 +131,11 @@ force_death={
 
 2d_physics/layer_2="CharacterPlatformer"
 2d_physics/layer_3="CharacterGhost"
+2d_physics/layer_5="OneWayPlatforms"
 2d_physics/layer_6="Solid"
 2d_physics/layer_7="WorldBoundary"
 2d_physics/layer_13="Trigger"
+2d_physics/layer_32="OneWaySensorMask"
 
 [physics]
 

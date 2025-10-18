@@ -1,7 +1,7 @@
 extends EntityCharacter2D
 class_name EntityCharacterPlatformer2D
 
-
+const ONEWAY_LAYER: int = 16
 
 ## Signals for major events
 signal jumped(jump_velocity: float, was_running: bool)
@@ -22,6 +22,7 @@ signal coyote_time_started()
 @export var floor_collision_shape: CollisionShape2D
 @export var body_collision_shape: CollisionShape2D
 
+@export var oneway_sensor: Area2D
 
 ## Visual Settings
 @export_group("Visual")
@@ -134,28 +135,27 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if active:
-		if Input.is_action_pressed("move_down"):
-			if Input.is_action_just_pressed("jump_down"):
-				print("Hello")
-				_disable_collision()
-				pass
-		else:
-			if Input.is_action_just_pressed("move_jump"):
+		if Input.is_action_just_pressed(&"move_jump") and Input.is_action_pressed(&"move_down"):
+			# if we're not on a oneway
+			if not _disable_oneway_collision() and Input.is_action_just_pressed(&"move_jump"):
 				_jump_buffer_timer.start()
-			if Input.is_action_pressed("move_jump") and _is_jumping:
-				_jump_hold_time += get_physics_process_delta_time()
-			if Input.is_action_just_released("move_jump"):
-				if _is_jumping and movement_setting.variable_jump_enabled:
-					_apply_jump_cutoff()
+		elif Input.is_action_just_pressed(&"move_jump"):
+			_jump_buffer_timer.start()
+		if Input.is_action_pressed(&"move_jump") and _is_jumping:
+			_jump_hold_time += get_physics_process_delta_time()
+		if Input.is_action_just_released(&"move_jump"):
+			if _is_jumping and movement_setting.variable_jump_enabled:
+				_apply_jump_cutoff()
+
 		var was_fast_falling: bool = _is_fast_falling
-		if Input.is_action_pressed("move_down") and not is_on_floor():
+		if Input.is_action_pressed(&"move_down") and not is_on_floor():
 			_is_fast_falling = true
 			if not was_fast_falling:
 				started_fast_falling.emit()
 		else:
 			_is_fast_falling = false
 
-		_last_horizontal_input = Input.get_axis("move_left", "move_right")
+		_last_horizontal_input = Input.get_axis(&"move_left", &"move_right")
 	else:
 		_last_horizontal_input = 0.0
 
@@ -230,20 +230,22 @@ func _update_collision_shape() -> void:
 		floor_collision_shape.disabled = false
 
 ## Disable character collision for one way platform
-func _disable_collision() -> void:
-	if !get_last_slide_collision(): return
-	if !get_last_slide_collision().get_collider() is OneWayPlatform2D: return
+func _disable_oneway_collision() -> bool:
+	if not oneway_sensor.has_overlapping_bodies():
+		return false
 	_is_one_way_platform = true
-	body_collision_shape.disabled = true
-	floor_collision_shape.disabled = true
-	get_tree().create_timer(0.01667 * 10).timeout.connect(_active_collision)
-	pass
+
+	collision_mask &= ~ONEWAY_LAYER
+	create_tween().tween_callback(_enable_oneway_collision).set_delay(0.25)
+	# Small upwards kick to make godot's physics clear `is_on_floor()`
+	# otherwise dropping off a oneway while running into a wall behaves poorly
+	velocity.y = -10.0
+	return true
 
 ## Enable character collision for one way platform
-func _active_collision() -> void:
+func _enable_oneway_collision() -> void:
 	_is_one_way_platform = false
-	floor_collision_shape.disabled = false
-	body_collision_shape.disabled = false
+	collision_mask |= ONEWAY_LAYER
 	pass
 
 
@@ -408,7 +410,7 @@ func _update_particle_effect() -> void:
 			vfx_floor_moving.emitting = false
 			# if asp_running.playing:
 			# 	asp_running.playing = false
-	
+
 	if vfx_jumping:
 		if _is_jumping:
 			pass
@@ -450,7 +452,7 @@ func _update_debug_display() -> void:
 		gravity_type = "Fast Fall" if movement_setting.variable_fast_fall_speed > 0 else "FF(%.1fx)" % movement_setting.fast_fall_multiplier
 	var debug_text := "Vel (%.1f, %.1f)|Facing %s\nFloor %s|Jump %s|Fall %s|FF %s\n" % [
 		velocity.x, velocity.y, "R" if _facing_direction == 1 else "L", is_on_floor(), _is_jumping, _is_falling, _is_fast_falling]
-	debug_text += "JumpBuf %.2fs - %d |Coyote %.2fs - %d|Hold %.2fs - %d \n" % [
+	debug_text += "JumpBuf %.2fs - %d |Coyote %.2fs - %d\n" % [
 		jump_buffer_left, int(jump_buffer_left * 60.0), coyote_left, int(coyote_left * 60.0)
 		]
 	debug_text += "Accel %s: %.0f px/s² \nGrav %s : %.0f px/s² \n" % [accel_name, current_accel, gravity_type, _current_gravity]
