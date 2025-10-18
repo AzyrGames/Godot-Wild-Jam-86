@@ -9,10 +9,12 @@ class_name EntityCharacterGhost2D
 @export var move_speed: float
 @export var move_direction: Vector2
 
+@export var body: Line2D
+
 var is_mask := true
 
-var _last_move_direction: Vector2
 var _time := 0.0
+var _oversized := false
 
 func _ready() -> void:
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
@@ -29,16 +31,16 @@ func _physics_process(_delta: float) -> void:
 		if !GameData.mask_tracker:
 			set_marker()
 		else:
-			clear_marker()
+			finish_mask()
 
 	if active:
 		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	elif !GameData.mask_tracker:
 		follow_player()
+	else:
+		move_direction = Vector2.ZERO
 
-	if _last_move_direction != move_direction:
-		_last_move_direction = move_direction
-		calculate_velocity()
+	calculate_velocity()
 	move_and_slide()
 
 
@@ -49,6 +51,7 @@ func _on_character_switched(char: GameData.CharacterType) -> void:
 
 func _on_mask_abort() -> void:
 	GameData.mask_tracker = null
+	set_warn_oversized(false)
 
 # var _
 
@@ -65,14 +68,14 @@ func follow_player() -> void:
 	pass
 
 func calculate_velocity() -> void:
-	velocity = move_direction * move_speed
+	velocity = move_direction * move_speed * (1.0 if not _oversized else 0.5)
 	pass
 
 
-func trigger_mask() -> void:
+func finish_mask() -> void:
 	EventBus.mask_track_finished.emit(global_position)
 	GameData.mask_tracker = null
-	EventBus.character_switched.emit(GameData.CharacterType.PLATFORMER)
+	set_warn_oversized(false)
 	pass
 
 
@@ -84,3 +87,7 @@ func set_marker() -> void:
 
 func clear_marker() -> void:
 	EventBus.mask_track_abort.emit()
+
+func set_warn_oversized(oversized: bool) -> void:
+	body.set_warn_oversized(oversized)
+	_oversized = oversized

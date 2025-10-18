@@ -1,5 +1,7 @@
 extends TileMapLayer
 
+const MASK_MAX_SIZE := 7
+
 @export var mask_bounds: Rect2i:
 	set(v):
 		mask_bounds = v
@@ -9,7 +11,7 @@ var _old_bounds: Rect2i
 
 func _ready() -> void:
 	EventBus.mask_point_set.connect(_on_mask_start)
-	EventBus.mask_track_finished.connect(emit_new_mask.unbind(1))
+	EventBus.mask_track_finished.connect(_on_mask_finished.unbind(1))
 	EventBus.mask_destroyed.connect(_on_mask_destroyed)
 
 func _physics_process(_delta: float) -> void:
@@ -36,8 +38,16 @@ func _on_mask_start(pos: Vector2) -> void:
 	clear()
 	mask_bounds = Rect2i(local_to_map(to_local(pos)), Vector2i.ZERO)
 
+func _on_mask_finished() -> void:
+	print("mask finished")
+	emit_new_mask()
+	for cell in get_used_cells():
+		if BetterTerrain.get_cell(self, cell) == 1:
+			BetterTerrain.set_cell(self, cell, -1)
+	BetterTerrain.update_terrain_area(self, get_used_rect())
+
 func emit_new_mask() -> void:
-	EventBus.mask_created.emit(Rect2i(realize_mask_position(), mask_bounds.size).abs())
+	EventBus.mask_created.emit(Rect2i(realize_mask_position(), mask_bounds.size.clampi(-MASK_MAX_SIZE, MASK_MAX_SIZE)).abs())
 
 func _on_mask_destroyed() -> void:
 	clear()
@@ -56,21 +66,29 @@ func realize_mask_position() -> Vector2i:
 func update_mask() -> void:
 	# Empty tilemap of existing mask
 
+	var real_mask_pos := realize_mask_position()
 	var new_bounds := Rect2i(realize_mask_position(), mask_bounds.size).abs()
+	GameManager.game_ghost.set_warn_oversized(new_bounds.size.x > MASK_MAX_SIZE or new_bounds.size.y > MASK_MAX_SIZE)
 	if mask_bounds.size.x == 0 or mask_bounds.size.y == 0:
 		return
 	# Create separate arrays of tiles to create and destroy
-	var acells: Array[Vector2i] = []
-	var dcells: Array[Vector2i] = []
+	var add_cells: Array[Vector2i] = []
+	var oversize_cells: Array[Vector2i] = []
+	var del_cells: Array[Vector2i] = []
 	for rect in rect_difference(new_bounds, _old_bounds):
 		for x in range(rect.position.x, rect.position.x + rect.size.x):
 			for y in range(rect.position.y, rect.position.y + rect.size.y):
 				if new_bounds.has_point(Vector2i(x, y)):
-					acells.push_back(Vector2i(x, y))
+					if absi(x - real_mask_pos.x) < MASK_MAX_SIZE and absi(y - real_mask_pos.y) < MASK_MAX_SIZE:
+						add_cells.push_back(Vector2i(x, y))
+					else:
+						oversize_cells.push_back(Vector2i(x, y))
 				else:
-					dcells.push_back(Vector2i(x, y))
-	BetterTerrain.set_cells(self, acells, 0)
-	BetterTerrain.set_cells(self, dcells, -1)
+					del_cells.push_back(Vector2i(x, y))
+	BetterTerrain.set_cells(self, add_cells, 0)
+	if GameData.mask_tracker:
+		BetterTerrain.set_cells(self, oversize_cells, 1)
+	BetterTerrain.set_cells(self, del_cells, -1)
 	# Trigger autotile update
 	BetterTerrain.update_terrain_area(self, new_bounds)
 	_old_bounds = new_bounds
