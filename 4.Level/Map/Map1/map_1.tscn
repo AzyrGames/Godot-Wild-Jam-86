@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://dpggt20oh3t7o"]
+[gd_scene load_steps=12 format=4 uid="uid://dpggt20oh3t7o"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_35pyb"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_2dxlp"]
@@ -12,7 +12,20 @@ size = Vector2(880, 200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dxlp"]
 size = Vector2(1240, 200)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2dxlp"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2do0m"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_afo26"]
+normal = Vector2(0, 1)
+distance = -180.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hmncv"]
+normal = Vector2(-1, 0)
+
 [node name="Map1" type="Node2D"]
+z_index = -1
 script = ExtResource("1_35pyb")
 metadata/_custom_type_script = "uid://dvtiu04654nwl"
 
@@ -64,3 +77,26 @@ limit_left = 524
 limit_top = -230
 limit_right = 2140
 limit_bottom = 40
+
+[node name="WorldBorders" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="Bottom" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(120, 40)
+shape = SubResource("WorldBoundaryShape2D_2dxlp")
+
+[node name="Top" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(120, -240)
+shape = SubResource("WorldBoundaryShape2D_2do0m")
+
+[node name="Left" type="CollisionShape2D" parent="WorldBorders"]
+z_index = -1
+position = Vector2(120, -120)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_afo26")
+
+[node name="Right" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(2180, -120)
+shape = SubResource("WorldBoundaryShape2D_hmncv")
+one_way_collision = true
