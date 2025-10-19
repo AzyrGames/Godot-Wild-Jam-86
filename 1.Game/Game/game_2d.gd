@@ -6,6 +6,7 @@ class_name Game2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Console.register_command(command_change_map, "change_map")
+	Console.register_command(reset_game_map, "reset_map")
 
 	GameManager.game_2d = self
 	connect_event_bus()

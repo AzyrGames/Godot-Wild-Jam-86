@@ -1,6 +1,7 @@
 extends TileMapLayer
 
-const MASK_MAX_SIZE := 9
+@export
+var mask_max_size := 9
 
 @export var mask_bounds: Rect2i:
 	set(v):
@@ -10,6 +11,8 @@ const MASK_MAX_SIZE := 9
 var _old_bounds: Rect2i
 
 func _ready() -> void:
+	Console.register_command(func(new_size: int): mask_max_size = new_size, "set_mask_limit")
+
 	EventBus.mask_point_set.connect(_on_mask_start)
 	EventBus.mask_track_finished.connect(_on_mask_finished.unbind(1))
 	EventBus.mask_destroyed.connect(_on_mask_destroyed)
@@ -47,7 +50,7 @@ func _on_mask_finished() -> void:
 	BetterTerrain.update_terrain_area(self, get_used_rect())
 
 func emit_new_mask() -> void:
-	EventBus.mask_created.emit(Rect2i(realize_mask_position(), mask_bounds.size.clampi(-MASK_MAX_SIZE, MASK_MAX_SIZE)).abs())
+	EventBus.mask_created.emit(Rect2i(realize_mask_position(), mask_bounds.size.clampi(-mask_max_size, mask_max_size)).abs())
 
 func _on_mask_destroyed() -> void:
 	clear()
@@ -68,7 +71,7 @@ func update_mask() -> void:
 
 	var real_mask_pos := realize_mask_position()
 	var new_bounds := Rect2i(realize_mask_position(), mask_bounds.size).abs()
-	GameManager.game_ghost.set_warn_oversized(new_bounds.size.x > MASK_MAX_SIZE or new_bounds.size.y > MASK_MAX_SIZE)
+	GameManager.game_ghost.set_warn_oversized(new_bounds.size.x > mask_max_size or new_bounds.size.y > mask_max_size)
 	if mask_bounds.size.x == 0 or mask_bounds.size.y == 0:
 		return
 	# Create separate arrays of tiles to create and destroy
@@ -79,10 +82,10 @@ func update_mask() -> void:
 		for x in range(rect.position.x, rect.position.x + rect.size.x):
 			for y in range(rect.position.y, rect.position.y + rect.size.y):
 				if new_bounds.has_point(Vector2i(x, y)):
-					if  (x - real_mask_pos.x) < MASK_MAX_SIZE \
-							and (x - real_mask_pos.x) > -(MASK_MAX_SIZE+1) \
-							and (y - real_mask_pos.y) < MASK_MAX_SIZE \
-							and (y - real_mask_pos.y) > -(MASK_MAX_SIZE+1):
+					if  (x - real_mask_pos.x) < mask_max_size \
+							and (x - real_mask_pos.x) > -(mask_max_size+1) \
+							and (y - real_mask_pos.y) < mask_max_size \
+							and (y - real_mask_pos.y) > -(mask_max_size+1):
 						add_cells.push_back(Vector2i(x, y))
 					else:
 						oversize_cells.push_back(Vector2i(x, y))
