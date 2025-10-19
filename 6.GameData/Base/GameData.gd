@@ -5,6 +5,13 @@ enum CharacterType {
 	GHOST
 }
 
+enum GhostState {
+	IDLE,
+	OVERSIZE,
+	ACTIVE,
+	MASKING,
+}
+
 var entity_character_node: Dictionary[CharacterType, EntityCharacter2D]
 
 var mask_tracker: EntityCharacterGhost2D

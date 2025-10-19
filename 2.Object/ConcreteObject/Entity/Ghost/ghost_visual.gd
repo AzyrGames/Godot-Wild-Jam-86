@@ -6,7 +6,7 @@ extends Line2D
 var _last_frame_position: Vector2
 
 var _point_velocity: PackedVector2Array = []
-var _oversized: bool
+var _state: GameData.GhostState
 
 func _ready() -> void:
 	_last_frame_position = tracking_target.global_position
@@ -39,10 +39,17 @@ func _process(delta: float) -> void:
 
 	_last_frame_position = tracking_target.global_position
 
-func set_warn_oversized(oversized: bool) -> void:
-	if oversized:
-		default_color = Color.ROYAL_BLUE
-		face.play(&"struggle")
-	else:
-		default_color = Color.WHITE
-		face.play(&"default")
+func set_ghost_state(state: GameData.GhostState) -> void:
+	match state:
+		GameData.GhostState.IDLE:
+			default_color = Color.WHITE
+			face.play(&"default")
+		GameData.GhostState.OVERSIZE:
+			default_color = Color.ROYAL_BLUE
+			face.play(&"struggle")
+		GameData.GhostState.ACTIVE:
+			default_color = Color(1.0, 1.0, 0.6)
+			face.play(&"default")
+		GameData.GhostState.MASKING:
+			default_color = Color(1.0, 0.8, 0.4)
+			face.play(&"masking")

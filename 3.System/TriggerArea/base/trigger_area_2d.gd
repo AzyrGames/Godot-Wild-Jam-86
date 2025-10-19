@@ -3,18 +3,27 @@ class_name TriggerArea2D
 
 signal triggered
 
+enum TriggerMode {
+	## whenever any body enters the area
+	NORMAL,
+	## when an EntityCharacter2D enters the area and is on the ground
+	CHAR_GROUNDED,
+}
+
 @export var active: bool = false:
 	set(value):
 		active = value
 		set_active_collision_shape(!value)
 
+## Only trigger once, instead of every time a body enters
+@export var oneshot: bool = false
+
 @export var trigger_name: String
 
-enum TriggerMode {
-	NORMAL,
-	CHAR_GROUNDED,
-}
-
+## Configure when the area should be considered triggered.
+##
+## EntityCharacter2Ds that enter that don't meet the requirements
+## will trigger the area as soon as they do.
 @export var trigger_mode := TriggerMode.NORMAL
 
 var _tracked_bodies: Array[EntityCharacter2D] = []
@@ -43,12 +52,16 @@ func connect_signal() -> void:
 func set_active_collision_shape(_value: bool) -> void:
 	for _child in get_children():
 		if _child is CollisionShape2D:
-			_child.disabled = _value
+			(func(): _child.disabled = _value).call_deferred()
 
 
 func trigger_area() -> void:
+	if not active:
+		return
 	EventBus.area_triggered.emit(trigger_name)
 	triggered.emit()
+	if oneshot:
+		active = false
 	pass
 
 
