@@ -10,7 +10,7 @@ enum TriggerMode {
 	CHAR_GROUNDED,
 }
 
-@export var active: bool = false:
+@export var active: bool = true:
 	set(value):
 		active = value
 		set_active_collision_shape(!value)

@@ -1,9 +1,9 @@
+class_name FadeInArea2D
 extends TriggerArea2D
 
 @export var duration := 1.0
 
 @export_exp_easing var fade_ease := 1.0
-
 
 func _ready() -> void:
 	super()
