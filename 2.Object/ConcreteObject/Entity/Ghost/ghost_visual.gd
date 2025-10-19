@@ -3,6 +3,12 @@ extends Line2D
 @export var tracking_target: Node2D
 @export var face: AnimatedSprite2D
 
+@export var color_idle: Color = Color.WHITE
+@export var color_oversize: Color = Color.ROYAL_BLUE
+@export var color_active: Color
+@export var color_mask: Color
+
+
 var _last_frame_position: Vector2
 
 var _point_velocity: PackedVector2Array = []
@@ -42,14 +48,14 @@ func _process(delta: float) -> void:
 func set_ghost_state(state: GameData.GhostState) -> void:
 	match state:
 		GameData.GhostState.IDLE:
-			default_color = Color.WHITE
+			default_color = color_idle
 			face.play(&"default")
 		GameData.GhostState.OVERSIZE:
-			default_color = Color.ROYAL_BLUE
+			default_color = color_oversize
 			face.play(&"struggle")
 		GameData.GhostState.ACTIVE:
-			default_color = Color(1.0, 1.0, 0.6)
+			default_color = color_active
 			face.play(&"default")
 		GameData.GhostState.MASKING:
-			default_color = Color(1.0, 0.8, 0.4)
+			default_color = color_mask
 			face.play(&"masking")

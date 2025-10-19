@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://nach75ydre15"]
+
+[ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="1_n1okg"]
+[ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_umi27"]
+[ext_resource type="PackedScene" uid="uid://bgjoq4dkotfrf" path="res://4.Level/Map/Map5/level/map_5_level_1.tscn" id="2_umi27"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ly4ds"]
+size = Vector2(1055, 200)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_umi27"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ly4ds"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8iejt"]
+normal = Vector2(0, 1)
+distance = -180.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hvjhi"]
+normal = Vector2(-1, 0)
+distance = -165.0
+
+[node name="Map5" type="Node2D"]
+script = ExtResource("1_umi27")
+metadata/_custom_type_script = "uid://dvtiu04654nwl"
+
+[node name="Map5Level1" parent="." instance=ExtResource("2_umi27")]
+
+[node name="CameraConstraint1" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("1_n1okg")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
+position = Vector2(427.5, -100)
+shape = SubResource("RectangleShape2D_ly4ds")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
+ignore_rotation = false
+enabled = false
+limit_left = -196
+limit_top = -520
+limit_right = 1380
+limit_bottom = 60
+metadata/_edit_lock_ = true
+
+[node name="WorldBorders" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="Bottom" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(170, 100)
+shape = SubResource("WorldBoundaryShape2D_umi27")
+
+[node name="Top" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(315, -560)
+shape = SubResource("WorldBoundaryShape2D_ly4ds")
+
+[node name="Left" type="CollisionShape2D" parent="WorldBorders"]
+z_index = -1
+position = Vector2(-420, 390)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_8iejt")
+
+[node name="Right" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(1215, -60)
+shape = SubResource("WorldBoundaryShape2D_hvjhi")
+one_way_collision = true
