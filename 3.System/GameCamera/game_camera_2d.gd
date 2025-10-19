@@ -39,13 +39,15 @@ func connect_event_bus() -> void:
 func follow_target() -> void:
 	if !tween_complete: return
 	if follow_target_node:
-		global_position = global_position.lerp(follow_target_node.global_position, 0.15)
+		global_position = follow_target_node.global_position
 	pass
 
 
 var camera_tween : Tween
 
 func tween_to_new_character() -> void:
+	if camera_tween:
+		camera_tween.kill()
 	camera_tween = create_tween()
 	tween_complete = false
 	camera_tween.tween_property(self, "global_position", follow_target_node.global_position, 0.3).set_trans(Tween.TRANS_SINE)
@@ -77,12 +79,13 @@ func change_camera_constraint(_constraint_camera: Camera2D) -> void:
 	limit_top = _constraint_camera.limit_top
 	pass
 
-func snap_to_target() -> void:
-	#limit_left = -100000
-	#limit_right = 100000
-	#limit_bottom = 100000
-	#limit_top = -10000
+func snap_to_target(skip_limits := false) -> void:
+	if skip_limits:
+		limit_left = -100000
+		limit_right = 100000
+		limit_bottom = 100000
+		limit_top = -10000
 	if camera_tween:
-		camera_tween.stop()
+		camera_tween.kill()
 	global_position = follow_target_node.global_position
 	reset_smoothing()

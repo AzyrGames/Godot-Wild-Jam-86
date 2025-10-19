@@ -127,7 +127,7 @@ func _handle_command_input(p_event: InputEvent) -> void:
 			_:
 				# if p_event.is_action_pressed(""):
 					# _reverse_autocomplete()
-				
+
 				return
 				# pass
 		get_viewport().set_input_as_handled()
