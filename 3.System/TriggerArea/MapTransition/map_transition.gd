@@ -6,8 +6,8 @@ class_name MapTransition2D
 func _ready() -> void:
 	super()
 	EventBus.preload_map.emit(to_map)
-
-func trigger_area() -> void:
-	super()
-	EventBus.switch_map.emit(to_map)
-	pass
+	await get_tree().process_frame
+	await get_tree().process_frame
+	triggered.connect(func():
+		EventBus.switch_map.emit(to_map)
+	)

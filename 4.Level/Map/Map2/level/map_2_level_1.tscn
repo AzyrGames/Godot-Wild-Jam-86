@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b6hv1suuub6y"]
+[gd_scene load_steps=14 format=4 uid="uid://b6hv1suuub6y"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_t3yvo"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_a77ow"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c07mi1fdbfwqm" path="res://3.System/TriggerArea/death_zone.tscn" id="5_mscxc"]
 [ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="5_uc0vy"]
 [ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="6_uc0vy"]
+[ext_resource type="Script" uid="uid://bmhsjf5ienrk3" path="res://4.Level/Component/fade_in_trigger_area.gd" id="7_ddol7"]
+[ext_resource type="Script" uid="uid://bpjkbgww5a82r" path="res://2.Object/ConcreteObject/tutorial/switch_on_ghost_state.gd" id="8_l0jop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mscxc"]
 size = Vector2(635, 40)
@@ -17,6 +19,9 @@ size = Vector2(60, 40)
 [sub_resource type="LabelSettings" id="LabelSettings_vvxt6"]
 outline_size = 1
 outline_color = Color(0.12619856, 0.19195244, 0.28181565, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0jop"]
+size = Vector2(280, 130)
 
 [node name="Map2Level1" type="Node2D" node_paths=PackedStringArray("unmasked_world", "masked_tiles", "oneway_layer")]
 z_index = -1
@@ -42,7 +47,6 @@ collision_enabled = false
 
 [node name="Checkpoint" parent="." instance=ExtResource("4_b7rvl")]
 check_point_name = "m2l1c1"
-active = true
 
 [node name="DeathZone" parent="." instance=ExtResource("5_mscxc")]
 
@@ -58,12 +62,27 @@ shape = SubResource("RectangleShape2D_b7rvl")
 position = Vector2(1130, -170)
 to_map = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="FadeInArea2D" type="Area2D" parent="."]
+position = Vector2(40, -120)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("7_ddol7")
+oneshot = true
+metadata/_custom_type_script = "uid://bmhsjf5ienrk3"
+
+[node name="GhostIntroPanel" type="PanelContainer" parent="FadeInArea2D" node_paths=PackedStringArray("non_ghost_text", "ghost_text", "masking_text")]
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = -20.0
+script = ExtResource("8_l0jop")
+non_ghost_text = NodePath("GoGhost")
+ghost_text = NodePath("ThenMask")
+masking_text = NodePath("ThenFinish")
+
+[node name="GoGhost" type="Label" parent="FadeInArea2D/GhostIntroPanel"]
+visible = false
 z_index = 10
-offset_left = 40.0
-offset_top = -120.0
-offset_right = 160.0
-offset_bottom = -80.0
+layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("6_uc0vy")
 text = "Press Tab
@@ -71,18 +90,30 @@ to Switch to the Ghost"
 label_settings = SubResource("LabelSettings_vvxt6")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
-[node name="Label2" type="Label" parent="."]
+[node name="ThenMask" type="Label" parent="FadeInArea2D/GhostIntroPanel"]
 z_index = 10
-offset_left = 40.0
-offset_top = -80.0
-offset_right = 160.0
-offset_bottom = -20.0
+layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("6_uc0vy")
-text = "When in the Ghost
-Press Space 
+text = "Press Space 
 to Create Mask"
 label_settings = SubResource("LabelSettings_vvxt6")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ThenFinish" type="Label" parent="FadeInArea2D/GhostIntroPanel"]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_uc0vy")
+text = "Press Space Again
+to Finish Mask"
+label_settings = SubResource("LabelSettings_vvxt6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FadeInArea2D"]
+position = Vector2(20, 55)
+shape = SubResource("RectangleShape2D_l0jop")

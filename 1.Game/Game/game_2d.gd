@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func command_change_map(mapname: String) -> void:
 	print("Command to change map received, switching to ", GameData.MapList.get("MAP_" + mapname))
-	request_game_map(GameData.MapList.get("MAP_" + mapname))
+	request_and_load_map(GameData.MapList.get("MAP_" + mapname))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -61,7 +61,7 @@ func reset_game_map() -> void:
 		EventBus.mask_track_abort.emit()
 	if GameManager.current_mask.has_area():
 		EventBus.mask_destroyed.emit()
-	GameManager.game_camera.snap_to_target()
+	GameManager.game_camera.snap_to_target(true)
 	pass
 
 
@@ -75,9 +75,11 @@ func switch_map() -> void:
 
 
 func change_game_map_to(_game_map: Map2D) -> bool:
+	print("Changing map to ", _game_map.name)
 	if !_game_map: return false
 	if current_game_map:
 		current_game_map.queue_free()
+	GameManager.game_character.global_position = Vector2(10000, 10000)
 	add_child(_game_map)
 	current_game_map = _game_map
 	EventBus.game_map_changed.emit()
