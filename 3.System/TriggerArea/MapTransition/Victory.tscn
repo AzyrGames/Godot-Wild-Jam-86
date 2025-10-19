@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcywgu7p7dbeq"]
+
+[ext_resource type="Script" uid="uid://c0kcen2hphj3m" path="res://3.System/TriggerArea/base/trigger_area_2d.gd" id="1_0rd05"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31fk1"]
+size = Vector2(60, 70)
+
+[node name="VictoryTrigger" type="Area2D"]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("1_0rd05")
+active = true
+trigger_name = "Victory"
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_31fk1")
+metadata/_edit_lock_ = true

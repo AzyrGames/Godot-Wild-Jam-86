@@ -29,26 +29,18 @@ func _input(event: InputEvent) -> void:
 
 func connect_signal() -> void:
 	super()
-	body_shape_entered.connect(_on_body_shape_entered)
-	body_shape_exited.connect(_on_body_shape_exited)
-	EventBus.check_point_entered.connect(func(entered):
-		if not entered:
-			return
+	triggered.connect(_on_triggered)
+	EventBus.check_point_entered.connect(func():
 		if GameManager.current_checkpoint != self:
 			is_active = false
 	)
 	pass
 
 
-func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_triggered() -> void:
 	if GameManager.current_checkpoint and GameManager.current_checkpoint != self:
 		GameManager.current_checkpoint.is_active = false
 	GameManager.current_checkpoint = self
 	is_active = true
-	EventBus.check_point_entered.emit(true)
-	pass # Replace with function body.
-
-
-func _on_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	EventBus.check_point_entered.emit(false)
+	EventBus.check_point_entered.emit()
 	pass # Replace with function body.
