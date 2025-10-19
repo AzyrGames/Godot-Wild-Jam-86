@@ -3,7 +3,7 @@ class_name Game2D
 
 @export var current_game_map: Map2D
 @export var asp_level_clear: AudioStreamPlayer
-
+@export var asp_death: AudioStreamPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Console.unregister_command("change_map")
@@ -62,13 +62,17 @@ func respawn_character(force_ghost := false) -> void:
 	GameManager.game_character.global_position = GameManager.current_checkpoint.character_respawn_point.global_position
 	if GameData.mask_tracker != GameManager.game_ghost or force_ghost:
 		GameManager.game_ghost.global_position = GameManager.current_checkpoint.character_respawn_point.global_position + Vector2(-24.0, -30.0)
+	
 	pass
 
 
 
 func _on_area_triggered(_trigger_name: String) -> void:
 	if _trigger_name == "death_zone":
+		if asp_death:
+			asp_death.play()
 		respawn_character()
+
 	pass
 
 func reset_game_map() -> void:

@@ -136,5 +136,6 @@ process_material = SubResource("ParticleProcessMaterial_7uih4")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamInteractive_q2vkl")
+volume_db = 10.0
 pitch_scale = 1.1
 bus = &"SFX"

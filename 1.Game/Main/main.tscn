@@ -101,6 +101,7 @@ render_target_update_mode = 0
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = SubResource("AudioStreamInteractive_bohkq")
+volume_db = -5.0
 autoplay = true
 bus = &"Music"
 

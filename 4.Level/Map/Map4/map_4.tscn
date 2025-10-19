@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3mcaorrlftgb"]
+[gd_scene load_steps=13 format=3 uid="uid://b3mcaorrlftgb"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_fhs10"]
 [ext_resource type="PackedScene" uid="uid://1iba7bnghl2r" path="res://4.Level/Map/Map4/level/map_4_level_1.tscn" id="2_3yj3i"]
@@ -16,6 +16,20 @@ size = Vector2(300, 520)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uswsg"]
 size = Vector2(440, 140)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qy24i"]
+distance = 60.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m4n5s"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uswsg"]
+normal = Vector2(0, 1)
+distance = -180.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_caemc"]
+normal = Vector2(-1, 0)
+distance = -165.0
 
 [node name="Map4" type="Node2D"]
 script = ExtResource("1_fhs10")
@@ -118,3 +132,26 @@ metadata/_edit_lock_ = true
 
 [node name="VictoryTrigger" parent="." instance=ExtResource("4_qy24i")]
 position = Vector2(1900, -2060)
+
+[node name="WorldBorders" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="Bottom" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(170, 100)
+shape = SubResource("WorldBoundaryShape2D_qy24i")
+
+[node name="Top" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(1520, -2220)
+shape = SubResource("WorldBoundaryShape2D_m4n5s")
+
+[node name="Left" type="CollisionShape2D" parent="WorldBorders"]
+z_index = -1
+position = Vector2(-20, -260)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_uswsg")
+
+[node name="Right" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(1715, -1985)
+shape = SubResource("WorldBoundaryShape2D_caemc")
+one_way_collision = true

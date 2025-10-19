@@ -74,7 +74,7 @@ shape = SubResource("RectangleShape2D_ch06j")
 metadata/_edit_lock_ = true
 
 [node name="DeathZone3" parent="." instance=ExtResource("4_en05x")]
-position = Vector2(1130, -1820)
+position = Vector2(1200, -1800)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone3"]
 position = Vector2(10, 0)
