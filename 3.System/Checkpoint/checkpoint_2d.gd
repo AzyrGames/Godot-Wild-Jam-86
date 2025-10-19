@@ -12,7 +12,11 @@ class_name Checkpoint2D
 		if value != is_active:
 			print("updating checkpoint ", name, " to ", value)
 			$AnimationPlayer.play(&"get_checkpoint" if value == true else &"RESET")
+			if asp_checkpoint:
+				asp_checkpoint.play()
 		is_active = value
+
+@export var asp_checkpoint: AudioStreamPlayer2D
 
 func _ready() -> void:
 	super()

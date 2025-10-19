@@ -2,6 +2,7 @@ extends Node2D
 class_name Game2D
 
 @export var current_game_map: Map2D
+@export var asp_level_clear: AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -103,6 +104,9 @@ func change_game_map_to(_game_map: Map2D) -> bool:
 	add_child(_game_map)
 	current_game_map = _game_map
 	EventBus.game_map_changed.emit()
+	if _request_map != GameData.MapList.MAP_1:
+		if asp_level_clear:
+			asp_level_clear.play()
 	return true
 
 

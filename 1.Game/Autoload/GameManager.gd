@@ -55,6 +55,8 @@ func configure_game_settings() -> void:
 func start_game() -> void:
 	is_game_active = main_2d.start_game()
 	GuiManager.active_gui_panel.get(GuiManager.GUIPanel.HUD).visible = true
+	main_2d.asp_music.set("parameters/switch_to_clip", "music_main_intro")
+
 
 	pass
 
@@ -74,6 +76,7 @@ func game_victory() -> void:
 	clear_game()
 	main_2d.game_timer.paused = true
 	GuiManager.switch_gui_panel(GuiManager.GUIPanel.VICTORY_SCREEN)
+	main_2d.asp_music.set("parameters/switch_to_clip", "music_victory")
 	pass
 
 

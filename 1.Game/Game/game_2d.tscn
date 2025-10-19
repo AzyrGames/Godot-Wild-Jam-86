@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw3votfvu4bw7"]
+[gd_scene load_steps=14 format=3 uid="uid://bw3votfvu4bw7"]
 
 [ext_resource type="Script" uid="uid://b74ubmyligtxg" path="res://1.Game/Game/game_2d.gd" id="1_hbmr2"]
 [ext_resource type="PackedScene" uid="uid://caa43fkynpx52" path="res://2.Object/ConcreteObject/Entity/Character/entity_character_player.tscn" id="3_7mnxe"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://byu0ya1xhnbrd" path="res://2.Object/ConcreteObject/game_object_mask.gd" id="8_murlr"]
 [ext_resource type="PackedScene" uid="uid://dpggt20oh3t7o" path="res://4.Level/Map/Map1/map_1.tscn" id="9_k3eo0"]
 [ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="9_murlr"]
+[ext_resource type="AudioStream" uid="uid://n4kdm0rthvqs" path="res://8.Asset/Audio/sfx_levelclear.ogg" id="11_wdgkn"]
 [ext_resource type="Script" path="res://2.Object/ConcreteObject/ghost_filter.gd" id="12_kg0ya"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k3eo0"]
@@ -175,9 +176,10 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[node name="Game2d" type="Node2D" node_paths=PackedStringArray("current_game_map")]
+[node name="Game2d" type="Node2D" node_paths=PackedStringArray("current_game_map", "asp_level_clear")]
 script = ExtResource("1_hbmr2")
 current_game_map = NodePath("Map1")
+asp_level_clear = NodePath("ASPMapClear")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
 [node name="OceanBackground" parent="." instance=ExtResource("9_murlr")]
@@ -222,3 +224,7 @@ active = true
 [node name="Map1" parent="." instance=ExtResource("9_k3eo0")]
 
 [node name="OceanBackground2" parent="." instance=ExtResource("9_murlr")]
+
+[node name="ASPMapClear" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_wdgkn")
+bus = &"SFX"

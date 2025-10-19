@@ -10,6 +10,8 @@ class_name UserSettings
 @export_range(0, 100.0, 1.0) var music_volume : float = 0.8
 @export_range(0, 100.0, 1.0) var sfx_volume : float = 0.8
 @export_range(0, 100.0, 1.0) var screen_shake : float = 100.0
+@export var show_fps: bool = false
+@export var show_game_timer: bool = false
 
 
 const USER_PREFS_PATH : String = "user://user_setting_1.tres"

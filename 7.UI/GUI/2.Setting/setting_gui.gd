@@ -19,7 +19,12 @@ enum AudioBus {
 @export var value_slider_music: ValueSlider 
 @export var value_slider_sfx: ValueSlider
 
+@export var value_toggle_game_timer: ValueToggle
+@export var value_toggle_fps: ValueToggle
+
+
 @export var value_slider_screen_shake: ValueSlider
+
 
 var user_settings: UserSettings
 
@@ -44,6 +49,9 @@ func setup_setting_gui() -> void:
 	set_audio_bus_volume("Music", user_settings.music_volume)
 	set_audio_bus_volume("SFX", user_settings.sfx_volume)
 
+	GuiManager.show_fps = user_settings.show_fps
+	GuiManager.show_game_timer = user_settings.show_game_timer
+
 	value_slider_master.slider_value.value = user_settings.master_volume * 100
 	value_slider_music.slider_value.value = user_settings.music_volume * 100
 	value_slider_sfx.slider_value.value = user_settings.sfx_volume * 100 
@@ -51,6 +59,7 @@ func setup_setting_gui() -> void:
 
 	connect_window_related()
 	connect_value_slider()
+	connect_value_toggle()
 	pass
 	
 
@@ -82,6 +91,14 @@ func connect_value_slider() -> void:
 		value_slider_sfx.value_changed.connect(_on_value_slider_sfx_value_changed)
 	if value_slider_screen_shake:
 		value_slider_screen_shake.value_changed.connect(_on_value_slider_screen_shake_value_changed)
+	pass
+
+
+func connect_value_toggle() -> void:
+	if value_toggle_fps:
+		value_toggle_fps.value_changed.connect(_on_value_toggle_fps_value_changed)
+	if value_toggle_game_timer:
+		value_toggle_game_timer.value_changed.connect(_on_value_toggle_game_timer_value_changed)
 	pass
 
 
@@ -154,3 +171,14 @@ func _on_value_slider_screen_shake_value_changed(_value: float) -> void:
 	_value = _value / 100.0
 	user_settings.screen_shake = _value
 	user_settings.save()
+
+
+func _on_value_toggle_fps_value_changed(_value: float) -> void:
+	user_settings.show_fps = _value
+	GuiManager.show_fps = _value
+	pass
+
+func _on_value_toggle_game_timer_value_changed(_value: float) -> void:
+	user_settings.show_game_timer = _value
+	GuiManager.show_game_timer = _value
+	pass

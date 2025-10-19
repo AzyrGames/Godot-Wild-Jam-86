@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ctmouvrx5tsrg" path="res://7.UI/Component/ValueToggle/value_toggle.tscn" id="5_1jpph"]
 [ext_resource type="PackedScene" uid="uid://baeaosrxobc3w" path="res://7.UI/Component/ScreenScale/screen_scale.tscn" id="7_2rmca"]
 
-[node name="SettingMenuGUI" type="Control" node_paths=PackedStringArray("screen_scale", "value_toggle_fullscreen", "value_toggle_vsync", "value_slider_master", "value_slider_music", "value_slider_sfx", "value_slider_screen_shake")]
+[node name="SettingMenuGUI" type="Control" node_paths=PackedStringArray("screen_scale", "value_toggle_fullscreen", "value_toggle_vsync", "value_slider_master", "value_slider_music", "value_slider_sfx", "value_toggle_game_timer", "value_toggle_fps", "value_slider_screen_shake")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,8 @@ value_toggle_vsync = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2
 value_slider_master = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueSliderMasterVolume")
 value_slider_music = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueSliderMusicVolume")
 value_slider_sfx = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueSliderSFXVolume")
+value_toggle_game_timer = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueToggleFPS")
+value_toggle_fps = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueToggleGameTimer")
 value_slider_screen_shake = NodePath("AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer/ValueSliderScreenShake")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
@@ -43,7 +45,7 @@ layout_mode = 2
 theme = ExtResource("1_h80o3")
 
 [node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="AspectRatioContainer/VBoxContainer"]
@@ -116,6 +118,14 @@ option_text = "SFX Volume"
 visible = false
 layout_mode = 2
 option_text = "Screen Shake"
+
+[node name="ValueToggleFPS" parent="AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("5_1jpph")]
+layout_mode = 2
+option_text = "Game Timer"
+
+[node name="ValueToggleGameTimer" parent="AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("5_1jpph")]
+layout_mode = 2
+option_text = "FPS"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(128, 32)
