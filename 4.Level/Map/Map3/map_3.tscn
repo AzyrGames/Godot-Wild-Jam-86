@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp4lu5c42iak"]
+[gd_scene load_steps=6 format=3 uid="uid://bp4lu5c42iak"]
 
 [ext_resource type="PackedScene" uid="uid://dsi5nsmfphwa6" path="res://4.Level/Map/Map3/level/map_3_level_1.tscn" id="1_6wtpp"]
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_qp20w"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_0b6lc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jpxp"]
-size = Vector2(1260, 200)
+size = Vector2(940, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0b6lc"]
+size = Vector2(400, 200)
 
 [node name="Map3" type="Node2D"]
 script = ExtResource("1_qp20w")
@@ -21,15 +24,33 @@ constraint_camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://c0kcen2hphj3m"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
-position = Vector2(530, -100)
+position = Vector2(370, -100)
 shape = SubResource("RectangleShape2D_5jpxp")
-metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
 ignore_rotation = false
 enabled = false
 limit_left = -100
 limit_top = -230
-limit_right = 1120
+limit_right = 1260
 limit_bottom = 40
-metadata/_edit_lock_ = true
+
+[node name="CameraConstraint2" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+position = Vector2(1040, -55)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("3_0b6lc")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint2"]
+position = Vector2(40, -100)
+shape = SubResource("RectangleShape2D_0b6lc")
+
+[node name="Camera2D" type="Camera2D" parent="CameraConstraint2"]
+ignore_rotation = false
+enabled = false
+limit_left = 580
+limit_top = -520
+limit_right = 2480
+limit_bottom = 20

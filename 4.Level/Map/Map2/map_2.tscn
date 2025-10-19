@@ -1,11 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://heaygjhx42wq"]
+[gd_scene load_steps=10 format=3 uid="uid://heaygjhx42wq"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_iqu1b"]
 [ext_resource type="PackedScene" uid="uid://b6hv1suuub6y" path="res://4.Level/Map/Map2/level/map_2_level_1.tscn" id="2_kibp3"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_ssseh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ek741"]
-size = Vector2(1260, 200)
+size = Vector2(1055, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssseh"]
+size = Vector2(1470, 280)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ssseh"]
 
@@ -34,7 +37,7 @@ constraint_camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://c0kcen2hphj3m"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
-position = Vector2(530, -100)
+position = Vector2(427.5, -100)
 shape = SubResource("RectangleShape2D_ek741")
 metadata/_edit_lock_ = true
 
@@ -43,8 +46,30 @@ ignore_rotation = false
 enabled = false
 limit_left = -100
 limit_top = -230
-limit_right = 1160
+limit_right = 1690
 limit_bottom = 40
+metadata/_edit_lock_ = true
+
+[node name="CameraConstraint2" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+position = Vector2(1290, 0)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("3_ssseh")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint2"]
+position = Vector2(425, -140)
+shape = SubResource("RectangleShape2D_ssseh")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="CameraConstraint2"]
+ignore_rotation = false
+enabled = false
+limit_left = 740
+limit_top = -305
+limit_right = 2040
+limit_bottom = 80
 metadata/_edit_lock_ = true
 
 [node name="WorldBorders" type="StaticBody2D" parent="."]
@@ -52,20 +77,20 @@ collision_layer = 64
 collision_mask = 64
 
 [node name="Bottom" type="CollisionShape2D" parent="WorldBorders"]
-position = Vector2(-3.0559022e-10, 60)
+position = Vector2(170, 100)
 shape = SubResource("WorldBoundaryShape2D_ssseh")
 
 [node name="Top" type="CollisionShape2D" parent="WorldBorders"]
-position = Vector2(-20, -240)
+position = Vector2(375, -360)
 shape = SubResource("WorldBoundaryShape2D_ek741")
 
 [node name="Left" type="CollisionShape2D" parent="WorldBorders"]
 z_index = -1
-position = Vector2(60, 0)
+position = Vector2(80, -35)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_5jgtx")
 
 [node name="Right" type="CollisionShape2D" parent="WorldBorders"]
-position = Vector2(1180, -80)
+position = Vector2(2000, -60)
 shape = SubResource("WorldBoundaryShape2D_x881e")
 one_way_collision = true
