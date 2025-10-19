@@ -28,3 +28,10 @@ func _on_go_to_start_screen_button_button_up() -> void:
 func _on_exit_game_button_button_up() -> void:
 	get_tree().quit()
 	pass
+
+
+func _on_respawn_pressed() -> void:
+	GameManager.game_2d.respawn_character()
+	GuiManager.switch_gui_panel(GuiManager.GUIPanel.CLOSED)
+	GameManager.resume_game()
+	pass # Replace with function body.

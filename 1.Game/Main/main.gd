@@ -34,6 +34,7 @@ func start_music() -> void:
 
 
 func start_game() -> bool:
+
 	clear_game()
 	return add_game()
 
@@ -43,11 +44,13 @@ func clear_game() -> void:
 	if game_2d:
 		game_2d.queue_free()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	sub_viewport_container.visible = false
 	pass
 
 
 
 func add_game() -> bool:
+	sub_viewport_container.visible = true
 	game_2d = get_game_node()
 	if !game_2d:
 		print("Not game")
