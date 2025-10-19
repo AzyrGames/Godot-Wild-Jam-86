@@ -1,14 +1,21 @@
-[gd_scene load_steps=7 format=4 uid="uid://dtfsdhl03ostd"]
+[gd_scene load_steps=10 format=4 uid="uid://dtfsdhl03ostd"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_qy42e"]
 [ext_resource type="TileSet" uid="uid://dfw6cnhjb3cpn" path="res://5.Resouces/Tileset/tileset_oneways.tres" id="2_5vls1"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_x4ejk"]
 [ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="5_5vls1"]
+[ext_resource type="Script" uid="uid://bmhsjf5ienrk3" path="res://4.Level/Component/fade_in_trigger_area.gd" id="6_ug2bu"]
 [ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="6_ugxel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugxel"]
+size = Vector2(200, 160)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vls1"]
 outline_size = 1
 outline_color = Color(0.12619856, 0.19195244, 0.28181565, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug2bu"]
+size = Vector2(220, 160)
 
 [node name="Map1Level1" type="Node2D" node_paths=PackedStringArray("unmasked_world", "masked_tiles", "oneway_layer")]
 script = ExtResource("1_qy42e")
@@ -34,41 +41,127 @@ collision_enabled = false
 position = Vector2(-80, 60)
 check_point_name = "m1l1c1"
 
-[node name="Label" type="Label" parent="."]
-z_index = 1
-offset_left = 20.0
+[node name="BasicMovement" type="Area2D" parent="."]
+position = Vector2(-40, -20)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("6_ug2bu")
+active = true
+oneshot = true
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicMovement"]
+shape = SubResource("RectangleShape2D_ugxel")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="BasicMovement"]
+offset_left = -60.0
 offset_top = -60.0
-offset_right = 160.0
+offset_right = 60.0
 offset_bottom = -20.0
+
+[node name="Label" type="Label" parent="BasicMovement/Panel"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -20.0
+offset_right = 70.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("5_5vls1")
 text = "A or D to move
 Space to Jump"
 label_settings = SubResource("LabelSettings_5vls1")
 horizontal_alignment = 1
+metadata/_edit_lock_ = true
 
-[node name="Label2" type="Label" parent="."]
+[node name="HoldSpace" type="Area2D" parent="."]
+position = Vector2(320, -20)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("6_ug2bu")
+active = true
+oneshot = true
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldSpace"]
+position = Vector2(-70, 0)
+shape = SubResource("RectangleShape2D_ug2bu")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="HoldSpace"]
+offset_left = -40.0
+offset_top = 40.0
+offset_right = 80.0
+offset_bottom = 80.0
+
+[node name="Label2" type="Label" parent="HoldSpace/Panel"]
 z_index = 1
-offset_left = 260.0
-offset_top = -60.0
-offset_right = 380.0
-offset_bottom = -20.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("5_5vls1")
+theme_override_constants/paragraph_spacing = 7794
 text = "Hold Space 
 to Jump higher"
 label_settings = SubResource("LabelSettings_5vls1")
 horizontal_alignment = 1
+metadata/_edit_lock_ = true
 
-[node name="Label3" type="Label" parent="."]
+[node name="OneWayPlatforms" type="Area2D" parent="."]
+position = Vector2(580, -60)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("6_ug2bu")
+active = true
+oneshot = true
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(-70, 0)
+shape = SubResource("RectangleShape2D_ug2bu")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="OneWayPlatforms"]
+offset_left = -120.0
+offset_top = 100.0
+offset_bottom = 140.0
+
+[node name="Label3" type="Label" parent="OneWayPlatforms/Panel"]
 z_index = 1
-offset_left = 580.0
-offset_top = -80.0
-offset_right = 700.0
-offset_bottom = -40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("5_5vls1")
 text = "Hold S and Space
 To Jump Down"
 label_settings = SubResource("LabelSettings_5vls1")
 horizontal_alignment = 1
+metadata/_edit_lock_ = true

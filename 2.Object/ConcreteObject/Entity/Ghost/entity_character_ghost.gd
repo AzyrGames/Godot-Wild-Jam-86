@@ -4,6 +4,7 @@ class_name EntityCharacterGhost2D
 @export var active: bool = false:
 	set(value):
 		active = value
+		set_warn_oversized(_state == GameData.GhostState.OVERSIZE)
 
 @export var is_following: bool = true
 @export var move_speed: float
@@ -14,7 +15,7 @@ class_name EntityCharacterGhost2D
 var is_mask := true
 
 var _time := 0.0
-var _oversized := false
+var _state := GameData.GhostState.IDLE
 
 func _ready() -> void:
 	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
@@ -60,7 +61,7 @@ func follow_player() -> void:
 	if cos(_time) > 0.0:
 		z_index = 2
 	else:
-		z_index = 0
+		z_index = 1
 	if global_position.distance_to(_characer_target_pos) > 5:
 		move_direction = global_position.direction_to(_characer_target_pos)
 	else:
@@ -68,7 +69,7 @@ func follow_player() -> void:
 	pass
 
 func calculate_velocity() -> void:
-	velocity = move_direction * move_speed * (1.0 if not _oversized else 0.5)
+	velocity = move_direction * move_speed * (1.0 if _state != GameData.GhostState.OVERSIZE else 0.5)
 	pass
 
 
@@ -88,6 +89,16 @@ func set_marker() -> void:
 func clear_marker() -> void:
 	EventBus.mask_track_abort.emit()
 
-func set_warn_oversized(oversized: bool) -> void:
-	body.set_warn_oversized(oversized)
-	_oversized = oversized
+func set_ghost_state(state: GameData.GhostState) -> void:
+	body.set_ghost_state(state)
+	_state = state
+
+func set_warn_oversized(oversize: bool) -> void:
+	if oversize:
+		set_ghost_state(GameData.GhostState.OVERSIZE)
+	elif GameData.mask_tracker == self:
+		set_ghost_state(GameData.GhostState.MASKING)
+	elif active:
+		set_ghost_state(GameData.GhostState.ACTIVE)
+	else:
+		set_ghost_state(GameData.GhostState.IDLE)

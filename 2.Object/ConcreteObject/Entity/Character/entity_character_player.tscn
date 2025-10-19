@@ -148,6 +148,7 @@ stream = SubResource("AudioStreamRandomizer_5kksx")
 bus = &"SFX"
 
 [node name="ASPJump" type="AudioStreamPlayer2D" parent="."]
+z_index = 1
 stream = SubResource("AudioStreamRandomizer_d011n")
 
 [node name="ASPJumpVoice" type="AudioStreamPlayer2D" parent="."]
