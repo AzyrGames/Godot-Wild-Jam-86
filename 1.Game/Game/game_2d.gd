@@ -67,7 +67,7 @@ func reset_game_map() -> void:
 var _request_game_map_path: String
 var _request_map: GameData.MapList
 var _load_request_progress: Array = [0.0]
-var _is_map_request: bool = false
+# var _is_map_request: bool = false
 
 func switch_map() -> void:
 	pass

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbc8ytg0miju5"]
+
+[ext_resource type="Script" uid="uid://b8g33k4m0u7pq" path="res://7.UI/GUI/HUD/ingame_hud.gd" id="1_pm70q"]
+[ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="3_uu5ep"]
+[ext_resource type="FontFile" uid="uid://ca1re3aydie38" path="res://7.UI/Font/pixel_unicode/Pixel-UniCode.ttf" id="3_y8hxg"]
+
+[sub_resource type="FontVariation" id="FontVariation_23llv"]
+base_font = ExtResource("3_y8hxg")
+
+[node name="IngameHub" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_pm70q")
+
+[node name="FPSLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("3_uu5ep")
+text = "FPS"
+
+[node name="GameTimeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_top = 2.0
+offset_right = 13.0
+offset_bottom = 25.0
+grow_horizontal = 0
+theme = ExtResource("3_uu5ep")
+theme_override_fonts/font = SubResource("FontVariation_23llv")
+text = "Timer"

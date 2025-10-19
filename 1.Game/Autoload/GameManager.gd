@@ -39,6 +39,7 @@ func connect_event_bus() -> void:
 	EventBus.mask_destroyed.connect(func():
 		current_mask = Rect2i(0, 0, 0, 0)
 	)
+	EventBus.area_triggered.connect(_on_area_triggered)
 	pass
 
 
@@ -53,6 +54,8 @@ func configure_game_settings() -> void:
 
 func start_game() -> void:
 	is_game_active = main_2d.start_game()
+	GuiManager.active_gui_panel.get(GuiManager.GUIPanel.HUD).visible = true
+
 	pass
 
 
@@ -64,6 +67,13 @@ func resume_game() -> void:
 
 # Reset game to initial state
 func reset_game() -> void:
+	pass
+
+
+func game_victory() -> void:
+	clear_game()
+	main_2d.game_timer.paused = true
+	GuiManager.switch_gui_panel(GuiManager.GUIPanel.VICTORY_SCREEN)
 	pass
 
 
@@ -80,6 +90,7 @@ func quit_game() -> void:
 
 
 func clear_game() -> void:
+	GuiManager.active_gui_panel.get(GuiManager.GUIPanel.HUD).visible = false
 	main_2d.clear_game()
 	set_game_paused(false)
 
@@ -127,3 +138,10 @@ func freeze_frame(time_scale: float, duration: float) -> void:
 	await get_tree().create_timer(duration * time_scale, false).timeout
 	Engine.time_scale = default_time_scale
 	EventBus.game_unfrozen.emit()
+
+
+
+func _on_area_triggered(_trigger_name: String) -> void:
+	if _trigger_name == "Victory":
+		game_victory()
+	pass

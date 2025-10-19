@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=4 uid="uid://dsi5nsmfphwa6"]
+[gd_scene load_steps=9 format=4 uid="uid://dsi5nsmfphwa6"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_l26py"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_ln8gj"]
 [ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="3_ynkwa"]
 [ext_resource type="PackedScene" uid="uid://c07mi1fdbfwqm" path="res://3.System/TriggerArea/death_zone.tscn" id="4_l3lfp"]
 [ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="5_k7gta"]
+[ext_resource type="Script" uid="uid://c0kcen2hphj3m" path="res://3.System/TriggerArea/base/trigger_area_2d.gd" id="6_cvcvc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mscxc"]
-size = Vector2(635, 40)
+size = Vector2(800, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31fk1"]
+size = Vector2(60, 70)
 
 [node name="Map3Level1" type="Node2D" node_paths=PackedStringArray("unmasked_world", "masked_tiles")]
 z_index = -1
@@ -37,9 +41,21 @@ active = true
 [node name="DeathZone" parent="." instance=ExtResource("4_l3lfp")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
-position = Vector2(582.5, 40)
+position = Vector2(740, 40)
 shape = SubResource("RectangleShape2D_mscxc")
 
 [node name="MapTransition2D" parent="." instance=ExtResource("5_k7gta")]
 position = Vector2(1130, -170)
 to_map = 2
+
+[node name="TriggerArea2D" type="Area2D" parent="."]
+position = Vector2(1110, -95)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("6_cvcvc")
+active = true
+trigger_name = "Victory"
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea2D"]
+shape = SubResource("RectangleShape2D_31fk1")

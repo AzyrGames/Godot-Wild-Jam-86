@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0rjmyu6yhxev"]
+[gd_scene load_steps=8 format=3 uid="uid://b0rjmyu6yhxev"]
 
 [ext_resource type="Script" uid="uid://ybutnrp1d24r" path="res://1.Game/Main/main.gd" id="1_bhcqt"]
 [ext_resource type="Shader" uid="uid://du6dphj2kesr4" path="res://5.Resouces/Shader/post_effect.gdshader" id="2_bhcqt"]
+[ext_resource type="AudioStream" uid="uid://b0f2jbu4oapyt" path="res://8.Asset/Audio/music_maintheme_intro.ogg" id="3_rv7se"]
+[ext_resource type="AudioStream" uid="uid://r82qhfhdfj4f" path="res://8.Asset/Audio/music_maintheme.ogg" id="4_siurp"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bhcqt"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
@@ -26,10 +28,22 @@ shader_parameter/saturation = 1.10000005225
 shader_parameter/value_mult = 1.0
 shader_parameter/aberration_amount = 0.02000000095
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("sub_viewport_container", "sub_viewport")]
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_bohkq"]
+clip_count = 2
+clip_0/name = &"music_main_intro"
+clip_0/stream = ExtResource("3_rv7se")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"music_main"
+clip_1/stream = ExtResource("4_siurp")
+clip_1/auto_advance = 0
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("sub_viewport_container", "sub_viewport", "game_timer", "asp_music")]
 script = ExtResource("1_bhcqt")
 sub_viewport_container = NodePath("SubViewportContainer")
 sub_viewport = NodePath("SubViewportContainer/SubViewport")
+game_timer = NodePath("Timer")
+asp_music = NodePath("AudioStreamPlayer")
 metadata/_custom_type_script = "uid://ybutnrp1d24r"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -45,3 +59,11 @@ canvas_item_default_texture_repeat = 1
 audio_listener_enable_2d = true
 size = Vector2i(480, 272)
 render_target_update_mode = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = SubResource("AudioStreamInteractive_bohkq")
+autoplay = true
+bus = &"Music"
+
+[node name="Timer" type="Timer" parent="."]
