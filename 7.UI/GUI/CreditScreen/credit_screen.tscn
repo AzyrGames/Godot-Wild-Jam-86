@@ -25,6 +25,7 @@ grow_vertical = 2
 ratio = 1.7778
 
 [node name="Panel" type="Panel" parent="AspectRatioContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_4pbp1")
 
@@ -72,7 +73,12 @@ layout_mode = 2
 
 [node name="Line" type="Label" parent="AspectRatioContainer/HBoxContainer2/VBoxContainer/MainContent/VBoxContainer"]
 layout_mode = 2
-text = "Made in Godot Engine
+text = "AzyrGames - Game Developer
+Setadokalo - Programmer, Artist
+Felpo - Composer, Audio deisgner
+
+Made in Godot Engine
+For Godot Wild Jam 86
 "
 horizontal_alignment = 1
 

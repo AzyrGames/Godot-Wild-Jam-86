@@ -18,7 +18,7 @@ time_to_stop_ticks = 12
 max_jump_height = 64.0
 jump_time_to_peak_ticks = 26
 jump_time_to_fall_ticks = 24
-head_bump_velocity = -20.0
+head_bump_velocity = 20.0
 running_horizontal_boost = 20.0
 jump_cutoff_multiplier = 0.4
 air_control_time_to_max_ticks = 20
@@ -132,6 +132,7 @@ process_material = SubResource("ParticleProcessMaterial_f5gn7")
 
 [node name="ASPRunning" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_5kksx")
+bus = &"SFX"
 
 [node name="ASPJump" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_d011n")
