@@ -2,13 +2,12 @@ extends Node2D
 class_name Main2D
 
 const GAME_PATH: String = "uid://bw3votfvu4bw7"
+const GAME_TIME_LIMIT : float = 60 * 60.0
 
 @export var sub_viewport_container: SubViewportContainer
 @export var sub_viewport: SubViewport
 @export var game_timer: Timer
 @export var asp_music: AudioStreamPlayer
-
-@export var cross_hair : Sprite2D
 
 var game_2d: Game2D
 
@@ -34,8 +33,9 @@ func start_music() -> void:
 
 
 func start_game() -> bool:
-
 	clear_game()
+	game_timer.paused = false
+	game_timer.start(GAME_TIME_LIMIT)
 	return add_game()
 
 

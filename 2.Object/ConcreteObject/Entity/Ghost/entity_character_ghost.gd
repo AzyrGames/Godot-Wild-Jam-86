@@ -44,8 +44,8 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
-func _on_character_switched(char: GameData.CharacterType) -> void:
-	if !char == GameData.CharacterType.GHOST: return
+func _on_character_switched(_character: GameData.CharacterType) -> void:
+	if !_character == GameData.CharacterType.GHOST: return
 	active = !active
 	pass
 

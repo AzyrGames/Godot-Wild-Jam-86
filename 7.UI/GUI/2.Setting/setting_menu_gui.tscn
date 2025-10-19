@@ -110,9 +110,10 @@ option_text = "Music Volume"
 
 [node name="ValueSliderSFXVolume" parent="AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("4_nmtg8")]
 layout_mode = 2
-option_text = "SFX Valume"
+option_text = "SFX Volume"
 
 [node name="ValueSliderScreenShake" parent="AspectRatioContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("4_nmtg8")]
+visible = false
 layout_mode = 2
 option_text = "Screen Shake"
 
