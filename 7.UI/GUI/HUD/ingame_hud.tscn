@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbc8ytg0miju5"]
+[gd_scene load_steps=7 format=3 uid="uid://cbc8ytg0miju5"]
 
 [ext_resource type="Script" uid="uid://b8g33k4m0u7pq" path="res://7.UI/GUI/HUD/ingame_hud.gd" id="1_pm70q"]
 [ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="3_uu5ep"]
 [ext_resource type="FontFile" uid="uid://ca1re3aydie38" path="res://7.UI/Font/pixel_unicode/Pixel-UniCode.ttf" id="3_y8hxg"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_ck5e6"]
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="FontVariation" id="FontVariation_23llv"]
 base_font = ExtResource("3_y8hxg")
+
+[sub_resource type="LabelSettings" id="LabelSettings_yta7v"]
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [node name="IngameHub" type="Control"]
 layout_mode = 3
@@ -24,6 +32,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("3_uu5ep")
 text = "FPS"
+label_settings = SubResource("LabelSettings_ck5e6")
 
 [node name="GameTimeLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -40,3 +49,4 @@ grow_horizontal = 0
 theme = ExtResource("3_uu5ep")
 theme_override_fonts/font = SubResource("FontVariation_23llv")
 text = "Timer"
+label_settings = SubResource("LabelSettings_yta7v")

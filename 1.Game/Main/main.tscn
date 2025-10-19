@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0rjmyu6yhxev"]
+[gd_scene load_steps=11 format=3 uid="uid://b0rjmyu6yhxev"]
 
 [ext_resource type="Script" uid="uid://ybutnrp1d24r" path="res://1.Game/Main/main.gd" id="1_bhcqt"]
 [ext_resource type="Shader" uid="uid://du6dphj2kesr4" path="res://5.Resouces/Shader/post_effect.gdshader" id="2_bhcqt"]
 [ext_resource type="AudioStream" uid="uid://b0f2jbu4oapyt" path="res://8.Asset/Audio/music_maintheme_intro.ogg" id="3_rv7se"]
 [ext_resource type="AudioStream" uid="uid://r82qhfhdfj4f" path="res://8.Asset/Audio/music_maintheme.ogg" id="4_siurp"]
+[ext_resource type="AudioStream" uid="uid://c42gh577j5iiw" path="res://8.Asset/Audio/music_victorytheme.ogg" id="5_bohkq"]
 [ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="5_siurp"]
+[ext_resource type="AudioStream" uid="uid://qjo0m8x4wfgg" path="res://8.Asset/Audio/music_ingame.ogg" id="6_5lpr8"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bhcqt"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
@@ -30,14 +32,48 @@ shader_parameter/value_mult = 1.0
 shader_parameter/aberration_amount = 0.0050000002375
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_bohkq"]
-clip_count = 2
+clip_count = 4
 clip_0/name = &"music_main_intro"
 clip_0/stream = ExtResource("3_rv7se")
 clip_0/auto_advance = 1
 clip_0/next_clip = 1
 clip_1/name = &"music_main"
 clip_1/stream = ExtResource("4_siurp")
-clip_1/auto_advance = 0
+clip_1/auto_advance = 1
+clip_1/next_clip = 2
+clip_2/name = &"music_in_game"
+clip_2/stream = ExtResource("6_5lpr8")
+clip_2/auto_advance = 1
+clip_2/next_clip = 1
+clip_3/name = &"music_victory"
+clip_3/stream = ExtResource("5_bohkq")
+clip_3/auto_advance = 0
+_transitions = {
+Vector2i(1, 2): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(1, 3): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(2, 1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(2, 3): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+}
+}
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("sub_viewport_container", "sub_viewport", "game_timer", "asp_music", "background")]
 script = ExtResource("1_bhcqt")

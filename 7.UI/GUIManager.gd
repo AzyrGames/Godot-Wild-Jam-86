@@ -30,6 +30,9 @@ var is_playing: bool = false
 var canvas_layer: CanvasLayer
 
 
+var show_fps: bool = false
+var show_game_timer: bool = false
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	setup_gui_manager()

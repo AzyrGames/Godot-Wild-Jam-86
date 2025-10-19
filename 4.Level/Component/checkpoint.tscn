@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://j5jqvofgb1no"]
+[gd_scene load_steps=11 format=4 uid="uid://j5jqvofgb1no"]
 
 [ext_resource type="Script" uid="uid://bdah4wskhtoqr" path="res://3.System/Checkpoint/checkpoint_2d.gd" id="1_unnu2"]
 [ext_resource type="Texture2D" uid="uid://df3d5wy7yqkrp" path="res://8.Asset/2D/Checkpoint/texture_checkpoint_Glow.ase_layer_tex" id="1_w2ox7"]
 [ext_resource type="Script" uid="uid://cocyq087a2ucj" path="res://3.System/Checkpoint/CharacterRespawnPoint/character_respawn_point_2d.gd" id="3_bcsj0"]
+[ext_resource type="AudioStream" uid="uid://cpeq2dnvoo4h3" path="res://8.Asset/Audio/sfx_checkpoint.ogg" id="4_bcsj0"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_jqlnq"]
 _data = PackedByteArray("AAADAAUAAAABAAAAJwAAACgAAACqAAAAUklGRqIAAABXRUJQVlA4TJYAAAAvJsAJECegkI0kOLYuq/CexhFmG+fGMoZB3P8Is41z4xjC3sdw8x8A/1dDdQsYtI3kaL4Q2EfwmmVwwx/dldkvACL6PwEA3R3A7VxbSQCgG7G9JgYtjXOgfmFbSSdJljRRktcXJL0kZzdJrVwLHLW1vssBHiDZqiRPqknSmT7TatKiExHbu1TDt6xHBP5mK0EFANzGjh4=")
@@ -149,14 +150,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nw657"]
 size = Vector2(80, 60)
 
-[node name="Checkpoint" type="Area2D" node_paths=PackedStringArray("character_respawn_point", "collision_shape", "animation_player")]
+[node name="Checkpoint" type="Area2D" node_paths=PackedStringArray("character_respawn_point", "collision_shape", "animation_player", "asp_checkpoint")]
 collision_layer = 4096
 collision_mask = 2
 script = ExtResource("1_unnu2")
 character_respawn_point = NodePath("CharacterRespawnPoint")
 collision_shape = NodePath("CollisionShape2D")
 animation_player = NodePath("AnimationPlayer")
-active = true
+asp_checkpoint = NodePath("ASPCheckpoint")
 trigger_mode = 1
 metadata/_custom_type_script = "uid://bdah4wskhtoqr"
 
@@ -188,3 +189,7 @@ metadata/_custom_type_script = "uid://cocyq087a2ucj"
 visible = false
 position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_nw657")
+
+[node name="ASPCheckpoint" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_bcsj0")
+bus = &"SFX"
