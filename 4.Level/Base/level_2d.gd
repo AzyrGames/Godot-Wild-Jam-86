@@ -3,11 +3,14 @@ class_name Level2D
 
 const MASKABLE_ROCK: int = 4
 const MASK_OUT_ROCK: int = 5
+const ONEWAY: int = 6
 
 @export
 var unmasked_world: TileMapLayer
 @export
 var masked_tiles: TileMapLayer
+@export
+var oneway_layer: TileMapLayer
 
 func _ready() -> void:
 	EventBus.mask_created.connect(_on_mask_created)
@@ -19,6 +22,11 @@ func _ready() -> void:
 	for tpos in unmasked_world.get_used_cells():
 		if BetterTerrain.get_cell(unmasked_world, tpos) == MASK_OUT_ROCK:
 			switch_cell(unmasked_world, masked_tiles, tpos)
+		elif BetterTerrain.get_cell(unmasked_world, tpos) == ONEWAY:
+			BetterTerrain.set_cell(oneway_layer, tpos, 0)
+			BetterTerrain.set_cell(unmasked_world, tpos, -1)
+	BetterTerrain.update_terrain_area(oneway_layer, oneway_layer.get_used_rect())
+
 
 func _on_mask_created(mask: Rect2i) -> void:
 	if not masked_tiles or not unmasked_world:

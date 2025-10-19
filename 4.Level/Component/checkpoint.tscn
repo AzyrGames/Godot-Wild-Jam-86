@@ -150,7 +150,6 @@ _data = {
 size = Vector2(80, 60)
 
 [node name="Checkpoint" type="Area2D" node_paths=PackedStringArray("character_respawn_point", "collision_shape", "animation_player")]
-z_index = -2
 collision_layer = 4096
 collision_mask = 2
 script = ExtResource("1_unnu2")
@@ -184,5 +183,6 @@ script = ExtResource("3_bcsj0")
 metadata/_custom_type_script = "uid://cocyq087a2ucj"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_nw657")

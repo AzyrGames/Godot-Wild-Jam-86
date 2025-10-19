@@ -1,16 +1,15 @@
-[gd_scene load_steps=12 format=4 uid="uid://dpggt20oh3t7o"]
+[gd_scene load_steps=11 format=3 uid="uid://dpggt20oh3t7o"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_35pyb"]
-[ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_2dxlp"]
 [ext_resource type="PackedScene" uid="uid://dtfsdhl03ostd" path="res://4.Level/Map/Map1/Level/map_1_level_1.tscn" id="2_vf2xv"]
 [ext_resource type="PackedScene" uid="uid://btauevy5ped7p" path="res://4.Level/Map/Map1/Level/map_1_level_2.tscn" id="3_hox6u"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="4_5426l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5426l"]
-size = Vector2(880, 200)
+size = Vector2(860, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dxlp"]
-size = Vector2(1240, 200)
+size = Vector2(1260, 200)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2dxlp"]
 
@@ -29,14 +28,10 @@ z_index = -1
 script = ExtResource("1_35pyb")
 metadata/_custom_type_script = "uid://dvtiu04654nwl"
 
-[node name="TMLFilter" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAArAPz/AQABAAAAAAAsAPz/AQABAAAAAAArAP3/AQABAAEAAAAsAP3/AQABAAEAAAArAP7/AQABAAEAAAAsAP7/AQABAAEAAAArAP//AQABAAEAAAAsAP//AQABAAEAAAArAAAAAQABAAEAAAAsAAAAAQABAAEAAAArAAEAAQABAAEAAAAsAAEAAQABAAEAAAArAAIAAQABAAIAAAAsAAIAAQABAAIAAAApAPz/AQABAAAAAAAqAPz/AQABAAAAAAApAP3/AQABAAEAAAAqAP3/AQABAAEAAAApAP7/AQABAAEAAAAqAP7/AQABAAEAAAApAP//AQABAAEAAAAqAP//AQABAAEAAAApAAAAAQABAAEAAAAqAAAAAQABAAEAAAApAAEAAQABAAEAAAAqAAEAAQABAAEAAAApAAIAAQABAAIAAAAqAAIAAQABAAIAAAAtAPz/AQACAAAAAAAtAP3/AQACAAEAAAAtAP7/AQACAAEAAAAtAP//AQACAAEAAAAtAAAAAQACAAEAAAAtAAEAAQACAAEAAAAtAAIAAQACAAIAAAApAPL/AQAAAAAAAAAqAPL/AQABAAAAAAArAPL/AQABAAAAAAAsAPL/AQACAAAAAAApAPP/AQAAAAEAAAAqAPP/AQABAAEAAAArAPP/AQABAAEAAAAsAPP/AQACAAEAAAApAPT/AQAAAAEAAAAqAPT/AQABAAEAAAArAPT/AQABAAEAAAAsAPT/AQACAAEAAAApAPX/AQAAAAIAAAAqAPX/AQABAAIAAAArAPX/AQABAAIAAAAsAPX/AQACAAIAAAAoAPz/AQAAAAAAAAAoAP3/AQAAAAEAAAAoAP7/AQAAAAEAAAAoAP//AQAAAAEAAAAoAAAAAQAAAAEAAAAoAAEAAQAAAAEAAAAoAAIAAQAAAAIAAAA=")
-tile_set = ExtResource("2_2dxlp")
-
 [node name="Map1Level1" parent="." instance=ExtResource("2_vf2xv")]
 
 [node name="Map1Level2" parent="." instance=ExtResource("3_hox6u")]
-position = Vector2(900, 0)
+position = Vector2(840, 0)
 
 [node name="CameraConstraint" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
 collision_layer = 4096
@@ -46,19 +41,20 @@ constraint_camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://c0kcen2hphj3m"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint"]
-position = Vector2(420, -100)
+visible = false
+position = Vector2(290, -40)
 shape = SubResource("RectangleShape2D_5426l")
 
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint"]
 ignore_rotation = false
 enabled = false
-limit_left = -40
-limit_top = -230
-limit_right = 1156
-limit_bottom = 40
+limit_left = -160
+limit_top = -170
+limit_right = 1300
+limit_bottom = 100
 
 [node name="CameraConstraint1" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
-position = Vector2(1070, -4)
+position = Vector2(1070, 60)
 collision_layer = 4096
 collision_mask = 2
 script = ExtResource("4_5426l")
@@ -67,18 +63,20 @@ active = true
 metadata/_custom_type_script = "uid://ltyvu5n6v5tb"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
-position = Vector2(450, -100)
+visible = false
+position = Vector2(280, -100)
 shape = SubResource("RectangleShape2D_2dxlp")
 
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
 ignore_rotation = false
 enabled = false
-limit_left = 524
-limit_top = -230
-limit_right = 2140
-limit_bottom = 40
+limit_left = 300
+limit_top = -170
+limit_right = 2020
+limit_bottom = 100
 
 [node name="WorldBorders" type="StaticBody2D" parent="."]
+position = Vector2(-100, 60)
 collision_layer = 64
 collision_mask = 64
 
