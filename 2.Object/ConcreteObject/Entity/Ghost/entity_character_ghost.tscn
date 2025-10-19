@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnv7r0f8ypqrw"]
+[gd_scene load_steps=15 format=3 uid="uid://bnv7r0f8ypqrw"]
 
 [ext_resource type="Script" uid="uid://ciyuq7rs48dma" path="res://2.Object/ConcreteObject/Entity/Ghost/entity_character_ghost.gd" id="1_hg4ld"]
 [ext_resource type="Script" uid="uid://ckvb2btma1dev" path="res://2.Object/ConcreteObject/Entity/Ghost/ghost_visual.gd" id="2_gejy7"]
 [ext_resource type="SpriteFrames" uid="uid://cs3t6naila1xn" path="res://8.Asset/2D/texture_ghost_face.aseprite" id="3_q2vkl"]
+[ext_resource type="AudioStream" uid="uid://d3qe5m4a3hxah" path="res://8.Asset/Audio/sfx_ghost_hover_sound_2.ogg" id="4_q2vkl"]
+[ext_resource type="AudioStream" uid="uid://cf47hadxaprii" path="res://8.Asset/Audio/sfx_ghost_hover_end.ogg" id="5_7uih4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tcxqw"]
 radius = 20.024984
@@ -53,13 +55,40 @@ alpha_curve = SubResource("CurveTexture_q2vkl")
 hue_variation_min = -0.010000022
 hue_variation_max = 0.009999977
 
-[node name="EntityCharacterGhost" type="CharacterBody2D" node_paths=PackedStringArray("body")]
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_q2vkl"]
+clip_count = 2
+clip_0/name = &"sfx_ghost_hover"
+clip_0/stream = ExtResource("4_q2vkl")
+clip_0/auto_advance = 0
+clip_1/name = &"sfx_ghost_hover_end"
+clip_1/stream = ExtResource("5_7uih4")
+clip_1/auto_advance = 0
+initial_clip = 1
+_transitions = {
+Vector2i(0, 1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"hold_previous": true,
+"to_time": 2
+},
+Vector2i(1, 0): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"hold_previous": true,
+"to_time": 2
+}
+}
+
+[node name="EntityCharacterGhost" type="CharacterBody2D" node_paths=PackedStringArray("body", "asp_ghost_hover")]
 z_index = 2
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hg4ld")
 move_speed = 120.0
 body = NodePath("Polygon2D/SubViewport/Line2D")
+asp_ghost_hover = NodePath("AudioStreamPlayer2D")
 metadata/_custom_type_script = "uid://ciyuq7rs48dma"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -102,3 +131,8 @@ amount = 6
 texture = SubResource("GradientTexture2D_q2vkl")
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_7uih4")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamInteractive_q2vkl")
+pitch_scale = 1.1
+bus = &"SFX"
