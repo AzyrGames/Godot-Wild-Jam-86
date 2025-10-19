@@ -37,6 +37,8 @@ signal coyote_time_started()
 
 @export var asp_running: AudioStreamPlayer2D
 @export var asp_jump: AudioStreamPlayer2D
+@export var asp_jump_voice: AudioStreamPlayer2D
+
 
 ## Debug Display - Read-only calculated values
 var debug_forward_acceleration: float = 0.0
@@ -341,9 +343,11 @@ func _perform_jump() -> void:
 	# Emit jump signal
 	jumped.emit(jump_vel, was_running)
 	# vfx_jumping.emitting = true
-	if asp_jump:
+	if asp_jump and asp_jump_voice:
 		if !asp_jump.playing:
 			asp_jump.playing = true
+		if !asp_jump_voice.playing:
+			asp_jump_voice.playing = true
 	Utils.add_vfx(vfx_jumping, global_position)
 
 

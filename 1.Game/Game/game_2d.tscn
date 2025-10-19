@@ -187,6 +187,7 @@ current_game_map = NodePath("Map1")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
 [node name="OceanBackground" parent="." instance=ExtResource("9_murlr")]
+visible = false
 
 [node name="Parallax2D2" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0, 0)
@@ -226,11 +227,4 @@ active = true
 
 [node name="Map1" parent="." instance=ExtResource("9_k3eo0")]
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0, 0)
-
-[node name="Polygon2D" type="Polygon2D" parent="Parallax2D"]
-visible = false
-material = SubResource("ShaderMaterial_wdgkn")
-polygon = PackedVector2Array(-408, -679, 1115, -659, 1198, 540, -411, 485)
-script = ExtResource("12_kg0ya")
+[node name="OceanBackground2" parent="." instance=ExtResource("9_murlr")]
