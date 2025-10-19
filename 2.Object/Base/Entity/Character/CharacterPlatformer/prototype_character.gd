@@ -96,7 +96,10 @@ var _is_one_way_platform: bool
 ## Initialize physics calculations and setup timers
 func _ready() -> void:
 	GameManager.game_character = self
-	GameData.entity_character_node.get_or_add(GameData.CharacterType.PLATFORMER, self)
+	if GameData.entity_character_node.has(GameData.CharacterType.PLATFORMER):
+		GameData.entity_character_node.set(GameData.CharacterType.PLATFORMER, self)
+	else:
+		GameData.entity_character_node.get_or_add(GameData.CharacterType.PLATFORMER, self)
 
 	if movement_setting:
 		# Connect resource changed signal

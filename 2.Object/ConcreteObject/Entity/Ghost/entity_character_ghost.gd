@@ -27,7 +27,10 @@ var _time := 0.0
 var _state := GameData.GhostState.IDLE
 
 func _ready() -> void:
-	GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
+	if GameData.entity_character_node.has(GameData.CharacterType.GHOST):
+		GameData.entity_character_node.set(GameData.CharacterType.GHOST, self)
+	else:
+		GameData.entity_character_node.get_or_add(GameData.CharacterType.GHOST, self)
 	GameManager.game_ghost = self
 	# EventBus.mask_created.connect(func(_v): is_mask = true)
 	# EventBus.mask_destroyed.connect(func(): is_mask = false)
