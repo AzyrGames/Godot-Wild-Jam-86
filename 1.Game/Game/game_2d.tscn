@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://bw3votfvu4bw7"]
+[gd_scene load_steps=16 format=3 uid="uid://bw3votfvu4bw7"]
 
 [ext_resource type="Script" uid="uid://b74ubmyligtxg" path="res://1.Game/Game/game_2d.gd" id="1_hbmr2"]
 [ext_resource type="PackedScene" uid="uid://caa43fkynpx52" path="res://2.Object/ConcreteObject/Entity/Character/entity_character_player.tscn" id="3_7mnxe"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="9_murlr"]
 [ext_resource type="Shader" uid="uid://188xc3mv7l64" path="res://5.Resouces/Shader/ghost_shader.gdshader" id="10_k3eo0"]
 [ext_resource type="Texture2D" uid="uid://5t2v3le1j7sw" path="res://8.Asset/2D/texture_ghost_TLUT.png" id="11_wdgkn"]
-[ext_resource type="Script" path="res://2.Object/ConcreteObject/ghost_filter.gd" id="12_kg0ya"]
+[ext_resource type="Script" uid="uid://dlxeo1x0f46ck" path="res://2.Object/ConcreteObject/ghost_filter.gd" id="12_kg0ya"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k3eo0"]
 texture = ExtResource("7_la1kc")
@@ -209,7 +209,6 @@ follow_target_node = NodePath("../PlayerSwitcher/EntityCharacterPlayer")
 metadata/_custom_type_script = "uid://cacxmmyur2858"
 
 [node name="GhostMask" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAhAAUAAAACAAEAAAAgAAUAAAACAAEAAAAgAAYAAAABAAAAADAhAAYAAAABAAAAADAiAAYAAAABAAAAADAiAAUAAAACAAEAAAAiAAQAAAACAAEAAAAhAAQAAAACAAEAAAAgAAQAAAACAAEAAAAfAAQAAAABAAAAAGAfAAUAAAABAAAAAGAfAAYAAAAAAAAAAGAfAAMAAAAAAAAAAAAgAAMAAAABAAAAAAAhAAMAAAABAAAAAAAiAAMAAAABAAAAAAAjAAMAAAAAAAAAAFAjAAQAAAABAAAAAFAjAAUAAAABAAAAAFAjAAYAAAAAAAAAADAkAAYAAAADAAEAAAAkAAUAAAAAAAQAAAAkAAQAAAAAAAQAAAAkAAMAAAAAAAQAAAAkAAIAAAABAAIAAAAjAAIAAAABAAQAAAAiAAIAAAABAAQAAAAhAAIAAAABAAQAAAAgAAIAAAABAAQAAAAfAAIAAAADAAEAAAAfAAEAAAADAAAAAAAgAAEAAAAAAAMAAAAhAAEAAAAAAAMAAAAiAAEAAAAAAAMAAAAjAAEAAAAAAAMAAAAkAAEAAAAAAAMAAAAlAAEAAAAEAAAAAAAlAAIAAAABAAMAAAAlAAMAAAABAAMAAAAlAAQAAAABAAMAAAAlAAUAAAABAAMAAAAlAAYAAAAEAAEAAAA=")
 tile_set = SubResource("TileSet_wdgkn")
 script = ExtResource("8_murlr")
 
