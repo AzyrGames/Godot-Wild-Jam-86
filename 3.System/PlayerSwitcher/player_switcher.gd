@@ -3,6 +3,7 @@ extends Node2D
 
 @export var character_platformer: EntityCharacterPlatformer2D
 @export var character_ghost: EntityCharacterGhost2D
+@export var asp_charswitch: AudioStreamPlayer
 
 var is_character_platformer: bool = true
 
@@ -34,6 +35,8 @@ func switch_character() ->void:
 		EventBus.character_switched.emit(GameData.CharacterType.GHOST)
 	else:
 		EventBus.character_switched.emit(GameData.CharacterType.PLATFORMER)
+	if asp_charswitch:
+		asp_charswitch.play()
 	switch_cooldown.start()
 	pass
 
