@@ -50,4 +50,4 @@ signal mask_destroyed()
 
 
 ## Emitted when checkpoint is entered or exited
-signal check_point_entered(_value: bool)
+signal check_point_entered()
