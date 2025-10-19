@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ndwe8omip53i"]
+[gd_scene load_steps=6 format=3 uid="uid://ndwe8omip53i"]
 
 [ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="1_6e6hy"]
 [ext_resource type="StyleBox" uid="uid://crpci47t7tqbd" path="res://7.UI/Theme/panel_plat_black.tres" id="2_8dc38"]
@@ -6,6 +6,25 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_gm5af"]
 font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne8if"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.1, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+shadow_size = 16
+anti_aliasing = false
 
 [node name="PauseMenuGUI" type="Control"]
 layout_mode = 3
@@ -67,41 +86,38 @@ text = "Paused"
 label_settings = SubResource("LabelSettings_gm5af")
 horizontal_alignment = 1
 
-[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Resume"
-alignment = 0
 
-[node name="Respawn" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="Respawn" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Respawn "
-alignment = 0
 
-[node name="SettingButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="SettingButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Setting"
-alignment = 0
+text = "Settings"
 
-[node name="GoToStartScreenButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="GoToStartScreenButton" type="Button" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Go to Menu"
-alignment = 0
+text = "Quit to Menu"
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
@@ -111,7 +127,65 @@ layout_mode = 2
 custom_minimum_size = Vector2(128, 86)
 layout_mode = 2
 
-[connection signal="button_up" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/ResumeButton" to="." method="_on_resume_button_button_up"]
-[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/Respawn" to="." method="_on_respawn_pressed"]
-[connection signal="button_up" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/SettingButton" to="." method="_on_setting_button_button_up"]
-[connection signal="button_up" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/GoToStartScreenButton" to="." method="_on_go_to_start_screen_button_button_up"]
+[node name="QuitWarning" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ne8if")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuitWarning"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="QuitWarning/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "WARNING"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="QuitWarning/VBoxContainer"]
+layout_mode = 2
+text = "Progress will not be saved."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuitWarning/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="CancelQuit" type="Button" parent="QuitWarning/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../ConfirmQuit")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../ConfirmQuit")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../ConfirmQuit")
+focus_previous = NodePath("../ConfirmQuit")
+text = "Return to Game"
+
+[node name="ConfirmQuit" type="Button" parent="QuitWarning/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../CancelQuit")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../CancelQuit")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../CancelQuit")
+focus_previous = NodePath("../CancelQuit")
+text = "Quit to Menu"
+
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_button_up"]
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer/Respawn" to="." method="_on_respawn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer/SettingButton" to="." method="_on_setting_button_button_up"]
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer3/VBoxContainer/VBoxContainer/GoToStartScreenButton" to="." method="_on_go_to_start_screen_button_button_up"]
+[connection signal="pressed" from="QuitWarning/VBoxContainer/HBoxContainer/CancelQuit" to="." method="_on_cancel_quit_pressed"]
+[connection signal="pressed" from="QuitWarning/VBoxContainer/HBoxContainer/ConfirmQuit" to="." method="_on_confirm_quit_pressed"]

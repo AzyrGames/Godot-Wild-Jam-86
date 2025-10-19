@@ -16,7 +16,7 @@ enum AudioBus {
 
 
 @export var value_slider_master: ValueSlider
-@export var value_slider_music: ValueSlider 
+@export var value_slider_music: ValueSlider
 @export var value_slider_sfx: ValueSlider
 
 @export var value_toggle_game_timer: ValueToggle
@@ -54,14 +54,14 @@ func setup_setting_gui() -> void:
 
 	value_slider_master.slider_value.value = user_settings.master_volume * 100
 	value_slider_music.slider_value.value = user_settings.music_volume * 100
-	value_slider_sfx.slider_value.value = user_settings.sfx_volume * 100 
+	value_slider_sfx.slider_value.value = user_settings.sfx_volume * 100
 	value_slider_screen_shake.slider_value.value = user_settings.screen_shake * 100
 
 	connect_window_related()
 	connect_value_slider()
 	connect_value_toggle()
 	pass
-	
+
 
 func _load_user_settings() -> void:
 	pass
@@ -151,7 +151,7 @@ func _on_value_slider_master_value_changed(_value: float) -> void:
 	set_audio_bus_volume("Master", _value)
 	user_settings.master_volume = _value
 	user_settings.save()
-	
+
 
 func _on_value_slider_music_value_changed(_value: float) -> void:
 	_value = _value / 100.0

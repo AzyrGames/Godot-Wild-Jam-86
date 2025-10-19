@@ -8,15 +8,21 @@ extends Control
 
 
 func _ready() -> void:
+	await get_tree().process_frame
 	start_button.grab_focus.call_deferred()
 	connect_button()
-
+	get_viewport().gui_focus_changed.connect(func(control):
+		if control:
+			print(control.name, " has focus")
+		else:
+			print("nothing has focus")
+	)
 
 func connect_button() -> void:
-	start_button.button_up.connect(_on_start_button_button_up)
-	setting_button.button_up.connect(_on_setting_button_button_up)
-	credit_button.button_up.connect(_on_credit_button_button_up)
-	quit_button.button_up.connect(_on_quit_button_button_up)
+	start_button.pressed.connect(_on_start_button_button_up)
+	setting_button.pressed.connect(_on_setting_button_button_up)
+	credit_button.pressed.connect(_on_credit_button_button_up)
+	quit_button.pressed.connect(_on_quit_button_button_up)
 	pass
 
 
