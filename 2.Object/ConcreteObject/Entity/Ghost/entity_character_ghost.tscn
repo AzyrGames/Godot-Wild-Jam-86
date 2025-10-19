@@ -52,8 +52,8 @@ damping_max = 20.0
 scale_max = 2.0
 color = Color(0.84629995, 0.93, 0.93, 0.7921569)
 alpha_curve = SubResource("CurveTexture_q2vkl")
-hue_variation_min = -0.010000022
-hue_variation_max = 0.009999977
+hue_variation_min = -0.050000023
+hue_variation_max = 0.049999975
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_q2vkl"]
 clip_count = 2
@@ -86,7 +86,7 @@ z_index = 2
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hg4ld")
-move_speed = 120.0
+move_speed = 135.0
 body = NodePath("Polygon2D/SubViewport/Line2D")
 asp_ghost_hover = NodePath("AudioStreamPlayer2D")
 metadata/_custom_type_script = "uid://ciyuq7rs48dma"

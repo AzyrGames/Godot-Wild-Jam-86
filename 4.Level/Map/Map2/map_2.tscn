@@ -3,17 +3,16 @@
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_iqu1b"]
 [ext_resource type="PackedScene" uid="uid://b6hv1suuub6y" path="res://4.Level/Map/Map2/level/map_2_level_1.tscn" id="2_kibp3"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_ssseh"]
+[ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="4_ek741"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ek741"]
 size = Vector2(1055, 200)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssseh"]
-size = Vector2(1470, 280)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ssseh"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ek741"]
 normal = Vector2(0, 1)
+distance = 60.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5jgtx"]
 normal = Vector2(0, 1)
@@ -45,31 +44,9 @@ metadata/_edit_lock_ = true
 ignore_rotation = false
 enabled = false
 limit_left = -100
-limit_top = -230
-limit_right = 1690
+limit_top = -320
+limit_right = 1995
 limit_bottom = 40
-metadata/_edit_lock_ = true
-
-[node name="CameraConstraint2" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
-position = Vector2(1290, 0)
-collision_layer = 4096
-collision_mask = 2
-script = ExtResource("3_ssseh")
-constraint_camera = NodePath("Camera2D")
-metadata/_custom_type_script = "uid://c0kcen2hphj3m"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint2"]
-position = Vector2(425, -140)
-shape = SubResource("RectangleShape2D_ssseh")
-metadata/_edit_lock_ = true
-
-[node name="Camera2D" type="Camera2D" parent="CameraConstraint2"]
-ignore_rotation = false
-enabled = false
-limit_left = 740
-limit_top = -305
-limit_right = 2040
-limit_bottom = 80
 metadata/_edit_lock_ = true
 
 [node name="WorldBorders" type="StaticBody2D" parent="."]
@@ -94,3 +71,7 @@ shape = SubResource("WorldBoundaryShape2D_5jgtx")
 position = Vector2(2000, -60)
 shape = SubResource("WorldBoundaryShape2D_x881e")
 one_way_collision = true
+
+[node name="MapTransition2D" parent="." instance=ExtResource("4_ek741")]
+position = Vector2(1930, -150)
+to_map = 2

@@ -27,7 +27,7 @@ tile_map_data = PackedByteArray("AAD6/wEAAQABAAEAAAD7/wEAAQABAAEAAAD8/wEAAQABAAE
 tile_set = ExtResource("3_ktbum")
 
 [node name="TMLMasked" type="TileMapLayer" parent="."]
-modulate = Color(1, 1, 1, 0.21568628)
+modulate = Color(1, 1, 1, 0.47058824)
 tile_set = ExtResource("3_ktbum")
 collision_enabled = false
 
