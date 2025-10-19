@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 
 func connect_event_bus() -> void:
 	EventBus.area_triggered.connect(_on_area_triggered)
-	EventBus.switch_map.connect(request_game_map)
+	EventBus.switch_map.connect(request_and_load_map)
+	EventBus.preload_map.connect(request_game_map)
 	EventBus.game_map_changed.connect(reset_game_map)
 	pass
 
@@ -87,10 +88,12 @@ func request_game_map(_target_map: GameData.MapList) -> void:
 	if !GameData.map_path.has(_target_map):
 		print_debug(GameData.map_path, " not found")
 		return
-	_request_map = _target_map
-	_request_game_map_path = GameData.map_path.get(_target_map)
 	ResourceLoader.load_threaded_request(_request_game_map_path)
-	pass
+
+func request_and_load_map(target_map: GameData.MapList) -> void:
+	_request_map = target_map
+	_request_game_map_path = GameData.map_path.get(target_map)
+	request_game_map(target_map)
 
 
 func update_game_map_request() -> void:

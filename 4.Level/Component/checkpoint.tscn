@@ -156,6 +156,7 @@ script = ExtResource("1_unnu2")
 character_respawn_point = NodePath("CharacterRespawnPoint")
 collision_shape = NodePath("CollisionShape2D")
 animation_player = NodePath("AnimationPlayer")
+active = true
 trigger_mode = 1
 metadata/_custom_type_script = "uid://bdah4wskhtoqr"
 
