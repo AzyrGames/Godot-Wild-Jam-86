@@ -3618,6 +3618,12 @@ texture_region_size = Vector2i(20, 20)
 12: [4],
 &"type": 1
 }
+1:26/0 = 0
+2:26/0 = 0
+2:26/0/metadata/_better_terrain = {
+&"type": 6
+}
+3:26/0 = 0
 
 [resource]
 tile_size = Vector2i(20, 20)
@@ -3643,6 +3649,8 @@ metadata/_better_terrain = {
 }], ["MaskableRock", Color(0.46679688, 0.25, 1, 1), 0, [0, 2], {
 &"path": ""
 }], ["MaskOutRock", Color(0.88671875, 0.27017212, 0.4869268, 1), 0, [0, 2], {
+&"path": ""
+}], ["OneWay", Color(0.493927, 0.97265625, 0.50140715, 1), 0, [], {
 &"path": ""
 }]],
 &"version": "0.2"

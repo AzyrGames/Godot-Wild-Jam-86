@@ -1,10 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3mcaorrlftgb"]
+[gd_scene load_steps=5 format=3 uid="uid://b3mcaorrlftgb"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_fhs10"]
 [ext_resource type="PackedScene" uid="uid://1iba7bnghl2r" path="res://4.Level/Map/Map4/level/map_4_level_1.tscn" id="2_3yj3i"]
+[ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_71mip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qy24i"]
+size = Vector2(720, 640)
 
 [node name="Map4" type="Node2D"]
 script = ExtResource("1_fhs10")
 metadata/_custom_type_script = "uid://dvtiu04654nwl"
 
 [node name="Map4Level1" parent="." instance=ExtResource("2_3yj3i")]
+
+[node name="CameraConstraint1" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("3_71mip")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint1"]
+position = Vector2(260, -320)
+shape = SubResource("RectangleShape2D_qy24i")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
+ignore_rotation = false
+enabled = false
+limit_left = -100
+limit_top = -640
+limit_right = 580
+limit_bottom = 40
+metadata/_edit_lock_ = true
