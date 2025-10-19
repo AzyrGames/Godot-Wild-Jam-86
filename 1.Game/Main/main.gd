@@ -8,6 +8,7 @@ const GAME_TIME_LIMIT : float = 60 * 60.0
 @export var sub_viewport: SubViewport
 @export var game_timer: Timer
 @export var asp_music: AudioStreamPlayer
+@export var background: Node2D
 
 var game_2d: Game2D
 
@@ -35,6 +36,7 @@ func start_music() -> void:
 func start_game() -> bool:
 	clear_game()
 	game_timer.paused = false
+	background.visible = false
 	game_timer.start(GAME_TIME_LIMIT)
 	return add_game()
 
@@ -44,6 +46,7 @@ func clear_game() -> void:
 	if game_2d:
 		game_2d.queue_free()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	background.visible = true
 	sub_viewport_container.visible = false
 	pass
 

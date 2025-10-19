@@ -180,6 +180,7 @@ current_game_map = NodePath("Map1")
 metadata/_custom_type_script = "uid://b74ubmyligtxg"
 
 [node name="OceanBackground" parent="." instance=ExtResource("9_murlr")]
+visible = false
 
 [node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_target_node")]
 physics_interpolation_mode = 1
@@ -209,3 +210,5 @@ active = true
 position = Vector2(70, -140)
 
 [node name="Map1" parent="." instance=ExtResource("9_k3eo0")]
+
+[node name="OceanBackground2" parent="." instance=ExtResource("9_murlr")]

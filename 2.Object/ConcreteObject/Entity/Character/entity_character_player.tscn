@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://caa43fkynpx52"]
+[gd_scene load_steps=24 format=3 uid="uid://caa43fkynpx52"]
 
 [ext_resource type="Script" uid="uid://dukhpw2kiyr0p" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/prototype_character.gd" id="1_u5nji"]
 [ext_resource type="Script" uid="uid://bq0337t82fgc2" path="res://2.Object/Base/Entity/Character/CharacterPlatformer/Movement/character_movement_setting.gd" id="2_tsqhy"]
@@ -7,6 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://dk6h7i2ge2tiq" path="res://8.Asset/Audio/sfx_char_step_1.ogg" id="5_txlrk"]
 [ext_resource type="AudioStream" uid="uid://cgceqlr8w18tt" path="res://8.Asset/Audio/sfx_char_step_2.ogg" id="6_ytj0q"]
 [ext_resource type="AudioStream" uid="uid://vvw7xdg6wdwh" path="res://8.Asset/Audio/sfx_char_jump.wav" id="7_ytj0q"]
+[ext_resource type="AudioStream" uid="uid://dr4kqtdn50q0a" path="res://8.Asset/Audio/sfx_jump_voice-01.ogg" id="8_pt57d"]
+[ext_resource type="AudioStream" uid="uid://chdp7arkvb6ip" path="res://8.Asset/Audio/sfx_jump_voice-02.ogg" id="9_m1nrh"]
+[ext_resource type="AudioStream" uid="uid://csiebkwpv2dlc" path="res://8.Asset/Audio/sfx_jump_voice-03.ogg" id="10_ppyyn"]
+[ext_resource type="AudioStream" uid="uid://7pwgjm1grt47" path="res://8.Asset/Audio/sfx_jump_voice-04.ogg" id="11_bnpw1"]
 
 [sub_resource type="Resource" id="Resource_nlyfk"]
 script = ExtResource("2_tsqhy")
@@ -86,10 +90,18 @@ random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("7_ytj0q")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pt57d"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("8_pt57d")
+stream_1/stream = ExtResource("9_m1nrh")
+stream_2/stream = ExtResource("10_ppyyn")
+stream_3/stream = ExtResource("11_bnpw1")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ytj0q"]
 size = Vector2(18, 2)
 
-[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "oneway_sensor", "sprite", "vfx_floor_moving", "asp_running", "asp_jump")]
+[node name="EntityCharacterPlayer" type="CharacterBody2D" node_paths=PackedStringArray("floor_collision_shape", "body_collision_shape", "oneway_sensor", "sprite", "vfx_floor_moving", "asp_running", "asp_jump", "asp_jump_voice")]
 z_index = 1
 collision_layer = 2
 collision_mask = 112
@@ -104,6 +116,7 @@ vfx_floor_moving = NodePath("VFXFloorMoving")
 vfx_jumping = ExtResource("4_ury02")
 asp_running = NodePath("ASPRunning")
 asp_jump = NodePath("ASPJump")
+asp_jump_voice = NodePath("ASPJumpVoice")
 metadata/_custom_type_script = "uid://dukhpw2kiyr0p"
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
@@ -136,6 +149,9 @@ bus = &"SFX"
 
 [node name="ASPJump" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_d011n")
+
+[node name="ASPJumpVoice" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pt57d")
 
 [node name="OneWaySensor" type="Area2D" parent="."]
 collision_layer = 16
