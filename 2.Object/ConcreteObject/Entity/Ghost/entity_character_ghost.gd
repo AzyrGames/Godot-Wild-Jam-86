@@ -5,12 +5,21 @@ class_name EntityCharacterGhost2D
 	set(value):
 		active = value
 		set_warn_oversized(_state == GameData.GhostState.OVERSIZE)
+		if asp_ghost_hover:
+			if !asp_ghost_hover.playing:
+				asp_ghost_hover.playing = true
+			if active:
+				asp_ghost_hover.set("parameters/switch_to_clip", "sfx_ghost_hover")
+			else:
+				asp_ghost_hover.set("parameters/switch_to_clip", "sfx_ghost_hover_end")
 
 @export var is_following: bool = true
 @export var move_speed: float
 @export var move_direction: Vector2
 
 @export var body: Line2D
+
+@export var asp_ghost_hover: AudioStreamPlayer2D
 
 var is_mask := true
 
@@ -41,8 +50,14 @@ func _physics_process(_delta: float) -> void:
 	else:
 		move_direction = Vector2.ZERO
 
+				# asp_ghost_hover.finished.connect(_asp_ghost_finished)
+
 	calculate_velocity()
 	move_and_slide()
+
+
+# func _asp_ghost_finished() -> void:
+# 	asp_ghost_hover.playing = false
 
 
 func _on_character_switched(_character: GameData.CharacterType) -> void:
