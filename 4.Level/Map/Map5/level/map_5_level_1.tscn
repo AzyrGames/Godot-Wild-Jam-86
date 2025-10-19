@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://bgjoq4dkotfrf"]
+[gd_scene load_steps=7 format=4 uid="uid://bgjoq4dkotfrf"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_m382h"]
 [ext_resource type="TileSet" uid="uid://dfw6cnhjb3cpn" path="res://5.Resouces/Tileset/tileset_oneways.tres" id="2_0rnlg"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="3_ktbum"]
 [ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="4_khlxg"]
 [ext_resource type="PackedScene" uid="uid://c07mi1fdbfwqm" path="res://3.System/TriggerArea/death_zone.tscn" id="5_c3up8"]
-[ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="6_u5iia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mscxc"]
 size = Vector2(995, 40)
@@ -48,7 +47,3 @@ check_point_name = "m5l1c3"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
 position = Vector2(677.5, 40)
 shape = SubResource("RectangleShape2D_mscxc")
-
-[node name="MapTransition2D" parent="." instance=ExtResource("6_u5iia")]
-position = Vector2(1310, -410)
-to_map = 2

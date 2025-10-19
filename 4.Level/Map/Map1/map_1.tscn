@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpggt20oh3t7o"]
+[gd_scene load_steps=11 format=3 uid="uid://dpggt20oh3t7o"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_35pyb"]
 [ext_resource type="PackedScene" uid="uid://dtfsdhl03ostd" path="res://4.Level/Map/Map1/Level/map_1_level_1.tscn" id="2_vf2xv"]
 [ext_resource type="PackedScene" uid="uid://btauevy5ped7p" path="res://4.Level/Map/Map1/Level/map_1_level_2.tscn" id="3_hox6u"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="4_5426l"]
 [ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="5_2dxlp"]
-[ext_resource type="PackedScene" path="res://3.System/TriggerArea/MapTransition/Victory.tscn" id="6_2do0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5426l"]
 size = Vector2(860, 200)
@@ -78,6 +77,3 @@ one_way_collision = true
 
 [node name="MapTransition2D" parent="." instance=ExtResource("5_2dxlp")]
 position = Vector2(1970, -50)
-
-[node name="VictoryTrigger" parent="." instance=ExtResource("6_2do0m")]
-position = Vector2(102, -92)

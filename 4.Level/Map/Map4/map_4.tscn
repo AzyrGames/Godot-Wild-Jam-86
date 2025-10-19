@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3mcaorrlftgb"]
+[gd_scene load_steps=9 format=3 uid="uid://b3mcaorrlftgb"]
 
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_fhs10"]
 [ext_resource type="PackedScene" uid="uid://1iba7bnghl2r" path="res://4.Level/Map/Map4/level/map_4_level_1.tscn" id="2_3yj3i"]
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="3_71mip"]
-[ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="4_qy24i"]
+[ext_resource type="PackedScene" uid="uid://cxoxyqfbt7rnu" path="res://3.System/TriggerArea/MapTransition/Victory.tscn" id="4_qy24i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qy24i"]
 size = Vector2(180, 160)
@@ -16,9 +16,6 @@ size = Vector2(300, 520)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uswsg"]
 size = Vector2(440, 140)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_caemc"]
-size = Vector2(80, 180)
 
 [node name="Map4" type="Node2D"]
 script = ExtResource("1_fhs10")
@@ -42,8 +39,8 @@ metadata/_edit_lock_ = true
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint1"]
 ignore_rotation = false
 enabled = false
-limit_left = -100
-limit_top = -260
+limit_left = -160
+limit_top = -420
 limit_right = 620
 limit_bottom = 40
 metadata/_edit_lock_ = true
@@ -69,7 +66,7 @@ metadata/_edit_lock_ = true
 [node name="Camera2D" type="Camera2D" parent="CameraConstraint2"]
 ignore_rotation = false
 enabled = false
-limit_left = 0
+limit_left = -160
 limit_top = -960
 limit_right = 800
 limit_bottom = 40
@@ -92,15 +89,32 @@ metadata/_edit_lock_ = true
 ignore_rotation = false
 enabled = false
 limit_left = 0
-limit_top = -1800
-limit_right = 1100
+limit_top = -2160
+limit_right = 1585
 limit_bottom = -540
 metadata/_edit_lock_ = true
 
-[node name="MapTransition2D" parent="." instance=ExtResource("4_qy24i")]
-position = Vector2(700, -1560)
-to_map = 4
+[node name="CameraConstraint4" type="Area2D" parent="." node_paths=PackedStringArray("constraint_camera")]
+position = Vector2(1440, -2000)
+collision_layer = 4096
+collision_mask = 2
+script = ExtResource("3_71mip")
+constraint_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://c0kcen2hphj3m"
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapTransition2D"]
-position = Vector2(0, -70)
-shape = SubResource("RectangleShape2D_caemc")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstraint4"]
+position = Vector2(-40, -30)
+shape = SubResource("RectangleShape2D_uswsg")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="CameraConstraint4"]
+ignore_rotation = false
+enabled = false
+limit_left = 1184
+limit_top = -2173
+limit_right = 1789
+limit_bottom = -1938
+metadata/_edit_lock_ = true
+
+[node name="VictoryTrigger" parent="." instance=ExtResource("4_qy24i")]
+position = Vector2(1900, -2060)

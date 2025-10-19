@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://nach75ydre15"]
+[gd_scene load_steps=10 format=3 uid="uid://nach75ydre15"]
 
 [ext_resource type="Script" uid="uid://ltyvu5n6v5tb" path="res://3.System/TriggerArea/trigger_camera_constraint/trigger_camera_constraint.gd" id="1_n1okg"]
 [ext_resource type="Script" uid="uid://dvtiu04654nwl" path="res://4.Level/Base/map_2d.gd" id="1_umi27"]
 [ext_resource type="PackedScene" uid="uid://bgjoq4dkotfrf" path="res://4.Level/Map/Map5/level/map_5_level_1.tscn" id="2_umi27"]
+[ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="4_ly4ds"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ly4ds"]
 size = Vector2(1055, 200)
@@ -69,3 +70,7 @@ shape = SubResource("WorldBoundaryShape2D_8iejt")
 position = Vector2(1215, -60)
 shape = SubResource("WorldBoundaryShape2D_hvjhi")
 one_way_collision = true
+
+[node name="MapTransition2D" parent="." instance=ExtResource("4_ly4ds")]
+position = Vector2(1310, -410)
+to_map = 3
