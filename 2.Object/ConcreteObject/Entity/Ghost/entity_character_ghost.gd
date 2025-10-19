@@ -26,6 +26,8 @@ var is_mask := true
 var _time := 0.0
 var _state := GameData.GhostState.IDLE
 
+var _statechange_locked := false
+
 func _ready() -> void:
 	if GameData.entity_character_node.has(GameData.CharacterType.GHOST):
 		GameData.entity_character_node.set(GameData.CharacterType.GHOST, self)
@@ -40,11 +42,13 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	_time += _delta
-	if active and Input.is_action_just_pressed(&"move_jump"):
+	if active and not _statechange_locked and Input.is_action_just_pressed(&"move_jump"):
 		if !GameData.mask_tracker:
 			set_marker()
 		else:
 			finish_mask()
+		_statechange_locked = true
+		create_tween().tween_callback(func(): _statechange_locked = false).set_delay(0.1)
 
 	if active:
 		move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
