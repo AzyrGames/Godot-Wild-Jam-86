@@ -6,13 +6,13 @@ class_name UserSettings
 @export var is_vsync: bool = true
 
 
-@export_range(0, 100.0, 1.0) var master_volume : float = 60.0
-@export_range(0, 100.0, 1.0) var music_volume : float = 60.0
-@export_range(0, 100.0, 1.0) var sfx_volume : float = 60.0
+@export_range(0, 100.0, 1.0) var master_volume : float = 0.8
+@export_range(0, 100.0, 1.0) var music_volume : float = 0.8
+@export_range(0, 100.0, 1.0) var sfx_volume : float = 0.8
 @export_range(0, 100.0, 1.0) var screen_shake : float = 100.0
 
 
-const USER_PREFS_PATH : String = "user://user_settings.tres"
+const USER_PREFS_PATH : String = "user://user_setting_1.tres"
 
 func save() -> void:
 	ResourceSaver.save(self, USER_PREFS_PATH)

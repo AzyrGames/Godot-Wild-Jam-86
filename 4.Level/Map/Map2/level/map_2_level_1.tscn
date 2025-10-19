@@ -1,16 +1,21 @@
-[gd_scene load_steps=8 format=4 uid="uid://b6hv1suuub6y"]
+[gd_scene load_steps=10 format=4 uid="uid://b6hv1suuub6y"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_t3yvo"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_a77ow"]
 [ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="4_b7rvl"]
 [ext_resource type="PackedScene" uid="uid://c07mi1fdbfwqm" path="res://3.System/TriggerArea/death_zone.tscn" id="5_mscxc"]
 [ext_resource type="PackedScene" uid="uid://uxre0gba8qlp" path="res://3.System/TriggerArea/MapTransition/map_transition_2d.tscn" id="5_uc0vy"]
+[ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="6_uc0vy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mscxc"]
 size = Vector2(635, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b7rvl"]
 size = Vector2(60, 40)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vvxt6"]
+outline_size = 1
+outline_color = Color(0.12619856, 0.19195244, 0.28181565, 1)
 
 [node name="Map2Level1" type="Node2D" node_paths=PackedStringArray("unmasked_world", "masked_tiles")]
 z_index = -1
@@ -45,3 +50,32 @@ shape = SubResource("RectangleShape2D_b7rvl")
 [node name="MapTransition2D" parent="." instance=ExtResource("5_uc0vy")]
 position = Vector2(1130, -170)
 to_map = 2
+
+[node name="Label" type="Label" parent="."]
+z_index = 10
+offset_left = 40.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = -80.0
+size_flags_horizontal = 4
+theme = ExtResource("6_uc0vy")
+text = "Press Tab
+to Switch to the Ghost"
+label_settings = SubResource("LabelSettings_vvxt6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+z_index = 10
+offset_left = 40.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = -20.0
+size_flags_horizontal = 4
+theme = ExtResource("6_uc0vy")
+text = "When in the Ghost
+Press Space 
+to Create Mask"
+label_settings = SubResource("LabelSettings_vvxt6")
+horizontal_alignment = 1
+vertical_alignment = 1
