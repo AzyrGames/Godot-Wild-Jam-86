@@ -6,7 +6,11 @@ class_name Game2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Console.register_command(command_change_map, "change_map")
+	Console.add_alias("map", "change_map")
 	Console.register_command(reset_game_map, "reset_map")
+	Console.add_alias("restart", "reset_map")
+	Console.register_command(switch_checkpoint, "goto_checkpoint")
+	Console.add_alias("chkpt", "goto_checkpoint")
 
 	GameManager.game_2d = self
 	connect_event_bus()
@@ -16,6 +20,19 @@ func _ready() -> void:
 func command_change_map(mapname: String) -> void:
 	print("Command to change map received, switching to ", GameData.MapList.get("MAP_" + mapname))
 	request_and_load_map(GameData.MapList.get("MAP_" + mapname))
+
+func switch_checkpoint(checkpoint: String) -> void:
+	if !GameManager.checkpoint_list.has(checkpoint):
+		printerr("Checkpoint does not exist")
+		Console.print_line("Invalid checkpoint `" + checkpoint + "`")
+		Console.print_line("Valid checkpoints: ")
+		for chkpt in GameManager.checkpoint_list.keys():
+			Console.print_line(chkpt)
+		return
+
+	print("Jumping to checkpoint ", checkpoint)
+	GameManager.current_checkpoint = GameManager.checkpoint_list.get(checkpoint)
+	respawn_character(true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -80,6 +97,7 @@ func change_game_map_to(_game_map: Map2D) -> bool:
 	if current_game_map:
 		current_game_map.queue_free()
 	GameManager.game_character.global_position = Vector2(10000, 10000)
+	GameManager.checkpoint_list.clear()
 	add_child(_game_map)
 	current_game_map = _game_map
 	EventBus.game_map_changed.emit()
