@@ -125,10 +125,11 @@ func _handle_command_input(p_event: InputEvent) -> void:
 				var scroll_bar: VScrollBar = _output.get_v_scroll_bar()
 				scroll_bar.value += scroll_bar.page
 			_:
-				if p_event.is_action_pressed(""):
-					_reverse_autocomplete()
-				else:
-					return
+				# if p_event.is_action_pressed(""):
+					# _reverse_autocomplete()
+				
+				return
+				# pass
 		get_viewport().set_input_as_handled()
 
 

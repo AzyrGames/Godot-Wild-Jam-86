@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=4 uid="uid://dtfsdhl03ostd"]
+[gd_scene load_steps=7 format=4 uid="uid://dtfsdhl03ostd"]
 
 [ext_resource type="Script" uid="uid://bfljkk0eyjqir" path="res://4.Level/Base/level_2d.gd" id="1_qy42e"]
 [ext_resource type="TileSet" uid="uid://cl2pgygg26hv8" path="res://8.Asset/2D/tileset_ground_2.tres" id="2_x4ejk"]
+[ext_resource type="Theme" uid="uid://c55lhrkiw4ysq" path="res://7.UI/Theme/AzyrTheme.tres" id="5_5vls1"]
 [ext_resource type="PackedScene" uid="uid://bd6mw0rtbtay3" path="res://4.Level/Component/one_way_platform.tscn" id="5_rhrfv"]
 [ext_resource type="PackedScene" uid="uid://j5jqvofgb1no" path="res://4.Level/Component/checkpoint.tscn" id="6_ugxel"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vls1"]
+outline_size = 1
+outline_color = Color(0.12619856, 0.19195244, 0.28181565, 1)
 
 [node name="Map1Level1" type="Node2D" node_paths=PackedStringArray("unmasked_world", "masked_tiles")]
 script = ExtResource("1_qy42e")
@@ -30,3 +35,42 @@ position = Vector2(660, -95)
 [node name="Checkpoint" parent="." instance=ExtResource("6_ugxel")]
 position = Vector2(60, 0)
 check_point_name = "m1l1c1"
+
+[node name="Label" type="Label" parent="."]
+z_index = 1
+offset_left = 20.0
+offset_top = -60.0
+offset_right = 160.0
+offset_bottom = -20.0
+size_flags_horizontal = 4
+theme = ExtResource("5_5vls1")
+text = "A or D to move
+Space to Jump"
+label_settings = SubResource("LabelSettings_5vls1")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+z_index = 1
+offset_left = 260.0
+offset_top = -60.0
+offset_right = 380.0
+offset_bottom = -20.0
+size_flags_horizontal = 4
+theme = ExtResource("5_5vls1")
+text = "Hold Space 
+to Jump higher"
+label_settings = SubResource("LabelSettings_5vls1")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+z_index = 1
+offset_left = 580.0
+offset_top = -80.0
+offset_right = 700.0
+offset_bottom = -40.0
+size_flags_horizontal = 4
+theme = ExtResource("5_5vls1")
+text = "Hold S and Space
+To Jump Down"
+label_settings = SubResource("LabelSettings_5vls1")
+horizontal_alignment = 1
