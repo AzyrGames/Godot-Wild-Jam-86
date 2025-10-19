@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dqsj6qfx5mxds" path="res://4.Level/Component/ocean_background.tscn" id="9_murlr"]
 [ext_resource type="Shader" uid="uid://188xc3mv7l64" path="res://5.Resouces/Shader/ghost_shader.gdshader" id="10_k3eo0"]
 [ext_resource type="Texture2D" uid="uid://5t2v3le1j7sw" path="res://8.Asset/2D/texture_ghost_TLUT.png" id="11_wdgkn"]
-[ext_resource type="Script" uid="uid://dlxeo1x0f46ck" path="res://2.Object/ConcreteObject/ghost_filter.gd" id="12_kg0ya"]
+[ext_resource type="Script" path="res://2.Object/ConcreteObject/ghost_filter.gd" id="12_kg0ya"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k3eo0"]
 texture = ExtResource("7_la1kc")
@@ -218,12 +218,12 @@ script = ExtResource("3_8a5g4")
 character_platformer = NodePath("EntityCharacterPlayer")
 character_ghost = NodePath("EntityCharacterGhost")
 
+[node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
+position = Vector2(70, -140)
+
 [node name="EntityCharacterPlayer" parent="PlayerSwitcher" instance=ExtResource("3_7mnxe")]
 position = Vector2(60, -55)
 active = true
-
-[node name="EntityCharacterGhost" parent="PlayerSwitcher" instance=ExtResource("4_my75u")]
-position = Vector2(70, -140)
 
 [node name="Map1" parent="." instance=ExtResource("9_k3eo0")]
 
